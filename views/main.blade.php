@@ -79,7 +79,7 @@
                         <h3>Extra information</h3>
                         <ul class="nav side-menu">
                             <li><a target="_new" href="http://fos-streaming.com"><i class="fa fa-laptop"></i> Website </a></li>
-                            <li><a target="_new" href="https://github.com/zgelici/FOS-Streaming/issues"><i class="fa fa-exclamation-triangle"></i> Report </a></li>
+                            <li><a target="_new" href="https://github.com/zgelici/FOS-Streaming-v1/issues"><i class="fa fa-exclamation-triangle"></i> Report </a></li>
                         </ul>
                     </div>
 
