@@ -31,7 +31,7 @@ foreach($streams as $stream) {
 
             ////streamurl 2 checker
             shell_exec("kill -9 " . $stream->pid);
-            shell_exec("/bin/rm -r /usr/local/nginx/html/" . $setting->hlsfolder . "/" . $stream->id . "*");
+            shell_exec("/bin/rm -r /home/fos-streaming/fos/www/" . $setting->hlsfolder . "/" . $stream->id . "*");
 
             if($stream->streamurl2) {
                 $stream->checker = 2;
@@ -53,7 +53,7 @@ foreach($streams as $stream) {
                     $stream->status = 2;
 
                     shell_exec("kill -9 " . $stream->pid);
-                    shell_exec("/bin/rm -r /usr/local/nginx/html/" . $setting->hlsfolder . "/" . $stream->id . "*");
+                    shell_exec("/bin/rm -r /home/fos-streaming/fos/www/" . $setting->hlsfolder . "/" . $stream->id . "*");
 
                     //streamurl 3 checker
                     if($stream->streamurl3) {

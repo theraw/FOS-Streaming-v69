@@ -9,7 +9,7 @@ $edit = 0;
 
 if(isset($_GET['id'])) {
     $title = "Edit admin";
-    $admin = Admin::where('id', '=', $_GET['id'])->first();
+    $admin = Admin::find($_GET['id']);
 }
 
 if (isset($_POST['submit'])) {
@@ -33,9 +33,10 @@ if (isset($_POST['submit'])) {
         } else {
             $message['message'] = "admin Created";
         }
-        $message['message'] = "admin Created";
+
         $admin->username = $_POST['username'];
-        if(!isset($_GET['id'])) {
+        if($_POST['password'] != "") {
+
             $admin->password = md5($_POST['password']);
         }
         $admin->save();
