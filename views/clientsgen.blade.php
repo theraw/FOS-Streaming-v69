@@ -8,7 +8,7 @@
                         <h2>User Client</h2>
                         <div class="clearfix"></div>
                     </div>
-                    <div class="x_content">
+                    <div class="">
                         <br>
                         <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="" role="form" action="" method="post">
                             <div class="form-group">

@@ -13,7 +13,7 @@
                     </ul>
                     <div class="clearfix"></div>
                 </div>
-                <div class="x_content">
+                <div class="">
                     @if(count($admins) > 0)
 
                         @if($message)

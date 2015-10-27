@@ -8,7 +8,7 @@
                     <h2>Activities</h2>
                     <div class="clearfix"></div>
                 </div>
-                <div class="x_content">
+                <div class="">
                     <a class="btn btn-danger" title="Delete" href="activities.php?delete=1">Delete old activities(not shown)(logs)</a>
                     @if($message)
                         <div class="alert alert-{{ $message['type'] }}">

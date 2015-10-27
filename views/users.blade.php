@@ -14,7 +14,7 @@
                     </ul>
                     <div class="clearfix"></div>
                 </div>
-                <div class="x_content">
+                <div class="">
                     @if(count($users) > 0)
 
                         @if($message)

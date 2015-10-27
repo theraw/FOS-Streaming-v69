@@ -16,18 +16,19 @@
                         </ul>
                         <div class="clearfix"></div>
                     </div>
-                    <div class="x_content">
-
-                        <form action=""method="post">
-                            <input type="submit" name="mass_start" value="Mass start" class="btn btn-small btn-success">
-                            <input type="submit" name="mass_stop" value="Mass stop" class="btn btn-small btn-danger">
-                            <input type="submit" name="mass_delete" value="Mass delete" class="btn btn-small btn-danger">
-                            @if(count($streams) > 0)
-                                @if($message)
-                                    <div class="alert alert-{{ $message['type'] }}">
-                                        {{ $message['message'] }}
-                                    </div>
+                    <form action=""method="post">
+                        <input type="submit" name="mass_start" value="Mass start" class="btn btn-small btn-success">
+                        <input type="submit" name="mass_stop" value="Mass stop" class="btn btn-small btn-danger">
+                        <input type="submit" name="mass_delete" value="Mass delete" class="btn btn-small btn-danger">
+                        @if(count($streams) > 0)
+                            @if($message)
+                                <div class="alert alert-{{ $message['type'] }}">
+                                    {{ $message['message'] }}
+                                </div>
                             @endif
+                    <div class="">
+
+
                             <table id="example" class="table table-striped responsive-utilities jambo_table bulk_action">
                                 <thead>
                                 <tr class="headings">

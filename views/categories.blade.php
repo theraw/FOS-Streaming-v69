@@ -13,7 +13,7 @@
                             </ul>
                             <div class="clearfix"></div>
                         </div>
-                        <div class="x_content">
+                        <div class="">
                             @if(count($categories) > 0)
                             @if($message)
                                 <div class="alert alert-{{ $message['type'] }}">
