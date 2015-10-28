@@ -26,6 +26,7 @@
                                 <tr class="headings">
                                     <th>#</th>
                                     <th>Name</th>
+                                    <th>ffmpeg command</th>
                                     <th class=" no-link last"><span class="nobr">Action</span></th>
                                 </tr>
                                 </thead>
@@ -33,7 +34,8 @@
                                 @foreach($transcodes as $key => $trans)
                                     <tr>
                                         <td class="center">{{ $key+1 }}</td>
-                                        <td>{{ $trans->name }}</td>
+                                        <td class="col-md-1">{{ $trans->name }}</td>
+                                        <td>{{ getTranscodedata($trans->id) }}</td>
                                         <td class="center">
 
                                             <a class="btn btn-info" href="manage_transcode.php?id={{ $trans->id }}" title="Edit">

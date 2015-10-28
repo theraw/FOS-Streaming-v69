@@ -33,6 +33,7 @@
                                     <th>Category</th>
                                     <th>File</th>
                                     <th>Last viewed channel</th>
+                                    <th>Limit</th>
                                     <th>IP</th>
                                     <th>User agent</th>
                                     <th class=" no-link last"><span class="nobr">Action</span></th>
@@ -67,9 +68,12 @@
                                         <a href="getfile.php?m3u=true&id={{ $user->id }}" title="GET M3U"><span class="label label-success">M3U</span></a>
                                         <a href="getfile.php?e2=true&id={{ $user->id }}" title="GET E2"><span class="label label-success">E2</span></a>
                                         <a href="getfile.php?tv=true&id={{ $user->id }}" title="GET TV"><span class="label label-success">TV</span></a>
-                                        <a href="clientsgen.php?tv=true&id={{ $user->id }}" title="Clients"><span class="label label-success">Clients</span></a>
+                                        <a href="clientsgen.php?id={{ $user->id }}" title="Clients"><span class="label label-success">Clients</span></a>
                                     </td>
                                     <td class="center"> @if($user->laststream) {{ $user->laststream->name }} @else Never connected @endif </td>
+                                    <td class="center">{{ $user->max_connections }}</td>
+
+
                                     <td class="center"> @if($user->lastconnected_ip) {{ $user->lastconnected_ip }} @else Never connected @endif </td>
                                     <td class="center"> @if($user->useragent) {{ $user->useragent }} @else Never connected @endif </td>
                                     <td class="center">
@@ -96,6 +100,8 @@
 <script src="js/datatables/js/jquery.dataTables.js"></script>
 <script src="js/datatables/tools/js/dataTables.tableTools.js"></script>
 <script>
+
+
 $(document).ready(function () {
     $('input.tableflat').iCheck({
         checkboxClass: 'icheckbox_flat-green',

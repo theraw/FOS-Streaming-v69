@@ -9,7 +9,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="">
-                    <a class="btn btn-danger" title="Delete" href="activities.php?delete=1">Delete old activities(not shown)(logs)</a>
+                    <a class="btn btn-danger" title="Delete" href="activities.php?delete_all=1">Delete all logs</a>
                     @if($message)
                         <div class="alert alert-{{ $message['type'] }}">
                             {{ $message['message'] }}
@@ -24,6 +24,7 @@
                             <th>DataStart</th>
                             <th>IP</th>
                             <th>User agent</th>
+                            <th>Action</th>
                             </th>
                         </tr>
                         </thead>
@@ -35,6 +36,9 @@
                                     <td>{{ $activity->date_start }}</td>
                                     <td>{{ $activity->user_ip }}</td>
                                     <td>{{ $activity->user_agent }}</td>
+                                    <td class="center">
+                                        <a class="btn btn-danger" href="activities.php?delete={{ $activity->id }}" title="Delete" onclick="return confirm('Are you sure?')">Remove</a>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

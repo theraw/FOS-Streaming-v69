@@ -20,6 +20,11 @@ function logincheck() {
 }
 
 
+function checkPid($pid) {
+    exec("ps $pid", $output, $result);
+    return count($output) >= 2 ? true : false;
+}
+
 function stop_stream($id)
 {
     $stream = Stream::find($id);
@@ -34,12 +39,10 @@ function stop_stream($id)
     $stream->status = 0;
 
     $stream->save();
+    sleep(2);
 }
 
-function checkPid($pid) {
-    exec("ps $pid", $output, $result);
-    return count($output) >= 2 ? true : false;
-}
+
 
 function getTranscode($id, $streamnumber = null) {
     $stream = Stream::find($id);
@@ -100,6 +103,41 @@ function getTranscode($id, $streamnumber = null) {
     return $ffmpeg;
 }
 
+function getTranscodedata($id) {
+
+    $trans = Transcode::find($id);
+    $setting = Setting::first();
+
+    $ffmpeg = "ffmpeg";
+    $ffmpeg .= ' -y';
+    $ffmpeg .= ' -probesize ' . ($trans->probesize ? $trans->probesize : '15000000');
+    $ffmpeg .= ' -analyzeduration ' . ($trans->analyzeduration ? $trans->analyzeduration : '12000000');
+    $ffmpeg .= ' -i '.'"' . "[input]" . '"' ;
+    $ffmpeg .= ' -user_agent "'.($setting->user_agent ? $setting->user_agent : 'FOS-Streaming').'"';
+    $ffmpeg .= ' -strict -2 -dn ';
+    $ffmpeg .= $trans->scale ? ' -vf scale=' . ($trans->scale ? $trans->scale : '') : '';
+    $ffmpeg .= $trans->audio_codec ? ' -acodec ' . $trans->audio_codec : ''; '';
+    $ffmpeg .= $trans->video_codec ? ' -vcodec ' . $trans->video_codec : '';
+    $ffmpeg .= $trans->profile ? ' -profile:v ' .  $trans->profile : '';
+    $ffmpeg .= $trans->preset ? ' -preset ' .  $trans->preset_values : '';
+    $ffmpeg .= $trans->video_bitrate ? ' -b:v ' . $trans->video_bitrate . 'k' : '';
+    $ffmpeg .= $trans->audio_bitrate ? ' -b:a ' . $trans->audio_bitrate . 'k' : '';
+    $ffmpeg .= $trans->fps ? ' -r ' . $trans->fps : '';
+    $ffmpeg .= $trans->minrate ? ' -minrate ' . $trans->minrate . 'k' : '';
+    $ffmpeg .= $trans->maxrate ? ' -maxrate ' . $trans->maxrate . 'k' : '';
+    $ffmpeg .= $trans->bufsize ? ' -bufsize ' .$trans->bufsize . 'k' : '';
+    $ffmpeg .= $trans->aspect_ratio ? ' -aspect ' . $trans->aspect_ratio : '';
+    $ffmpeg .= $trans->audio_sampling_rate ? ' -ar ' . $trans->audio_sampling_rate : '';
+    $ffmpeg .= $trans->crf ? ' -crf ' . $trans->crf : '';
+    $ffmpeg .= $trans->audio_channel ? ' -ac ' . $trans->audio_channel : '';
+    $ffmpeg .= $trans->threads ? ' -threads ' . $trans->threads : '';
+    $ffmpeg .= $trans->deinterlance ? ' -vf yadif' : '';
+
+    return $ffmpeg;
+}
+
+
+
 function start_stream($id)
 {
     $stream = Stream::find($id);
@@ -112,119 +150,122 @@ function start_stream($id)
         $stream->status = 1;
     } else {
 
-        $stream->checker = 0;
-        $checkstreamurl = shell_exec(''.$setting->ffprobe_path.' -analyzeduration 1000000 -probesize 9000000 -i "'.$stream->streamurl.'" -v  quiet -print_format json -show_streams 2>&1');
-        $streaminfo = json_decode($checkstreamurl, true);
+        if (!checkPid($stream->pid) && $stream->running == 1) {
 
-        if($streaminfo) {
+            $stream->checker = 0;
+            $checkstreamurl = shell_exec('' . $setting->ffprobe_path . ' -analyzeduration 1000000 -probesize 9000000 -i "' . $stream->streamurl . '" -v  quiet -print_format json -show_streams 2>&1');
+            $streaminfo = json_decode($checkstreamurl, true);
 
-            $pid = shell_exec(getTranscode($stream->id));
+            if ($streaminfo) {
 
-            $stream->pid = $pid;
-            $stream->running = 1;
-            $stream->status = 1;
+                $pid = shell_exec(getTranscode($stream->id));
 
-            $video = "";
-            $audio = "";
+                $stream->pid = $pid;
+                $stream->running = 1;
+                $stream->status = 1;
 
-            if(is_array($streaminfo)) {
-                foreach ($streaminfo['streams'] as $info) {
-                    if ($video == '') {
-                        $video =  ($info['codec_type'] == 'video' ?  $info['codec_name'] : '');
-                    }
-                    if ($audio == '') {
-                        $audio = ($info['codec_type'] == 'audio' ? $info['codec_name'] : '');
-                    }
+                $video = "";
+                $audio = "";
 
-                }
-
-                $stream->video_codec_name = $video;
-                $stream->audio_codec_name = $audio;
-            }
-        } else {
-            $stream->running = 1;
-            $stream->status = 2;
-
-            //TODO: need to make recursive
-            if (checkPid($stream->pid)) {
-                shell_exec("kill -9 " . $stream->pid);
-                shell_exec("/bin/rm -r /home/fos-streaming/fos/www/" . $setting->hlsfolder . "/" . $stream->id . "*");
-            }
-
-            if($stream->streamurl2) {
-                $stream->checker = 2;
-
-                $checkstreamurl = shell_exec(''.$setting->ffprobe_path.' -analyzeduration 1000000 -probesize 9000000 -i "'.$stream->streamurl.'" -v  quiet -print_format json -show_streams 2>&1');
-                $streaminfo = json_decode($checkstreamurl, true);
-
-                if($streaminfo) {
-                    $pid = shell_exec(getTranscode($stream->id, 2));
-
-                    $stream->pid = $pid;
-                    $stream->running = 1;
-                    $stream->status = 1;
-
-                    $video = "";
-                    $audio = "";
-
-                    if(is_array($streaminfo)) {
-                        foreach ($streaminfo['streams'] as $info) {
-                            if ($video == '') {
-                                $video =  ($info['codec_type'] == 'video' ?  $info['codec_name'] : '');
-                            }
-                            if ($audio == '') {
-                                $audio = ($info['codec_type'] == 'audio' ? $info['codec_name'] : '');
-                            }
+                if (is_array($streaminfo)) {
+                    foreach ($streaminfo['streams'] as $info) {
+                        if ($video == '') {
+                            $video = ($info['codec_type'] == 'video' ? $info['codec_name'] : '');
+                        }
+                        if ($audio == '') {
+                            $audio = ($info['codec_type'] == 'audio' ? $info['codec_name'] : '');
                         }
 
-                        $stream->video_codec_name = $video;
-                        $stream->audio_codec_name = $audio;
-
-                    }
-                } else {
-                    $stream->running = 1;
-                    $stream->status = 2;
-
-                    if (checkPid($stream->pid)) {
-                        shell_exec("kill -9 " . $stream->pid);
-                        shell_exec("/bin/rm -r /home/fos-streaming/fos/www/" . $setting->hlsfolder . "/" . $stream->id . "*");
                     }
 
-                    //streamurl 3 checker
-                    if($stream->streamurl3) {
-                        $stream->checker = 3;
-                        $checkstreamurl = shell_exec(''.$setting->ffprobe_path.' -analyzeduration 1000000 -probesize 9000000 -i "'.$stream->streamurl.'" -v  quiet -print_format json -show_streams 2>&1');
-                        $streaminfo = json_decode($checkstreamurl, true);
+                    $stream->video_codec_name = $video;
+                    $stream->audio_codec_name = $audio;
+                }
+            } else {
+                $stream->running = 1;
+                $stream->status = 2;
 
-                        if ($streaminfo) {
+                //TODO: need to make recursive
+                if (checkPid($stream->pid)) {
+                    shell_exec("kill -9 " . $stream->pid);
+                    shell_exec("/bin/rm -r /home/fos-streaming/fos/www/" . $setting->hlsfolder . "/" . $stream->id . "*");
+                }
 
-                            $pid = shell_exec(getTranscode($stream->id, 3));
+                if ($stream->streamurl2) {
+                    $stream->checker = 2;
 
-                            $stream->pid = $pid;
-                            $stream->running = 1;
-                            $stream->status = 1;
+                    $checkstreamurl = shell_exec('' . $setting->ffprobe_path . ' -analyzeduration 1000000 -probesize 9000000 -i "' . $stream->streamurl . '" -v  quiet -print_format json -show_streams 2>&1');
+                    $streaminfo = json_decode($checkstreamurl, true);
 
-                            $video = "";
-                            $audio = "";
+                    if ($streaminfo) {
+                        $pid = shell_exec(getTranscode($stream->id, 2));
 
-                            if(is_array($streaminfo)) {
-                                foreach ($streaminfo['streams'] as $info) {
-                                    if ($video == '') {
-                                        $video =  ($info['codec_type'] == 'video' ?  $info['codec_name'] : '');
-                                    }
-                                    if ($audio == '') {
-                                        $audio =  ($info['codec_type'] == 'audio' ? $info['codec_name'] : '');
-                                    }
+                        $stream->pid = $pid;
+                        $stream->running = 1;
+                        $stream->status = 1;
+
+                        $video = "";
+                        $audio = "";
+
+                        if (is_array($streaminfo)) {
+                            foreach ($streaminfo['streams'] as $info) {
+                                if ($video == '') {
+                                    $video = ($info['codec_type'] == 'video' ? $info['codec_name'] : '');
                                 }
-
-                                $stream->video_codec_name = $video;
-                                $stream->audio_codec_name = $audio;
-
+                                if ($audio == '') {
+                                    $audio = ($info['codec_type'] == 'audio' ? $info['codec_name'] : '');
+                                }
                             }
-                        } else {
-                            $stream->running = 1;
-                            $stream->status = 2;
-                            $stream->pid = null;
+
+                            $stream->video_codec_name = $video;
+                            $stream->audio_codec_name = $audio;
+
+                        }
+                    } else {
+                        $stream->running = 1;
+                        $stream->status = 2;
+
+                        if (checkPid($stream->pid)) {
+                            shell_exec("kill -9 " . $stream->pid);
+                            shell_exec("/bin/rm -r /home/fos-streaming/fos/www/" . $setting->hlsfolder . "/" . $stream->id . "*");
+                        }
+
+                        //streamurl 3 checker
+                        if ($stream->streamurl3) {
+                            $stream->checker = 3;
+                            $checkstreamurl = shell_exec('' . $setting->ffprobe_path . ' -analyzeduration 1000000 -probesize 9000000 -i "' . $stream->streamurl . '" -v  quiet -print_format json -show_streams 2>&1');
+                            $streaminfo = json_decode($checkstreamurl, true);
+
+                            if ($streaminfo) {
+
+                                $pid = shell_exec(getTranscode($stream->id, 3));
+
+                                $stream->pid = $pid;
+                                $stream->running = 1;
+                                $stream->status = 1;
+
+                                $video = "";
+                                $audio = "";
+
+                                if (is_array($streaminfo)) {
+                                    foreach ($streaminfo['streams'] as $info) {
+                                        if ($video == '') {
+                                            $video = ($info['codec_type'] == 'video' ? $info['codec_name'] : '');
+                                        }
+                                        if ($audio == '') {
+                                            $audio = ($info['codec_type'] == 'audio' ? $info['codec_name'] : '');
+                                        }
+                                    }
+
+                                    $stream->video_codec_name = $video;
+                                    $stream->audio_codec_name = $audio;
+
+                                }
+                            } else {
+                                $stream->running = 1;
+                                $stream->status = 2;
+                                $stream->pid = null;
+                            }
                         }
                     }
                 }

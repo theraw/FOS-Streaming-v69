@@ -1,7 +1,7 @@
 <?php
 include('config.php');
 logincheck();
-
+set_time_limit(0);
 if(!isset($_GET['id'])) {
     die();
 }
@@ -22,6 +22,9 @@ if(isset($_GET['e2'])) {
     }
     header('Content-Type: application/octet-stream');
     header('Content-Disposition: attachment; filename="userbouquet.favourites.tv"');
+    header("Content-Transfer-Encoding: binary");
+    header('Pragma: no-cache');
+    header('Expires: 0');
     die;
 }
 
@@ -39,6 +42,9 @@ if(isset($_GET['m3u'])) {
     }
     header('Content-Type: application/octet-stream');
     header('Content-Disposition: attachment; filename="tv_user.m3u"');
+    header("Content-Transfer-Encoding: binary");
+    header('Pragma: no-cache');
+    header('Expires: 0');
     die;
 }
 
@@ -54,5 +60,8 @@ if(isset($_GET['tv'])) {
 
     header('Content-Type: application/octet-stream');
     header('Content-Disposition: attachment; filename="Channels.txt"');
+    header("Content-Transfer-Encoding: binary");
+    header('Pragma: no-cache');
+    header('Expires: 0');
     die;
 }

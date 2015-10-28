@@ -17,9 +17,9 @@
                         <div class="clearfix"></div>
                     </div>
                     <form action=""method="post">
-                        <input type="submit" name="mass_start" value="Mass start" class="btn btn-small btn-success">
-                        <input type="submit" name="mass_stop" value="Mass stop" class="btn btn-small btn-danger">
-                        <input type="submit" name="mass_delete" value="Mass delete" class="btn btn-small btn-danger">
+                        <input type="submit" name="mass_start" value="Mass start" class="btn btn-small btn-success" onclick="return confirm('Are you sure?')">
+                        <input type="submit" name="mass_stop" value="Mass stop" class="btn btn-small btn-danger" onclick="return confirm('Are you sure?')">
+                        <input type="submit" name="mass_delete" value="Mass delete" class="btn btn-small btn-danger" onclick="return confirm('Are you sure?')">
                         @if(count($streams) > 0)
                             @if($message)
                                 <div class="alert alert-{{ $message['type'] }}">
@@ -88,10 +88,6 @@
                                             <a class="btn btn-info" href="manage_stream.php?id={{ $stream->id }}" title="Edit">
                                                 Edit
                                             </a>
-                                            <a class="btn btn-success" title="SHOW STREAM" onclick="window.open('play.php?id={{ $stream->id }}', 'play','status,width=400,height=328'); return false" href="#">
-                                                Play
-                                            </a>
-
                                             <a class="btn btn-danger" href="streams.php?delete={{ $stream->id }}" title="Delete" onclick="return confirm('Are you sure?')">
                                                 Remove
                                             </a>
