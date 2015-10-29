@@ -63,7 +63,8 @@
 
 - Problems with database?
 - dpkg-reconfigure mysql-server-5.5# FOS-Streaming
-- 
+
+
 #### Commercial rights
 ------------
 - You may charge for installation, support and modification.
