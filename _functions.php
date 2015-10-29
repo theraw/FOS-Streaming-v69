@@ -150,7 +150,7 @@ function start_stream($id)
         $stream->status = 1;
     } else {
 
-        if (!checkPid($stream->pid) && $stream->running == 1) {
+        
 
             $stream->checker = 0;
             $checkstreamurl = shell_exec('' . $setting->ffprobe_path . ' -analyzeduration 1000000 -probesize 9000000 -i "' . $stream->streamurl . '" -v  quiet -print_format json -show_streams 2>&1');
@@ -271,7 +271,6 @@ function start_stream($id)
                 }
             }
         }
-    }
     $stream->save();
 }
 
