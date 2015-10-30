@@ -50,6 +50,7 @@
                                             <option value="" {{ isset($_POST['video_codec']) ?  $_POST['video_codec']  == '' : $transcode->video_codec  == '' ? "selected" : "" }}>Disable</option>
                                             <option value="h264" {{ isset($_POST['video_codec']) ?  $_POST['video_codec']  == 'h264' : $transcode->video_codec  == 'h264' ? "selected" : "" }}>H.264</option>
                                             <option value="copy" {{ isset($_POST['video_codec']) ?  $_POST['video_codec']  == 'copy' : $transcode->video_codec  == 'copy' ? "selected" : "" }}>Copy</option>
+                                            <option value="libx265" {{ isset($_POST['video_codec']) ?  $_POST['video_codec']  == 'libx265' : $transcode->video_codec  == 'libx265' ? "selected" : "" }}>H.265</option>
                                         </select>
                                     </div>
                                 </div>

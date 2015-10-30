@@ -133,6 +133,8 @@ function getTranscodedata($id) {
     $ffmpeg .= $trans->threads ? ' -threads ' . $trans->threads : '';
     $ffmpeg .= $trans->deinterlance ? ' -vf yadif' : '';
 
+    $ffmpeg .= " output[HLS]";
+
     return $ffmpeg;
 }
 
