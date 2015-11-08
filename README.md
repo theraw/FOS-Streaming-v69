@@ -59,7 +59,9 @@
 - You can report it here or on official website
 
 - Bug List:
-- Browser mozilla (chrome works best)
+- Stream (activity, limit connection)
+- Stream kill active stream, switch
+- Playlist (+40 items) 
 
 - Problems with database?
 - dpkg-reconfigure mysql-server-5.5# FOS-Streaming
