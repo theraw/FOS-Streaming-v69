@@ -1,4 +1,5 @@
 <?php
+ob_start();
 include('config.php');
 logincheck();
 set_time_limit(0);
