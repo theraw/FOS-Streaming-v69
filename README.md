@@ -61,7 +61,6 @@
 - Bug List:
 - Stream (activity, limit connection)
 - Stream kill active stream, switch
-- Playlist (+40 items) 
 
 - Problems with database?
 - dpkg-reconfigure mysql-server-5.5# FOS-Streaming
