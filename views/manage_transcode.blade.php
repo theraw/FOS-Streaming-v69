@@ -281,4 +281,4 @@
                 });
             </script>
         @endsection
-        @stop
+

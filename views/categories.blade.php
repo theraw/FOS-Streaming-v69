@@ -107,7 +107,6 @@
     });
 </script>
 @endsection
-@stop
 
 
 

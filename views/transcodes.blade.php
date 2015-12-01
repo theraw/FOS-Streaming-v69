@@ -110,4 +110,3 @@
         });
     </script>
 @endsection
-@stop

@@ -208,5 +208,4 @@
             }
         </script>
 @endsection
-@stop
 
