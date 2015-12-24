@@ -16,3 +16,4 @@ $cache = __DIR__ . '/cache';
 $template = new Blade($views, $cache);
 
 $version = 1.2;
+date_default_timezone_set('America/Chicago');
