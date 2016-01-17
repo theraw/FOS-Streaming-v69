@@ -104,7 +104,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">autoenigma2</h4>
+                    <h4 class="modal-title">automatic enigma2 oe2</h4>
                 </div>
                 <div class="modal-body">
                     <p><textarea name="" id="" class="col-md-12" rows="3">wget -O /etc/enigma2/iptv.sh "http://{{ $setting->webip }}:{{ $setting->webport }}/retrieve.php?username={{ $user->username }}&password={{ $user->password }}&type=auto_enigma2_oe2&output=mpegts" && chmod 777 /etc/enigma2/iptv.sh && /etc/enigma2/iptv.sh</textarea></p>
