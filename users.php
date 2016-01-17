@@ -14,4 +14,4 @@ if(isset($_GET['delete'])) {
 
 $users = User::all();
 
-echo $template->view()->make('users')->with('users',  $users)->with('message', $message)->render();
+echo $template->view()->make('users')->with('users',  $users)->with('message', $message)->with('setting', Setting::first())->render();
