@@ -1,5 +1,6 @@
 <?php
 include('config.php');
+logincheck();
 
 $message = [];
 $title = "All Streams";
