@@ -12,6 +12,23 @@ if(isset($_GET['id'])) {
     $user = User::find($_GET['id']);
 }
 
+function parseExpDate($expdate) {
+
+    $expdate = trim($expdate);
+
+    if($expdate == '0000-00-00' || empty($expdate)) {
+        return '0000-00-00';
+    }
+    try {
+        return Carbon::createFromFormat('m/d/Y', $expdate);
+    } catch (InvalidArgumentException $e) { }
+    try {
+        return Carbon::createFromFormat('Y-m-d', $expdate);
+    } catch (InvalidArgumentException $e) { }
+
+    return '0000-00-00';
+}
+
 if (isset($_POST['submit'])) {
 
     $user->username = $_POST['username'];
@@ -19,8 +36,8 @@ if (isset($_POST['submit'])) {
     $user->exp_date = $_POST['expdate'];
     $user->max_connections = $_POST['limit'];
 
-    if($_POST['expdate']) {
-        $user->exp_date = Carbon::parse($_POST['expdate']);
+    if(isset($_POST['expdate'])) {
+        $user->exp_date = parseExpDate($_POST['expdate']);
     }
 
 
