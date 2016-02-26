@@ -30,6 +30,9 @@ if(isset($_POST['mass_delete'])) {
 
         foreach($_POST['mselect'] as $streamids) {
             $stream = Stream::find($streamids);
+            if($stream->running == 1)
+                stop_stream($streamids);
+            }
             $stream->delete();
         }
     }
@@ -43,7 +46,10 @@ if(isset($_POST['mass_start'])) {
     if (isset($_POST['mselect'])) {
 
         foreach($_POST['mselect'] as $streamids) {
-            start_stream($streamids);
+            $stream = Stream::find($streamids);
+            if($stream->running == 0)
+                start_stream($streamids);
+            }
         }
     }
 
@@ -56,7 +62,10 @@ if(isset($_POST['mass_stop'])) {
     if (isset($_POST['mselect'])) {
 
         foreach($_POST['mselect'] as $streamids) {
-            stop_stream($streamids);
+            $stream = Stream::find($streamids);
+            if($stream->running == 1)
+                stop_stream($streamids);
+            }
         }
     }
 
