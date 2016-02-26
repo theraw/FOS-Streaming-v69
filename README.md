@@ -70,8 +70,8 @@
 ------------
 - You may charge for installation, support and modification.
 - You may Any significant modifications must be sent back to the author (me), under Open Source agreement.
-- You may not Rename the plugin.
-- You may not sell this plugin to anyone.
+- You may not Rename the package.
+- You may not sell this package to anyone.
 
 #### Contribution
 ------------
