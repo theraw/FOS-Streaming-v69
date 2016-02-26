@@ -58,6 +58,10 @@ if( isset($_GET['install'])) {
             $table->timestamps();
         });
 
+        $category = new Category;
+        $category->name = 'Default';
+        $category->save();
+
         echo "created categories table <br>" . PHP_EOL;
     }
 
