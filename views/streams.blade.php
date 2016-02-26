@@ -16,7 +16,7 @@
                         </ul>
                         <div class="clearfix"></div>
                     </div>
-                    <form action=""method="post">
+                    <form action="streams.php" method="post">
                         <input type="submit" name="mass_start" value="Mass start" class="btn btn-small btn-success" onclick="return confirm('Are you sure?')">
                         <input type="submit" name="mass_stop" value="Mass stop" class="btn btn-small btn-danger" onclick="return confirm('Are you sure?')">
                         <input type="submit" name="mass_delete" value="Mass delete" class="btn btn-small btn-danger" onclick="return confirm('Are you sure?')">
