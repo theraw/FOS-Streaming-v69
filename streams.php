@@ -18,6 +18,9 @@ if (isset($_GET['start'])){
 
 if(isset($_GET['delete'])) {
     $stream = Stream::find($_GET['delete']);
+    if($stream->running == 1)
+        stop_stream($_GET['delete']);
+    }
     $stream->delete();
 
     $message['type'] = "success";
