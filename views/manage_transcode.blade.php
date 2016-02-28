@@ -227,7 +227,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">threads <span class="required">*</span></label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="number" name="threads" class="form-control col-md-7 col-xs-12" placeholder="0" value="{{  isset($_POST['threads']) ?  $_POST['threads'] : $threads->bufsize}}" >
+                                        <input type="number" name="threads" class="form-control col-md-7 col-xs-12" placeholder="0" value="{{  isset($_POST['threads']) ?  $_POST['threads'] : $transcode->threads}}" >
                                         0 is disabled
                                     </div>
                                 </div>
