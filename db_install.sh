@@ -14,8 +14,11 @@ echo "phpmyadmin phpmyadmin/mysql/admin-pass password $sqlpasswd" | debconf-set-
 echo "phpmyadmin phpmyadmin/mysql/app-pass password $sqlpasswd" | debconf-set-selections
 echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect none" | debconf-set-selections
 
-apt-get install -y mysql-server > /dev/null 2>&1
+apt-get install -y mysql-server-5.6 > /dev/null 2>&1
 apt-get install -y php5-mysql  > /dev/null 2>&1
+service mysql stop
+mv /tmp/my.cnf /etc/mysql/my.cnf
+service mysql start
 
 mysql -uroot -p$sqlpasswd -e "CREATE DATABASE $sqldatabase"
 mysql -uroot -p$sqlpasswd -e "grant all privileges on $sqldatabase.* to '$sqluname'@'localhost' identified by '$sqlpasswd'"
