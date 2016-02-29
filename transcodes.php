@@ -6,7 +6,7 @@ include('config.php');
 logincheck();
 $message = [];
 
-if(isset($_GET['delete'])) {
+if (isset($_GET['delete'])) {
     $trans = Transcode::find($_GET['delete']);
     $trans->delete();
 
@@ -16,4 +16,4 @@ if(isset($_GET['delete'])) {
 
 $transcodes = Transcode::all();
 
-echo $template->view()->make('transcodes')->with('transcodes',  $transcodes)->with('message', $message)->render();
+echo $template->view()->make('transcodes')->with('transcodes', $transcodes)->with('message', $message)->render();

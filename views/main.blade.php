@@ -48,14 +48,16 @@
             <div class="left_col scroll-view">
 
                 <div class="navbar nav_title" style="border: 0;">
-                    <a href="index.php" class="site_title"> <span><span>FOS-Streaming <small style="font-size: 10px;">by Tyfix</small></span></span></a>
+                    <a href="index.php" class="site_title"> <span><span>FOS-Streaming <small style="font-size: 10px;">by
+                                    Tyfix
+                                </small></span></span></a>
                 </div>
                 <div class="clearfix"></div>
 
 
                 <!-- /menu prile quick info -->
 
-                <br />
+                <br/>
 
                 <!-- sidebar menu -->
                 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
@@ -73,18 +75,26 @@
 
                             <li><a href="admins.php"><i class="fa fa-user"></i> Admin's </a></li>
                             <li><a href="ipblocks.php"><i class="fa fa-exclamation-triangle"></i> Ipblock </a></li>
-                            <li><a href="useragentblocks.php"><i class="fa fa-exclamation-triangle"></i> User agent block </a></li>
+                            <li><a href="useragentblocks.php"><i class="fa fa-exclamation-triangle"></i> User agent
+                                    block </a></li>
                             <li><a href="settings.php"><i class="fa fa-cog"></i> Settings </a></li>
                         </ul>
                     </div>
                     <div class="menu_section">
                         <h3>Extra information</h3>
                         <ul class="nav side-menu">
-                            <li><a target="_new" href="http://fos-streaming.com"><i class="fa fa-laptop"></i> Website </a></li>
-                            <li><a target="_new" href="https://github.com/zgelici/FOS-Streaming-v1/issues"><i class="fa fa-exclamation-triangle"></i> Report </a></li>
-                            <li><a target="_new" href="http://www.fos-streaming.com/forum/"><i class="fa fa-circle-o"></i> Forum</a></li>
-                            <li><a target="_new" href="http://multics.info/threads/fos-streaming-v1.56885/"><i class="fa fa-circle-o"></i> Multics thread (Support) </a></li>
-                            <li><a target="_new" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6ATJFKYPFY65W"><img src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" alt="Donate Button" /></a></li>
+                            <li><a target="_new" href="http://fos-streaming.com"><i class="fa fa-laptop"></i> Website
+                                </a></li>
+                            <li><a target="_new" href="https://github.com/zgelici/FOS-Streaming-v1/issues"><i
+                                            class="fa fa-exclamation-triangle"></i> Report </a></li>
+                            <li><a target="_new" href="http://www.fos-streaming.com/forum/"><i
+                                            class="fa fa-circle-o"></i> Forum</a></li>
+                            <li><a target="_new" href="http://multics.info/threads/fos-streaming-v1.56885/"><i
+                                            class="fa fa-circle-o"></i> Multics thread (Support) </a></li>
+                            <li><a target="_new"
+                                   href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6ATJFKYPFY65W"><img
+                                            src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif"
+                                            alt="Donate Button"/></a></li>
                         </ul>
                     </div>
 
@@ -107,7 +117,8 @@
 
                     <ul class="nav navbar-nav navbar-right">
                         <li class="">
-                            <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
+                               aria-expanded="false">
                                 {{ $_SESSION['user_id'] }}
                                 <span class=" fa fa-angle-down"></span>
                             </a>
@@ -130,23 +141,23 @@
 
             @yield('content')
 
+        </div>
+        <div class="clearfix"></div>
+
+        <!-- footer content -->
+        <footer>
+            <div class="">
+                <p class="pull-right">FOS-Streaming by <a href="http://www.tyfix.nl" target="_new">Tyfix</a>
+
+                </p>
             </div>
             <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
 
-            <!-- footer content -->
-            <footer>
-                <div class="">
-                    <p class="pull-right">FOS-Streaming by <a href="http://www.tyfix.nl" target="_new">Tyfix</a>
-
-                    </p>
-                </div>
-                <div class="clearfix"></div>
-            </footer>
-            <!-- /footer content -->
-
-        </div>
-        <!-- /page content -->
     </div>
+    <!-- /page content -->
+</div>
 
 </div>
 
@@ -169,8 +180,6 @@
 <script src="js/icheck/icheck.min.js"></script>
 
 <script src="js/custom.js"></script>
-
-
 
 
 @yield('js')

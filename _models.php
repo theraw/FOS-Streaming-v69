@@ -1,5 +1,7 @@
 <?php
-class User extends Illuminate\Database\Eloquent\Model {
+
+class User extends Illuminate\Database\Eloquent\Model
+{
 
     protected $table = 'users';
 
@@ -12,8 +14,7 @@ class User extends Illuminate\Database\Eloquent\Model {
     {
         $return = "";
         $prefix = '';
-        foreach($this->categories as $category)
-        {
+        foreach ($this->categories as $category) {
             $return .= $prefix . ' ' . $category->name . '';
             $prefix = ', ';
         }
@@ -32,7 +33,8 @@ class User extends Illuminate\Database\Eloquent\Model {
     }
 }
 
-class Stream extends Illuminate\Database\Eloquent\Model {
+class Stream extends Illuminate\Database\Eloquent\Model
+{
 
     public function category()
     {
@@ -62,7 +64,8 @@ class Stream extends Illuminate\Database\Eloquent\Model {
     }
 }
 
-class Category extends Illuminate\Database\Eloquent\Model {
+class Category extends Illuminate\Database\Eloquent\Model
+{
 
     public function streams()
     {
@@ -70,12 +73,30 @@ class Category extends Illuminate\Database\Eloquent\Model {
     }
 }
 
-class Admin extends Illuminate\Database\Eloquent\Model { }
-class Setting extends Illuminate\Database\Eloquent\Model { }
-class Transcode extends Illuminate\Database\Eloquent\Model { }
-class BlockedIp extends Illuminate\Database\Eloquent\Model { protected $table = 'blocked_ips'; }
-class BlockedUseragent extends Illuminate\Database\Eloquent\Model { protected $table = 'blocked_user_agents'; }
-class Activity extends Illuminate\Database\Eloquent\Model {
+class Admin extends Illuminate\Database\Eloquent\Model
+{
+}
+
+class Setting extends Illuminate\Database\Eloquent\Model
+{
+}
+
+class Transcode extends Illuminate\Database\Eloquent\Model
+{
+}
+
+class BlockedIp extends Illuminate\Database\Eloquent\Model
+{
+    protected $table = 'blocked_ips';
+}
+
+class BlockedUseragent extends Illuminate\Database\Eloquent\Model
+{
+    protected $table = 'blocked_user_agents';
+}
+
+class Activity extends Illuminate\Database\Eloquent\Model
+{
 
     protected $table = 'activity';
 

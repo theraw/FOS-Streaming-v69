@@ -7,7 +7,7 @@ logincheck();
 
 //Create settings if not exists
 $settings = Setting::first();
-if( is_null($settings)) {
+if (is_null($settings)) {
     $settings = new Setting;
     $settings->webip = $_SERVER['SERVER_ADDR'];
     $settings->webport = 8000;
@@ -21,8 +21,8 @@ $offline = Stream::where('running', '=', 0)->count();
 
 //space
 $space_pr = 0;
-$space_free = round((disk_free_space('/'))/1048576, 1);
-$space_total = round((disk_total_space('/'))/1048576, 1);
+$space_free = round((disk_free_space('/')) / 1048576, 1);
+$space_total = round((disk_total_space('/')) / 1048576, 1);
 $space_pr = (int)(100 * ($space_free / $space_total));
 $cpu_usage = "";
 $cpu_total = "";
@@ -42,7 +42,7 @@ if (stristr(PHP_OS, 'win')) {
     //cpu
     $loads = sys_getloadavg();
     $core_nums = trim(shell_exec("grep -P '^processor' /proc/cpuinfo|wc -l"));
-    $cpu_pr = round($loads[0]/($core_nums + 1)*100, 2);
+    $cpu_pr = round($loads[0] / ($core_nums + 1) * 100, 2);
 
     //memory
     $free = shell_exec('free');
@@ -75,10 +75,10 @@ $mem['total'] = $mem_total;
 
 echo $template->view()
     ->make('dashboard')
-        ->with('all', $all)
-        ->with('online',  $online)
-        ->with('offline', $offline)
-        ->with('space', $space)
-        ->with('cpu', $cpu)
-        ->with('mem', $mem)
+    ->with('all', $all)
+    ->with('online', $online)
+    ->with('offline', $offline)
+    ->with('space', $space)
+    ->with('cpu', $cpu)
+    ->with('mem', $mem)
     ->render();

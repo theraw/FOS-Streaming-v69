@@ -17,100 +17,111 @@
                         <div class="clearfix"></div>
                     </div>
                     <form action="streams.php" method="post">
-                        <input type="submit" name="mass_start" value="Mass start" class="btn btn-small btn-success" onclick="return confirm('Are you sure?')">
-                        <input type="submit" name="mass_stop" value="Mass stop" class="btn btn-small btn-danger" onclick="return confirm('Are you sure?')">
-                        <input type="submit" name="mass_delete" value="Mass delete" class="btn btn-small btn-danger" onclick="return confirm('Are you sure?')">
+                        <input type="submit" name="mass_start" value="Mass start" class="btn btn-small btn-success"
+                               onclick="return confirm('Are you sure?')">
+                        <input type="submit" name="mass_stop" value="Mass stop" class="btn btn-small btn-danger"
+                               onclick="return confirm('Are you sure?')">
+                        <input type="submit" name="mass_delete" value="Mass delete" class="btn btn-small btn-danger"
+                               onclick="return confirm('Are you sure?')">
                         @if(count($streams) > 0)
                             @if($message)
                                 <div class="alert alert-{{ $message['type'] }}">
                                     {{ $message['message'] }}
                                 </div>
                             @endif
-                    <div class="">
+                            <div class="">
 
 
-                            <table id="example" class="table table-striped responsive-utilities jambo_table bulk_action">
-                                <thead>
-                                <tr class="headings">
-                                    <th>
-                                        <input type="checkbox" id="check-all" class="flat">
-                                    </th>
-                                    <th>Name</th>
-                                    <th>Status</th>
-                                    <th>Category</th>
-                                    <th>Video</th>
-                                    <th>Audio</th>
-                                    <th class=" no-link last"><span class="nobr">Action</span>
-                                    </th>
-                                </tr>
-                                </thead>
+                                <table id="example"
+                                       class="table table-striped responsive-utilities jambo_table bulk_action">
+                                    <thead>
+                                    <tr class="headings">
+                                        <th>
+                                            <input type="checkbox" id="check-all" class="flat">
+                                        </th>
+                                        <th>Name</th>
+                                        <th>Status</th>
+                                        <th>Category</th>
+                                        <th>Video</th>
+                                        <th>Audio</th>
+                                        <th class=" no-link last"><span class="nobr">Action</span>
+                                        </th>
+                                    </tr>
+                                    </thead>
 
-                                <tbody>
+                                    <tbody>
 
 
-                                @foreach($streams as $key => $stream)
+                                    @foreach($streams as $key => $stream)
 
-                                    <tr>
-                                        <td class="center"><input type="checkbox" class="tableflat check"  value="{{ $stream->id }}" name="mselect[]"></td>
-                                        <td>
-                                            {{ $stream->name }}
+                                        <tr>
+                                            <td class="center"><input type="checkbox" class="tableflat check"
+                                                                      value="{{ $stream->id }}" name="mselect[]"></td>
+                                            <td>
+                                                {{ $stream->name }}
 
-                                            @if($stream->checker == 2)
-                                                <span class="label label-info">streamurl2</span>
-                                            @endif
-                                            @if($stream->checker == 3)
-                                                <span class="label label-info">streamurl3</span>
-                                            @endif
-                                        </td>
-                                        <td class="center"><span class="label label-{{ $stream->status_label['label'] }}">{{ $stream->status_label['text'] }}</span></td>
-                                        <td class="center">{{ $stream->category ? $stream->category->name : '' }} </td>
-                                        <td>
-                                            @if($stream->video_codec_name)
-                                            {{ $stream->video_codec_name }}
+                                                @if($stream->checker == 2)
+                                                    <span class="label label-info">streamurl2</span>
+                                                @endif
+                                                @if($stream->checker == 3)
+                                                    <span class="label label-info">streamurl3</span>
+                                                @endif
+                                            </td>
+                                            <td class="center"><span
+                                                        class="label label-{{ $stream->status_label['label'] }}">{{ $stream->status_label['text'] }}</span>
+                                            </td>
+                                            <td class="center">{{ $stream->category ? $stream->category->name : '' }} </td>
+                                            <td>
+                                                @if($stream->video_codec_name)
+                                                    {{ $stream->video_codec_name }}
                                                 @else
-                                                Empty
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if($stream->audio_codec_name)
-                                                {{ $stream->audio_codec_name }}
-                                            @else
-                                                Empty
-                                            @endif
-                                        </td>
-                                        <td class="center">
-                                            @if($stream->status == 1)
-                                                <a class="btn btn-danger" title="STOP STREAM" href="streams.php?stop={{ $stream->id }}">Stop</a>
-                                            @elseif ($stream->status != 1)
-                                                <a class="btn btn-success" title="START STREAM" href="streams.php?start={{ $stream->id }}">Start</a>
-                                            @endif
+                                                    Empty
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if($stream->audio_codec_name)
+                                                    {{ $stream->audio_codec_name }}
+                                                @else
+                                                    Empty
+                                                @endif
+                                            </td>
+                                            <td class="center">
+                                                @if($stream->status == 1)
+                                                    <a class="btn btn-danger" title="STOP STREAM"
+                                                       href="streams.php?stop={{ $stream->id }}">Stop</a>
+                                                @elseif ($stream->status != 1)
+                                                    <a class="btn btn-success" title="START STREAM"
+                                                       href="streams.php?start={{ $stream->id }}">Start</a>
+                                                @endif
 
-                                            <a class="btn btn-info" href="manage_stream.php?id={{ $stream->id }}" title="Edit">
-                                                Edit
-                                            </a>
-                                            <a class="btn btn-danger" href="streams.php?delete={{ $stream->id }}" title="Delete" onclick="return confirm('Are you sure?')">
-                                                Remove
-                                            </a>
+                                                <a class="btn btn-info" href="manage_stream.php?id={{ $stream->id }}"
+                                                   title="Edit">
+                                                    Edit
+                                                </a>
+                                                <a class="btn btn-danger" href="streams.php?delete={{ $stream->id }}"
+                                                   title="Delete" onclick="return confirm('Are you sure?')">
+                                                    Remove
+                                                </a>
 
-                                        </td>
-                                @endforeach
+                                            </td>
+                                    @endforeach
 
-                                </tbody>
+                                    </tbody>
                                 </table>
-                            @else
-                                <div class="alert alert-info">
-                                    <button type="button" class="close" data-dismiss="alert">×</button>
-                                    No streams found
-                                </div>
-                            @endif
-                        </form>
-                    </div>
+                                @else
+                                    <div class="alert alert-info">
+                                        <button type="button" class="close" data-dismiss="alert">ï¿½</button>
+                                        No streams found
+                                    </div>
+                        @endif
+                    </form>
                 </div>
             </div>
-@endsection
+        </div>
+        @endsection
 
-@section('js')
-        <!-- Datatables -->
+        @section('js')
+                <!-- Datatables -->
         <script src="js/datatables/js/jquery.dataTables.js"></script>
         <script src="js/datatables/tools/js/dataTables.tableTools.js"></script>
         <script>

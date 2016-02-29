@@ -8,13 +8,12 @@ $stream = new Stream;
 $categories = Category::all();
 $transcodes = Transcode::all();
 
-if(isset($_GET['id'])) {
+if (isset($_GET['id'])) {
     $title = "Edit stream";
-    $stream = Stream::find( $_GET['id']);
+    $stream = Stream::find($_GET['id']);
 }
 
 if (isset($_POST['submit'])) {
-
 
 
     $stream->name = $_POST['name'];
@@ -26,36 +25,34 @@ if (isset($_POST['submit'])) {
     $stream->streamurl3 = $_POST['streamurl3'];
 
     $stream->restream = 0;
-    if(isset($_POST['restream'])) {
+    if (isset($_POST['restream'])) {
         $stream->restream = 1;
     }
 
     $stream->bitstreamfilter = 0;
-    if(isset($_POST['bitstreamfilter'])) {
+    if (isset($_POST['bitstreamfilter'])) {
         $stream->bitstreamfilter = 1;
     }
 
     if (empty($_POST['name'])) {
         $message['type'] = "error";
         $message['message'] = "Name field is empty";
-    }
-    else if (empty($_POST['streamurl'])) {
+    } else if (empty($_POST['streamurl'])) {
         $message['type'] = "error";
         $message['message'] = "streamurl is empty";
-    }
-    else if (empty($_POST['category'])) {
+    } else if (empty($_POST['category'])) {
         $message['type'] = "error";
         $message['message'] = "Select one category";
     } else {
 
-        if(isset($_GET['id'])) {
+        if (isset($_GET['id'])) {
             $message['type'] = "success";
             $message['message'] = "Stream saved";
             $stream->save();
         } else {
             $exists = Stream::where('name', '=', $_POST['name'])->get();
 
-            if(count($exists) > 0) {
+            if (count($exists) > 0) {
                 $message['type'] = "error";
                 $message['message'] = "streamname already in use";
             } else {
@@ -69,9 +66,9 @@ if (isset($_POST['submit'])) {
 }
 
 echo $template->view()->make('manage_stream')
-    ->with('stream',  $stream)
-    ->with('categories',  $categories)
-    ->with('transcodes',  $transcodes)
+    ->with('stream', $stream)
+    ->with('categories', $categories)
+    ->with('transcodes', $transcodes)
     ->with('message', $message)
     ->with('title', $title)
     ->render();

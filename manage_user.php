@@ -2,29 +2,33 @@
 include('config.php');
 logincheck();
 use Carbon\Carbon;
+
 $message = [];
 $title = "Create user";
 $user = new User;
 $categories = Category::all();
 
-if(isset($_GET['id'])) {
+if (isset($_GET['id'])) {
     $title = "Edit user";
     $user = User::find($_GET['id']);
 }
 
-function parseExpDate($expdate) {
+function parseExpDate($expdate)
+{
 
     $expdate = trim($expdate);
 
-    if($expdate == '0000-00-00' || empty($expdate)) {
+    if ($expdate == '0000-00-00' || empty($expdate)) {
         return '0000-00-00';
     }
     try {
         return Carbon::createFromFormat('m/d/Y', $expdate);
-    } catch (InvalidArgumentException $e) { }
+    } catch (InvalidArgumentException $e) {
+    }
     try {
         return Carbon::createFromFormat('Y-m-d', $expdate);
-    } catch (InvalidArgumentException $e) { }
+    } catch (InvalidArgumentException $e) {
+    }
 
     return '0000-00-00';
 }
@@ -36,30 +40,28 @@ if (isset($_POST['submit'])) {
     $user->exp_date = $_POST['expdate'];
     $user->max_connections = $_POST['limit'];
 
-    if(isset($_POST['expdate'])) {
+    if (isset($_POST['expdate'])) {
         $user->exp_date = parseExpDate($_POST['expdate']);
     }
 
 
     $user->active = 0;
-    if(isset($_POST['active'])) {
+    if (isset($_POST['active'])) {
         $user->active = 1;
     }
 
     if (empty($_POST['username'])) {
         $message['type'] = "error";
         $message['message'] = "username field is empty";
-    }
-    else if (empty($_POST['password'])) {
+    } else if (empty($_POST['password'])) {
         $message['type'] = "error";
         $message['message'] = "password is empty";
-    }
-    else if (empty($_POST['category'])) {
+    } else if (empty($_POST['category'])) {
         $message['type'] = "error";
         $message['message'] = "Select one category";
 
     } else {
-        if(isset($_GET['id'])) {
+        if (isset($_GET['id'])) {
             $message['type'] = "success";
             $message['message'] = "User saved";
             $user->save();
@@ -67,7 +69,7 @@ if (isset($_POST['submit'])) {
         } else {
             $exists = User::where('username', '=', $_POST['username'])->get();
 
-            if(count($exists) > 0) {
+            if (count($exists) > 0) {
                 $message['type'] = "error";
                 $message['message'] = "Username already in use";
             } else {
@@ -84,8 +86,8 @@ if (isset($_POST['submit'])) {
 
 echo $template->view()
     ->make('manage_user')
-        ->with('user',  $user)
-        ->with('categories',  $categories)
-        ->with('message', $message)
-        ->with('title', $title)
+    ->with('user', $user)
+    ->with('categories', $categories)
+    ->with('message', $message)
+    ->with('title', $title)
     ->render();

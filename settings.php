@@ -13,10 +13,10 @@ if (isset($_POST['submit'])) {
     $setting->ffmpeg_path = $_POST['ffmpeg_path'];
     $setting->ffprobe_path = $_POST['ffprobe_path'];
 
-    if($setting->webport != $_POST['webport']) {
+    if ($setting->webport != $_POST['webport']) {
 
         $setting->webport = $_POST['webport'];
-        if(is_null($_POST['webport'])) {
+        if (is_null($_POST['webport'])) {
             $setting->webport = 8000;
         }
         generatEginxConfPort($_POST['webport']);
@@ -31,8 +31,8 @@ if (isset($_POST['submit'])) {
     $message['message'] = "Setting saved";
     $setting->save();
 
-    if($port) {
-        die("Restart nginx and go to the following url: http://". $_SERVER['SERVER_ADDR'] . ":" . $_POST['webport'] . "/settings.php");
+    if ($port) {
+        die("Restart nginx and go to the following url: http://" . $_SERVER['SERVER_ADDR'] . ":" . $_POST['webport'] . "/settings.php");
     } else {
         redirect("settings.php", 1000);
     }
@@ -40,6 +40,6 @@ if (isset($_POST['submit'])) {
 
 }
 echo $template->view()->make('manage_settings')
-    ->with('setting',  $setting)
+    ->with('setting', $setting)
     ->with('message', $message)
     ->render();

@@ -1,16 +1,14 @@
 <?php
 include('config.php');
-if(isset($_SESSION['user_id'])){
+if (isset($_SESSION['user_id'])) {
     header("location: dashboard.php");
 }
 
-$error='';
+$error = '';
 if (isset($_POST['submit'])) {
     if (empty($_POST['username']) || empty($_POST['password'])) {
         $error = "Username or Password is invalid";
-    }
-    else
-    {
+    } else {
         $username = stripslashes($_POST['username']);
         $password = stripslashes($_POST['password']);
 
@@ -75,7 +73,7 @@ if (isset($_POST['submit'])) {
     <div id="wrapper">
         <div id="login" class="animate form">
             <?php
-            if($error != "") {
+            if ($error != "") {
                 echo "<div class=\"alert alert-error\">
                                     " . $error . "
                                 </div>";
@@ -85,10 +83,10 @@ if (isset($_POST['submit'])) {
                 <form action="" method="post">
                     <h1>FOS-Streaming</h1>
                     <div>
-                        <input type="text" name="username" class="form-control" placeholder="Username" required="" />
+                        <input type="text" name="username" class="form-control" placeholder="Username" required=""/>
                     </div>
                     <div>
-                        <input type="password" name="password" class="form-control" placeholder="Password" required="" />
+                        <input type="password" name="password" class="form-control" placeholder="Password" required=""/>
                     </div>
                     <div>
                         <input type="submit" name="submit" class="btn btn-default submit" value="Log in">
@@ -98,11 +96,12 @@ if (isset($_POST['submit'])) {
 
 
                         <div class="clearfix"></div>
-                        <br />
+                        <br/>
                         <div>
 
 
-                            <p>&copy;2015 All Rights Reserved FOS-Streaming by <a href="http://www.tyfix.nl" target="_blank">Tyfix</a></p>
+                            <p>&copy;2015 All Rights Reserved FOS-Streaming by <a href="http://www.tyfix.nl"
+                                                                                  target="_blank">Tyfix</a></p>
                         </div>
                     </div>
                 </form>

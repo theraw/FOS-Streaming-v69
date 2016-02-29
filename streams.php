@@ -6,7 +6,7 @@ $message = [];
 $title = "All Streams";
 
 
-if (isset($_GET['start'])){
+if (isset($_GET['start'])) {
     start_stream($_GET['start']);
     $message['type'] = "success";
     $message['message'] = "stream started";
@@ -16,9 +16,9 @@ if (isset($_GET['start'])){
     $message['message'] = "stream stopped";
 }
 
-if(isset($_GET['delete'])) {
+if (isset($_GET['delete'])) {
     $stream = Stream::find($_GET['delete']);
-    if($stream->running == 1) {
+    if ($stream->running == 1) {
         stop_stream($_GET['delete']);
     }
     $stream->delete();
@@ -27,13 +27,13 @@ if(isset($_GET['delete'])) {
     $message['message'] = "Stream deleted";
 }
 
-if(isset($_POST['mass_delete'])) {
+if (isset($_POST['mass_delete'])) {
 
     if (isset($_POST['mselect'])) {
 
-        foreach($_POST['mselect'] as $streamids) {
+        foreach ($_POST['mselect'] as $streamids) {
             $stream = Stream::find($streamids);
-            if($stream->running == 1) {
+            if ($stream->running == 1) {
                 stop_stream($streamids);
             }
             $stream->delete();
@@ -44,13 +44,13 @@ if(isset($_POST['mass_delete'])) {
     $message['message'] = "Streams deleted";
 }
 
-if(isset($_POST['mass_start'])) {
+if (isset($_POST['mass_start'])) {
 
     if (isset($_POST['mselect'])) {
 
-        foreach($_POST['mselect'] as $streamids) {
+        foreach ($_POST['mselect'] as $streamids) {
             $stream = Stream::find($streamids);
-            if($stream->running == 0) {
+            if ($stream->running == 0) {
                 start_stream($streamids);
             }
         }
@@ -60,13 +60,13 @@ if(isset($_POST['mass_start'])) {
     $message['message'] = "Streams started";
 }
 
-if(isset($_POST['mass_stop'])) {
+if (isset($_POST['mass_stop'])) {
 
     if (isset($_POST['mselect'])) {
 
-        foreach($_POST['mselect'] as $streamids) {
+        foreach ($_POST['mselect'] as $streamids) {
             $stream = Stream::find($streamids);
-            if($stream->running == 1) {
+            if ($stream->running == 1) {
                 stop_stream($streamids);
             }
         }
@@ -76,12 +76,11 @@ if(isset($_POST['mass_stop'])) {
     $message['message'] = "Streams stopped";
 }
 
-if (isset($_GET['running']) &&  $_GET['running']  == 1) {
+if (isset($_GET['running']) && $_GET['running'] == 1) {
     $title = "Running Streams";
     $stream = Stream::where('status', '=', 1)->get();
 
-}
-else if (isset($_GET['running']) &&  $_GET['running']  == 2) {
+} else if (isset($_GET['running']) && $_GET['running'] == 2) {
     $title = "Stopped Streams";
     $stream = Stream::where('status', '=', 2)->get();
 } else {
@@ -89,7 +88,7 @@ else if (isset($_GET['running']) &&  $_GET['running']  == 2) {
 }
 
 echo $template->view()->make('streams')
-    ->with('streams',  $stream)
+    ->with('streams', $stream)
     ->with('message', $message)
     ->with('title', $title)
     ->render();

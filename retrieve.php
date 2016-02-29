@@ -1,16 +1,16 @@
 <?php
-include ("config.php");
+include("config.php");
 $username = $_GET['username'];
 $password = $_GET['password'];
 $setting = Setting::first();
 
-echo 'USERNAME="' .$username  . '";';
-echo 'PASSWORD="' .$password  . '";';
+echo 'USERNAME="' . $username . '";';
+echo 'PASSWORD="' . $password . '";';
 echo 'bouquet="' . ($setting->user_agent ? $setting->user_agent : 'FOS-Streaming') . '";';
 echo 'directory="/etc/enigma2/iptv.sh";';
-echo 'url="http://' . $setting->webip . ':' . $setting->webport  . '/playlist.php?username=' .$username  . '&password=' .$password  . '&e2";';
+echo 'url="http://' . $setting->webip . ':' . $setting->webport . '/playlist.php?username=' . $username . '&password=' . $password . '&e2";';
 echo 'rm /etc/enigma2/userbouquet."$bouquet"__tv_.tv;';
-echo 'wget -O /etc/enigma2/userbouquet."$bouquet"__tv_.tv '. 'http://' . $setting->webip . ':' . $setting->webport  . ';';
+echo 'wget -O /etc/enigma2/userbouquet."$bouquet"__tv_.tv ' . 'http://' . $setting->webip . ':' . $setting->webport . ';';
 echo 'if !cat /etc/enigma2/bouquets.tv | grep -v grep | grep -c $bouquet > /dev/null;then echo "[+]Creating Folder for iptv and rehashing...";';
 echo 'cat /etc/enigma2/bouquets.tv | sed -n 1p > /etc/enigma2/new_bouquets.tv;';
 echo 'echo \'#SERVICE 1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "userbouquet.\'$bouquet\'__tv_.tv" ORDER BY bouquet\' >> /etc/enigma2/new_bouquets.tv;';

@@ -18,52 +18,71 @@
                                 </div>
                             @endif
                             <br>
-                            <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="" role="form" action="" method="post">
+                            <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left"
+                                  novalidate="" role="form" action="" method="post">
 
                                 <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Name <span class="required">*</span>
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Name <span
+                                                class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" name="name" class="form-control col-md-7 col-xs-12"  name="name" value="{{  isset($_POST['name']) ?  $_POST['name'] : $stream->name}}">
+                                        <input type="text" name="name" class="form-control col-md-7 col-xs-12"
+                                               name="name"
+                                               value="{{  isset($_POST['name']) ?  $_POST['name'] : $stream->name}}">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Streamurl <span class="required">*</span>
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Streamurl
+                                        <span class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" name="streamurl" class="form-control col-md-7 col-xs-12"  name="streamurl" value="{{  isset($_POST['streamurl']) ?  $_POST['streamurl'] : $stream->streamurl }}">
+                                        <input type="text" name="streamurl" class="form-control col-md-7 col-xs-12"
+                                               name="streamurl"
+                                               value="{{  isset($_POST['streamurl']) ?  $_POST['streamurl'] : $stream->streamurl }}">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Streamurl 2 (backup)
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Streamurl
+                                        2 (backup)
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" name="streamurl2" class="form-control col-md-7 col-xs-12"  name="streamurl2" value="{{  isset($_POST['streamurl2']) ?  $_POST['streamurl2'] : $stream->streamurl2}}">
+                                        <input type="text" name="streamurl2" class="form-control col-md-7 col-xs-12"
+                                               name="streamurl2"
+                                               value="{{  isset($_POST['streamurl2']) ?  $_POST['streamurl2'] : $stream->streamurl2}}">
                                     </div>
                                 </div>
 
 
                                 <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Streamurl 3 (backup
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Streamurl
+                                        3 (backup
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" name="streamurl3" class="form-control col-md-7 col-xs-12"  name="streamurl3" value="{{  isset($_POST['streamurl3']) ?  $_POST['streamurl3'] : $stream->streamurl3}}">
+                                        <input type="text" name="streamurl3" class="form-control col-md-7 col-xs-12"
+                                               name="streamurl3"
+                                               value="{{  isset($_POST['streamurl3']) ?  $_POST['streamurl3'] : $stream->streamurl3}}">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Proxy</label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <p style="padding: 5px;"><span><input type="checkbox" class="flat" name="restream" id="" value="1" {{ $stream->restream ? "checked" : ""}}></span></p>
+                                        <p style="padding: 5px;"><span><input type="checkbox" class="flat"
+                                                                              name="restream" id=""
+                                                                              value="1" {{ $stream->restream ? "checked" : ""}}></span>
+                                        </p>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Bit stream filter:</label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <p style="padding: 5px;"><span><input type="checkbox" class="flat" name="bitstreamfilter" id="" value="1" {{ $stream->bitstreamfilter ? "checked" : ""}}></span></p>
+                                        <p style="padding: 5px;"><span><input type="checkbox" class="flat"
+                                                                              name="bitstreamfilter" id=""
+                                                                              value="1" {{ $stream->bitstreamfilter ? "checked" : ""}}></span>
+                                        </p>
                                     </div>
                                 </div>
 
@@ -128,5 +147,5 @@
                     });
                 });
             </script>
-        @endsection
+@endsection
 

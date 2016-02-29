@@ -6,7 +6,7 @@ include('config.php');
 logincheck();
 $message = [];
 
-if(isset($_GET['delete'])) {
+if (isset($_GET['delete'])) {
     $useragentblock = BlockedUseragent::find($_GET['delete']);
     $useragentblock->delete();
 
@@ -16,4 +16,4 @@ if(isset($_GET['delete'])) {
 
 $useragentblocks = BlockedUseragent::all();
 
-echo $template->view()->make('useragentblocks')->with('useragentblocks',  $useragentblocks)->with('message', $message)->render();
+echo $template->view()->make('useragentblocks')->with('useragentblocks', $useragentblocks)->with('message', $message)->render();

@@ -2,10 +2,10 @@
 
 header("Connection: close"); // not sure we need this one
 header("Content-Encoding: none");
-include ("config.php");
+include("config.php");
 use Carbon\Carbon;
 
-ignore_user_abort( true );
+ignore_user_abort(true);
 set_time_limit(0);
 register_shutdown_function('shutdown');
 
@@ -18,13 +18,13 @@ function shutdown()
 {
     global $user_activity_id, $info;
 
-    if ( $user_activity_id != 0 ) {
+    if ($user_activity_id != 0) {
         $active = Activity::find($user_activity_id);
         $active->date_end = Carbon::now();
         $active->save();
     }
 
-    if ( empty( $info['type'] ) || $info['type'] == 'live' ) {
+    if (empty($info['type']) || $info['type'] == 'live') {
         fastcgi_finish_request();
         posix_kill(getmypid(), 9);
 
@@ -32,4 +32,5 @@ function shutdown()
         exit;
     }
 }
+
 ?>

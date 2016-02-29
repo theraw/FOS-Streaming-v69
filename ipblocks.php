@@ -6,7 +6,7 @@ include('config.php');
 logincheck();
 $message = [];
 
-if(isset($_GET['delete'])) {
+if (isset($_GET['delete'])) {
     $ipblock = BlockedIp::find($_GET['delete']);
     $ipblock->delete();
 
@@ -16,4 +16,4 @@ if(isset($_GET['delete'])) {
 
 $ipblocks = BlockedIp::all();
 
-echo $template->view()->make('ipblocks')->with('ipblocks',  $ipblocks)->with('message', $message)->render();
+echo $template->view()->make('ipblocks')->with('ipblocks', $ipblocks)->with('message', $message)->render();

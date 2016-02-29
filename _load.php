@@ -1,6 +1,6 @@
 <?php
 //debug
-if($debug) {
+if ($debug) {
     error_reporting(E_ALL);
     $whoops = new \Whoops\Run;
     $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);

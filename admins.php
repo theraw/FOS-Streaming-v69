@@ -6,8 +6,8 @@ include('config.php');
 logincheck();
 $message = [];
 
-if(isset($_GET['delete'])) {
-    if($_GET['delete'] == 1) {
+if (isset($_GET['delete'])) {
+    if ($_GET['delete'] == 1) {
         $message['type'] = "error";
         $message['message'] = "You cannot remove the main admin account";
     } else {
@@ -21,4 +21,4 @@ if(isset($_GET['delete'])) {
 
 $admins = Admin::all();
 
-echo $template->view()->make('admins')->with('admins',  $admins)->with('message', $message)->render();
+echo $template->view()->make('admins')->with('admins', $admins)->with('message', $message)->render();

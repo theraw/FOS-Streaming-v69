@@ -21,7 +21,8 @@
                                     {{ $message['message'] }}
                                 </div>
                             @endif
-                            <table id="example" class="table table-striped responsive-utilities jambo_table bulk_action">
+                            <table id="example"
+                                   class="table table-striped responsive-utilities jambo_table bulk_action">
                                 <thead>
                                 <tr class="headings">
                                     <th>#</th>
@@ -38,11 +39,13 @@
                                         <td>{{ getTranscodedata($trans->id) }}</td>
                                         <td class="center">
 
-                                            <a class="btn btn-info" href="manage_transcode.php?id={{ $trans->id }}" title="Edit">
+                                            <a class="btn btn-info" href="manage_transcode.php?id={{ $trans->id }}"
+                                               title="Edit">
                                                 Edit
                                             </a>
 
-                                            <a class="btn btn-danger" href="transcodes.php?delete={{ $trans->id }}" title="Delete" onclick="return confirm('Are you sure?')">
+                                            <a class="btn btn-danger" href="transcodes.php?delete={{ $trans->id }}"
+                                               title="Delete" onclick="return confirm('Are you sure?')">
                                                 Remove
                                             </a>
                                         </td>
@@ -61,52 +64,52 @@
             </div>
         </div>
 
-@endsection
-@section('js')
-    <script src="js/datatables/js/jquery.dataTables.js"></script>
-    <script src="js/datatables/tools/js/dataTables.tableTools.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('input.tableflat').iCheck({
-                checkboxClass: 'icheckbox_flat-green',
-                radioClass: 'iradio_flat-green'
-            });
-        });
+        @endsection
+        @section('js')
+            <script src="js/datatables/js/jquery.dataTables.js"></script>
+            <script src="js/datatables/tools/js/dataTables.tableTools.js"></script>
+            <script>
+                $(document).ready(function () {
+                    $('input.tableflat').iCheck({
+                        checkboxClass: 'icheckbox_flat-green',
+                        radioClass: 'iradio_flat-green'
+                    });
+                });
 
-        var asInitVals = new Array();
-        $(document).ready(function () {
-            var oTable = $('#example').dataTable({
-                "oLanguage": {
-                    "sSearch": "Search all columns:"
-                },
-                "aoColumnDefs": [
-                    {
-                        'bSortable': false,
-                        'aTargets': [0]
-                    } //disables sorting for column one
-                ],
-                'iDisplayLength': 50,
-                "sPaginationType": "full_numbers"
-            });
-            $("tfoot input").keyup(function () {
-                /* Filter on the column based on the index of this element's parent <th> */
-                oTable.fnFilter(this.value, $("tfoot th").index($(this).parent()));
-            });
-            $("tfoot input").each(function (i) {
-                asInitVals[i] = this.value;
-            });
-            $("tfoot input").focus(function () {
-                if (this.className == "search_init") {
-                    this.className = "";
-                    this.value = "";
-                }
-            });
-            $("tfoot input").blur(function (i) {
-                if (this.value == "") {
-                    this.className = "search_init";
-                    this.value = asInitVals[$("tfoot input").index(this)];
-                }
-            });
-        });
-    </script>
+                var asInitVals = new Array();
+                $(document).ready(function () {
+                    var oTable = $('#example').dataTable({
+                        "oLanguage": {
+                            "sSearch": "Search all columns:"
+                        },
+                        "aoColumnDefs": [
+                            {
+                                'bSortable': false,
+                                'aTargets': [0]
+                            } //disables sorting for column one
+                        ],
+                        'iDisplayLength': 50,
+                        "sPaginationType": "full_numbers"
+                    });
+                    $("tfoot input").keyup(function () {
+                        /* Filter on the column based on the index of this element's parent <th> */
+                        oTable.fnFilter(this.value, $("tfoot th").index($(this).parent()));
+                    });
+                    $("tfoot input").each(function (i) {
+                        asInitVals[i] = this.value;
+                    });
+                    $("tfoot input").focus(function () {
+                        if (this.className == "search_init") {
+                            this.className = "";
+                            this.value = "";
+                        }
+                    });
+                    $("tfoot input").blur(function (i) {
+                        if (this.value == "") {
+                            this.className = "search_init";
+                            this.value = asInitVals[$("tfoot input").index(this)];
+                        }
+                    });
+                });
+            </script>
 @endsection
