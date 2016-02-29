@@ -19,7 +19,7 @@ if (strcmp($release_info, "Ubuntu") === 0 || strcmp($release_info, "Debian") ===
     echo "]PASS \n";
 } else {
     echo "]FAIL. Need Ubuntu or Debian!!! \n";
-    exit();
+    //exit();
 }
 echo "3. [Installing needed files:]";
 echo " [#";
@@ -170,8 +170,7 @@ echo " [#";
 shell_exec("/usr/sbin/useradd -s /sbin/nologin -U -d /home/fos-streaming -m fosstreaming > /dev/null");
 echo "##";
 
-function GetFos()
-{
+function GetFos() {
     shell_exec("git clone https://github.com/zgelici/FOS-Streaming-v1.git /usr/src/FOS-Streaming/ > /dev/null 2>&1");
     shell_exec("/bin/mv /usr/src/FOS-Streaming/* /home/fos-streaming/fos/www/ > /dev/null 2>&1");
     shell_exec("wget https://getcomposer.org/installer -O /usr/src/installer  > /dev/null 2>&1");
@@ -180,15 +179,13 @@ function GetFos()
     shell_exec("/usr/bin/composer.phar install  -d  /home/fos-streaming/fos/www/ > /dev/null 2>&1");
 }
 
-function AddSudo()
-{
+function AddSudo() {
     shell_exec("echo 'www-data ALL = (root) NOPASSWD: /usr/local/bin/ffmpeg' >> /etc/sudoers");
     shell_exec("echo 'www-data ALL = (root) NOPASSWD: /usr/local/bin/ffprobe' >> /etc/sudoers");
     shell_exec("echo '*/2 * * * * www-data /usr/bin/php /home/fos-streaming/fos/www/cron.php' >> /etc/crontab");
 }
 
-function AddRCLocal()
-{
+function AddRCLocal() {
     shell_exec("sed --in-place '/exit 0/d' /etc/rc.local");
     shell_exec("echo 'sleep 10' >> /etc/rc.local");
     shell_exec("echo '/home/fos-streaming/fos/nginx/sbin/nginx_fos' >> /etc/rc.local");
@@ -196,8 +193,7 @@ function AddRCLocal()
     shell_exec("echo 'exit 0' >> /etc/rc.local");
 }
 
-function BuildWeb()
-{
+function BuildWeb() {
     shell_exec("/bin/mkdir /home/fos-streaming/fos/www/hl  > /dev/null 2>&1");
     shell_exec("chmod -R 777 /home/fos-streaming/fos/www/hl  > /dev/null 2>&1");
     shell_exec("/bin/mkdir /home/fos-streaming/fos/www/cache  > /dev/null 2>&1");
@@ -208,17 +204,20 @@ function BuildWeb()
     shell_exec("/home/fos-streaming/fos/nginx/sbin/nginx_fos");
 }
 
-function GetFOSResources($arch)
-{
-    shell_exec("wget http://198.20.126.212/fos-streaming_unpack_{$arch}.tar.gz -O /home/fos-streaming/fos-streaming_unpack_{$arch}.tar.gz  > /dev/null 2>&1");
-    shell_exec("tar -xzf /home/fos-streaming/fos-streaming_unpack_{$arch}.tar.gz -C /home/fos-streaming/ > /dev/null 2>&1");
-    shell_exec("/bin/rm -r /home/fos-streaming/fos-streaming_unpack_{$arch}.tar.gz  > /dev/null 2>&1");
+function GetFOSResources($arch) {
+    if (stristr($arch, '64')) {
+        $fos = "fos-streaming_unpack_x86_64.tar.gz";
+    } else {
+        $fos = "fos-streaming_unpack_i686.tar.gz";
+    }
+    shell_exec("wget http://198.20.126.212/{$fos} -O /home/fos-streaming/{$fos}  > /dev/null 2>&1");
+    shell_exec("tar -xzf /home/fos-streaming/{$fos} -C /home/fos-streaming/ > /dev/null 2>&1");
+    shell_exec("/bin/rm -r /home/fos-streaming/{$fos}  > /dev/null 2>&1");
     shell_exec("/bin/mkdir /usr/src/FOS-Streaming > /dev/null 2>&1");
 }
 
-function CleanUP($arch)
-{
-    shell_exec("rm -rf /home/fos-streaming/ffmpeg-release-{$arch}-static.tar.xz   > /dev/null 2>&1");
+function CleanUP() {
+    shell_exec("rm -rf /home/fos-streaming/*-static.tar.xz   > /dev/null 2>&1");
     shell_exec("rm -rf/usr/src/composer.phar > /dev/null 2>&1");
     shell_exec("rm -rf/usr/src/ffmpeg > /dev/null 2>&1");
     shell_exec("rm -rf/usr/src/FOS-Streaming > /dev/null 2>&1");
@@ -227,8 +226,7 @@ function CleanUP($arch)
     shell_exec(" > /dev/null 2>&1");
 }
 
-function GetIP()
-{
+function GetIP() {
     $ip_address = explode("\n", shell_exec("/sbin/ifconfig | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'"));
 
     foreach ($ip_address as $addr) {
@@ -240,14 +238,12 @@ function GetIP()
     return $result;
 }
 
-function DeployFF()
-{
+function DeployFF() {
     shell_exec("/bin/cp /usr/src/ffmpeg/ffmpeg*/ffmpeg  /usr/local/bin/ffmpeg");
     shell_exec("/bin/cp /usr/src/ffmpeg/ffmpeg*/ffprobe /usr/local/bin/ffprobe");
 }
 
-function ChmodFF()
-{
+function ChmodFF() {
     shell_exec("chmod 755 /usr/local/bin/ffmpeg  > /dev/null 2>&1");
     shell_exec("chmod 755 /usr/local/bin/ffprobe  > /dev/null 2>&1");
 }
@@ -262,9 +258,14 @@ AddRCLocal();
 echo "#";
 BuildWeb();
 echo "#";
-shell_exec("wget http://http://198.20.126.212/ffmpeg-{$arch}-static.tar.xz -O /home/fos-streaming/ffmpeg-release-{$arch}-static.tar.xz  > /dev/null 2>&1");
+if (stristr($arch, '64')) {
+    $ffmpeg = "ffmpeg-release-x86_64-static.tar.xz";
+} else {
+    $ffmpeg = "ffmpeg-release-i686-static.tar.xz";
+}
+shell_exec("wget http://http://198.20.126.212/{$ffmpeg} -O /home/fos-streaming/{$ffmpeg}  > /dev/null 2>&1");
 shell_exec("/bin/mkdir /usr/src/ffmpeg > /dev/null 2>&1");
-shell_exec("tar -xJf /home/fos-streaming/ffmpeg-release-{$arch}-static.tar.xz -C /usr/src/ffmpeg > /dev/null 2>&1");
+shell_exec("tar -xJf /home/fos-streaming/{$ffmpeg} -C /usr/src/ffmpeg > /dev/null 2>&1");
 
 
 DeployFF();
@@ -273,7 +274,7 @@ ChmodFF();
 echo "#";
 shell_exec("chown www-data:root /usr/local/nginx/html  > /dev/null 2>&1");
 echo "#";
-CleanUP($arch);
+CleanUP();
 echo "]PASS \n";
 
 $srv_ip = GetIP();
