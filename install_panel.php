@@ -14,12 +14,11 @@ echo "FOS-Streaming will be installed on your system \n";
 echo "Please don't close this session until it's finished \n \n";
 echo "1. [Distribution Detection:] ";
 echo " [############";
-if (strcmp($release_info == "Ubuntu") === 0) {
+
+if (strcmp($release_info, "Ubuntu") === 0 || strcmp($release_info, "Debian") === 0) {
     echo "]PASS \n";
-} else if (strcmp($release_info == "Debian") === 0) {
-    echo "]PASS \n";
-} else {
-    echo "]FAIL \n";
+}else {
+    echo "]FAIL. Need Ubuntu or Debian!!! \n";
     exit();
 }
 echo "3. [Installing needed files:]";
