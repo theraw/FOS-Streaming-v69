@@ -18,4 +18,4 @@ $template = new Blade($views, $cache);
 $version = 1.2;
 date_default_timezone_set('America/Chicago');
 
-define('STREAM_PATH', '/home/fos-streaming/fos/');
+define('STREAM_PATH', '/home/fos-streaming/fos/streams/');
