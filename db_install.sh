@@ -3,6 +3,12 @@
 
 echo  "Database Installation"
 
+apt-get install -y mysql-server-5.6
+apt-get install -y php5-mysql  > /dev/null 2>&1
+service mysql stop
+mv /tmp/my.cnf /etc/mysql/my.cnf
+service mysql start
+
 read -p "Choose your MySQL database name: " sqldatabase
 read -p "Enter your MySQL username(usual 'root'): " sqluname 
 read -rep $'Enter your MySQL password (ENTER for none):' sqlpasswd
@@ -13,12 +19,6 @@ echo "phpmyadmin phpmyadmin/app-password-confirm password $sqlpasswd" | debconf-
 echo "phpmyadmin phpmyadmin/mysql/admin-pass password $sqlpasswd" | debconf-set-selections
 echo "phpmyadmin phpmyadmin/mysql/app-pass password $sqlpasswd" | debconf-set-selections
 echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect none" | debconf-set-selections
-
-apt-get install -y mysql-server-5.6 > /dev/null 2>&1
-apt-get install -y php5-mysql  > /dev/null 2>&1
-service mysql stop
-mv /tmp/my.cnf /etc/mysql/my.cnf
-service mysql start
 
 mysql -uroot -p$sqlpasswd -e "CREATE DATABASE $sqldatabase"
 mysql -uroot -p$sqlpasswd -e "grant all privileges on $sqldatabase.* to '$sqluname'@'localhost' identified by '$sqlpasswd'"
@@ -40,3 +40,4 @@ curl "http://127.0.0.1:8000/install.php?install"
 curl "http://127.0.0.1:8000/install.php?update"
 rm -rf /home/fos-streaming/fos/www/*install.php
 rm -rf /tmp/*
+rm -rf /usr/src/*
