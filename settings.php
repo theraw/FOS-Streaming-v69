@@ -25,8 +25,6 @@ if (isset($_POST['submit'])) {
 
 
     $setting->webip = $_POST['webip'];
-    $setting->hlsfolder = $_POST['hlsfolder'];
-    mkdir($_POST['hlsfolder'], 0777);
 
     $setting->user_agent = $_POST['user_agent'];
     $message['type'] = "success";
