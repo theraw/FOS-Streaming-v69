@@ -2,10 +2,10 @@
 apt-get update
 echo "Done apt-get"
 echo "Installing PHP5-CLI CURL"
-apt-get -y install php5-cli curl zip unzip
+apt-get -y install php5-cli curl zip unzip sudo nano dialog
 echo "Done"
 echo "Upgrading existing packages and removing the obsolete ones!"
-apt-get upgrade -y && apt-get autoremove -y
+apt-get upgrade -y && apt-get install -f && apt-get autoremove && apt-get autoclean -y
 
 cd /tmp
 rm -rf /tmp/*
