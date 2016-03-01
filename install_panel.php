@@ -107,7 +107,7 @@ echo " [#";
 $packages = [
     "libxml2-dev",
     "libbz2-dev",
-    "libcurl4-openssl-dev ",
+    "libcurl4-openssl-dev",
     "libmcrypt-dev",
     "libmhash2",
     "libmhash-dev",
@@ -295,11 +295,11 @@ function AddRCLocal() {
 function BuildWeb() {
     $fstab_streams = shell_exec("cat /etc/fstab | grep -v grep | grep -c 'fos-streaming/fos/streams'");
     if ($fstab_streams == 0) {
-        shell_exec("echo 'tmpfs /home/fos-streaming/fos/streams tmpfs defaults,noatime,nosuid,nodev,noexec,mode=1777,size=85% 0 0' >> /etc/fstab ");
+        shell_exec("echo 'tmpfs /home/fos-streaming/fos/streams tmpfs defaults,noatime,nosuid,nodev,noexec,mode=1777,size=85% 0 0' >> /etc/fstab");
     }
     $fstab_cache = shell_exec("cat /etc/fstab | grep -v grep | grep -c 'fos-streaming/fos/www/cache'");
     if ($fstab_cache == 0) {
-        shell_exec("echo 'tmpfs /home/fos-streaming/fos/www/cache tmpfs defaults,noatime,nosuid,nodev,noexec,mode=1777,size=500M 0 0' >> /etc/fstab ");
+        shell_exec("echo 'tmpfs /home/fos-streaming/fos/www/cache tmpfs defaults,noatime,nosuid,nodev,noexec,mode=1777,size=500M 0 0' >> /etc/fstab");
     }
     shell_exec("chown -R fosstreaming:fosstreaming /home/fos-streaming");
     shell_exec("/home/fos-streaming/fos/php/sbin/php-fpm");
@@ -335,8 +335,8 @@ function DeployFF() {
         shell_exec("/bin/cp /usr/src/ffmpeg/ffprobe /usr/local/bin/ffprobe");
     }
 
-    shell_exec("chmod 755 /usr/local/bin/ffmpeg ");
-    shell_exec("chmod 755 /usr/local/bin/ffprobe ");
+    shell_exec("chmod 755 /usr/local/bin/ffmpeg");
+    shell_exec("chmod 755 /usr/local/bin/ffprobe");
 }
 
 GetFOSResources($arch);
