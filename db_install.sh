@@ -3,10 +3,16 @@
 
 echo  "Database Installation"
 
-apt-get install -y mysql-server mysql-client php5-mysql mysql-common -y
-//service mysql stop
-//mv /tmp/my.cnf /etc/mysql/my.cnf
-//service mysql start
+UP=$(pgrep mysql | wc -l);
+if [ "$UP" -ne 1 ];
+then
+if [ -f /etc/init.d/mysql* ]; then
+    service mysql start
+else 
+    apt-get install -y mysql-server mysql-client php5-mysql mysql-common -y > /dev/null
+fi
+    
+fi
 
 read -p "Choose your MySQL database name: " sqldatabase
 read -p "Enter your MySQL username(usual 'root'): " sqluname 
