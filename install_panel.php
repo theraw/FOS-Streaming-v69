@@ -244,12 +244,7 @@ if (file_exists($filename)) {
 echo "4. [FOS-Panel Installation:] ";
 echo " [#";
 
-ret=false
-getent passwd fosstreaming >/dev/null 2>&1 && ret=true
-
-if !$ret; then
 shell_exec("/usr/sbin/useradd -s /sbin/nologin -U -d /home/fos-streaming -m fosstreaming");
-fi
 
 shell_exec("mkdir /home/fos-streaming/fos");
 shell_exec("mkdir /home/fos-streaming/fos/www");
@@ -298,10 +293,7 @@ function BuildWeb() {
 	if ($fstab_streams == 0) {
     shell_exec("echo 'tmpfs /home/fos-streaming/fos/www/cache tmpfs defaults,noatime,nosuid,nodev,noexec,mode=1777,size=500M 0 0' >> /etc/fstab ");
 	}
-    shell_exec("chmod -R 777 /home/fos-streaming/fos/www/cache ");
-    shell_exec("chmod -R 777 /home/fos-streaming/fos/streams ");
     shell_exec("chown -R fosstreaming:fosstreaming /home/fos-streaming");
-
     shell_exec("/home/fos-streaming/fos/php/sbin/php-fpm");
     shell_exec("/home/fos-streaming/fos/nginx/sbin/nginx_fos");
 }
