@@ -158,7 +158,6 @@ if (file_exists($filename)) {
     shell_exec("/bin/rm -r /usr/bin/composer.phar");
     shell_exec("/bin/rm -r /usr/src/installer*");
     shell_exec("/bin/rm -r /home/fos-streaming/*");
-    shell_exec("apt-get remove --purge mysql* -y");
     shell_exec("deluser fosstreaming -q");
     shell_exec("delgroup fosstreaming -q");
 }
