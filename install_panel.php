@@ -149,7 +149,7 @@ foreach ($packages as $package) {
 }
 echo "]PASS \n";
 
-$filename = '/usr/src/FOS-Streaming';
+$filename = '/home/fos-streaming';
 if (file_exists($filename)) {
     shell_exec("killall -9 ffmpeg php5-fpm php-fpm nginx_fos nginx");
     shell_exec("service php5-fpm stop");
@@ -157,7 +157,7 @@ if (file_exists($filename)) {
     shell_exec("/bin/rm -r /usr/src/ffmpeg");
     shell_exec("/bin/rm -r /usr/bin/composer.phar");
     shell_exec("/bin/rm -r /usr/src/installer*");
-    shell_exec("/bin/rm -rf /home/fos-streaming/*");
+    shell_exec("/bin/rm -r /home/fos-streaming/*");
     shell_exec("apt-get remove --purge mysql* -y");
     shell_exec("deluser fosstreaming -q");
     shell_exec("delgroup fosstreaming -q");
