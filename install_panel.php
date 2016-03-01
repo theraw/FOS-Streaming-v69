@@ -5,8 +5,82 @@ if (strcmp($we_root, "root") !== 0) {
     echo "Please execute this script as root! Exitting...";
     exit;
 }
-shell_exec("apt-get update");
-shell_exec("apt-get upgrade -y && apt-get install apt-utils python-software-properties apt nscd nano zip unzip gzip -y");
+function InstallSources($CodeName) {
+    echo "[+] Installing Sources ($CodeName)...\n";
+    switch ($CodeName) {
+        case 'trusty':
+            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ trusty main restricted universe multiverse' > /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ trusty main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ trusty-security main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ trusty-updates main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ trusty-proposed main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ trusty-backports main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ trusty-security main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ trusty-updates main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ trusty-proposed main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ trusty-backports main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+
+            break;
+
+        case 'utopic':
+            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ utopic main restricted universe multiverse' > /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ utopic main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ utopic-security main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ utopic-updates main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ utopic-proposed main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ utopic-backports main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ utopic-security main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ utopic-updates main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ utopic-proposed main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ utopic-backports main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+
+            break;
+
+        case 'saucy':
+            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ saucy main restricted universe multiverse' > /etc/apt/sources.list.d/fos_streaming.list'");
+            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ saucy main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ saucy-security main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ saucy-updates main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ saucy-proposed main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ saucy-backports main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ saucy-security main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ saucy-updates main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ saucy-proposed main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ saucy-backports main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+
+
+        case 'wheezy':
+            shell_exec("echo 'deb http://ftp.de.debian.org/debian stable main contrib non-free' > /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://ftp.de.debian.org/debian stable main contrib non-free' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://ftp.debian.org/debian/ wheezy-updates main contrib non-free' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://ftp.debian.org/debian/ wheezy-updates main contrib non-free' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://security.debian.org/ wheezy/updates main contrib non-free' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://security.debian.org/ wheezy/updates main contrib non-free' >> /etc/apt/sources.list.d/fos_streaming.list");
+            break;
+
+        case 'squeeze':
+            shell_exec("echo 'deb http://archive.debian.org/debian oldstable main contrib non-free' > /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://archive.debian.org/debian oldstable main contrib non-free' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://ftp.debian.org/debian/ squeeze-updates main contrib non-free' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://ftp.debian.org/debian/ squeeze-updates main contrib non-free' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://security.debian.org/ squeeze/updates main contrib non-free' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://security.debian.org/ squeeze/updates main contrib non-free' >> /etc/apt/sources.list.d/fos_streaming.list");
+            break;
+
+        case "jessie":
+            shell_exec("echo 'deb http://ftp.fr.debian.org/debian testing main contrib non-free' > /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://ftp.fr.debian.org/debian testing main contrib non-free' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://ftp.debian.org/debian/ jessie-updates main contrib non-free' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://ftp.debian.org/debian/ jessie-updates main contrib non-free' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://security.debian.org/ jessie/updates main contrib non-free' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://security.debian.org/ jessie/updates main contrib non-free' >> /etc/apt/sources.list.d/fos_streaming.list");
+            break;
+
+        default:
+            return true;
+    }
+    return true;
+}
 $release_info = shell_exec("lsb_release -i -s");
 $arch = shell_exec("uname -m");
 echo "Welcome \n";
@@ -15,11 +89,16 @@ echo "Please don't close this session until it's finished \n \n";
 echo "1. [Distribution Detection:] ";
 echo " [############";
 
-if (strcmp($release_info, "Ubuntu") === 0 || strcmp($release_info, "Debian") === 0) {
+if (strcmp($release_info, "Ubuntu") || strcmp($release_info, "Debian")) {
     echo "]PASS \n";
+    $CodeName = trim(strtolower(shell_exec('lsb_release -c -s')));
+    if(!file_exists("/etc/apt/sources.list.d/fos_streaming.list")){
+    InstallSources($CodeName);
+    }
+    shell_exec("apt-get update > /dev/null");
 } else {
     echo "]FAIL. Need Ubuntu or Debian!!! \n";
-    exit();
+    //exit();
 }
 echo "3. [Installing needed files:]";
 echo " [#";
@@ -132,103 +211,113 @@ $packages = [
     "xorg-sgml-doctools",
     "libjpeg8",
     "xtrans-dev",
-    "zlib1g-dev",
-    "php5-fpm"];
+    "zlib1g-dev"];
 $pak_inst = 0;
 foreach ($packages as $package) {
     $pack_status = shell_exec('dpkg-query -W -f=\'${Status}\\n\' ' . $package);
     $c = preg_match("/install ok installed/i", $pack_status);
     if ($c == 0) {
-        shell_exec("apt-get install -y -f --force-yes $package > /dev/null 2>&1");
+        shell_exec("apt-get install -y -f --force-yes $package > /dev/null");
     }
-    $pak_inst++;
-    if ($pak_inst == 4) {
+	$pak_inst++;
+    if ($pak_inst == 8) {
         echo "#";
         $pak_inst = 0;
     }
 }
 echo "]PASS \n";
 
-$filename = '/usr/src/FOS-Streaming';
+$filename = '/home/fos-streaming';
 if (file_exists($filename)) {
-    shell_exec("killall -9 ffmpeg php5-fpm php-fpm nginx > /dev/null 2>&1");
-    shell_exec("rm -rf /usr/src/FOS-Streaming > /dev/null 2>&1");
-    shell_exec("rm -rf /usr/src/ffmpeg > /dev/null 2>&1");
-    shell_exec("rm -rf composer.phar > /dev/null 2>&1");
-    shell_exec("rm -rf installer* > /dev/null 2>&1");
-    //shell_exec("rm -rf installer.1 > /dev/null 2>&1");
-    shell_exec("rm -rf /home/fos-streaming > /dev/null 2>&1");
-    shell_exec("apt-get remove --purge mysql* -y > /dev/null 2>&1");
-    shell_exec("deluser fosstreaming -q > /dev/null 2>&1");
-    shell_exec("delgroup fosstreaming -q > /dev/null 2>&1");
+    shell_exec("killall -9 ffmpeg php5-fpm php-fpm nginx_fos nginx");
+    shell_exec("service php5-fpm stop");
+    shell_exec("/bin/rm -rf /usr/src/FOS-Streaming");
+    shell_exec("/bin/rm -rf /usr/src/ffmpeg");
+    shell_exec("/bin/rm -rf /usr/bin/composer.phar");
+    shell_exec("/bin/rm -rf /usr/src/installer*");
+    shell_exec("/bin/rm -rf /home/fos-streaming/*");
+    shell_exec("deluser fosstreaming -q");
+    shell_exec("delgroup fosstreaming -q");
 }
 
 
 echo "4. [FOS-Panel Installation:] ";
 echo " [#";
 
-shell_exec("/usr/sbin/useradd -s /sbin/nologin -U -d /home/fos-streaming -m fosstreaming > /dev/null");
+shell_exec("/usr/sbin/useradd -s /sbin/nologin -U -d /home/fos-streaming -m fosstreaming");
+
+shell_exec("mkdir /home/fos-streaming/fos");
+shell_exec("mkdir /home/fos-streaming/fos/www");
+
 echo "##";
 
-function GetFos()
-{
-    shell_exec("git clone https://github.com/zgelici/FOS-Streaming-v1.git /usr/src/FOS-Streaming/ > /dev/null 2>&1");
-    shell_exec("/bin/mv /usr/src/FOS-Streaming/* /home/fos-streaming/fos/www/ > /dev/null 2>&1");
-    shell_exec("wget https://getcomposer.org/installer -O /usr/src/installer  > /dev/null 2>&1");
-    shell_exec("/usr/bin/php /usr/src/installer > /dev/null 2>&1");
-    shell_exec("/bin/cp /usr/src/composer.phar /usr/bin/composer.phar > /dev/null 2>&1");
-    shell_exec("/usr/bin/composer.phar install  -d  /home/fos-streaming/fos/www/ > /dev/null 2>&1");
+function GetFos() {
+    shell_exec("git clone https://github.com/zgelici/FOS-Streaming-v1.git /usr/src/FOS-Streaming/");
+    shell_exec("/bin/mv /usr/src/FOS-Streaming/* /home/fos-streaming/fos/www/");
+    shell_exec("wget https://getcomposer.org/installer -O /tmp/installer ");
+    shell_exec("/usr/bin/php /tmp/installer --quiet");
+    shell_exec("/bin/cp /tmp/composer.phar /usr/bin/composer.phar");
+    shell_exec("chmod +x /usr/bin/composer.phar");
+    shell_exec("/usr/bin/composer.phar install  -d  /home/fos-streaming/fos/www/");
 }
 
-function AddSudo()
-{
+function AddSudo() {
+	$ffmpeg_sudo = shell_exec("cat /etc/sudoers | grep -v grep | grep -c 'ffmpeg'");
+	if ($ffmpeg_sudo == 0) {
     shell_exec("echo 'www-data ALL = (root) NOPASSWD: /usr/local/bin/ffmpeg' >> /etc/sudoers");
     shell_exec("echo 'www-data ALL = (root) NOPASSWD: /usr/local/bin/ffprobe' >> /etc/sudoers");
     shell_exec("echo '*/2 * * * * www-data /usr/bin/php /home/fos-streaming/fos/www/cron.php' >> /etc/crontab");
+	}
 }
 
-function AddRCLocal()
-{
+function AddRCLocal() {
     shell_exec("sed --in-place '/exit 0/d' /etc/rc.local");
     shell_exec("echo 'sleep 10' >> /etc/rc.local");
+    $nginx_bin = shell_exec("cat /etc/rc.local | grep -v grep | grep -c 'nginx_fos'");
+if ($nginx_bin == 0) {
     shell_exec("echo '/home/fos-streaming/fos/nginx/sbin/nginx_fos' >> /etc/rc.local");
+}
+    $phpfpm_bin = shell_exec("cat /etc/rc.local | grep -v grep | grep -c 'php-fpm'");
+if ($phpfpm_bin == 0) {
     shell_exec("echo '/home/fos-streaming/fos/php/sbin/php-fpm' >> /etc/rc.local");
+}
     shell_exec("echo 'exit 0' >> /etc/rc.local");
 }
 
-function BuildWeb()
-{
-    shell_exec("/bin/mkdir /home/fos-streaming/fos/www/hl  > /dev/null 2>&1");
-    shell_exec("chmod -R 777 /home/fos-streaming/fos/www/hl  > /dev/null 2>&1");
-    shell_exec("/bin/mkdir /home/fos-streaming/fos/www/cache  > /dev/null 2>&1");
-    shell_exec("chmod -R 777 /home/fos-streaming/fos/www/cache  > /dev/null 2>&1");
-    shell_exec("chown www-data:www-data /home/fos-streaming/fos/nginx/conf  > /dev/null 2>&1");
-
+function BuildWeb() {
+	$fstab_streams = shell_exec("cat /etc/fstab | grep -v grep | grep -c 'fos-streaming/fos/streams'");
+	if ($fstab_streams == 0) {
+    shell_exec("echo 'tmpfs /home/fos-streaming/fos/streams tmpfs defaults,noatime,nosuid,nodev,noexec,mode=1777,size=85% 0 0' >> /etc/fstab ");
+	}
+    	$fstab_streams = shell_exec("cat /etc/fstab | grep -v grep | grep -c 'fos-streaming/fos/streams'");
+	if ($fstab_streams == 0) {
+    shell_exec("echo 'tmpfs /home/fos-streaming/fos/www/cache tmpfs defaults,noatime,nosuid,nodev,noexec,mode=1777,size=500M 0 0' >> /etc/fstab ");
+	}
+    shell_exec("chown -R fosstreaming:fosstreaming /home/fos-streaming");
     shell_exec("/home/fos-streaming/fos/php/sbin/php-fpm");
     shell_exec("/home/fos-streaming/fos/nginx/sbin/nginx_fos");
 }
 
-function GetFOSResources($arch)
-{
-    shell_exec("wget http://198.20.126.212/fos-streaming_unpack_{$arch}.tar.gz -O /home/fos-streaming/fos-streaming_unpack_{$arch}.tar.gz  > /dev/null 2>&1");
-    shell_exec("tar -xzf /home/fos-streaming/fos-streaming_unpack_{$arch}.tar.gz -C /home/fos-streaming/ > /dev/null 2>&1");
-    shell_exec("/bin/rm -r /home/fos-streaming/fos-streaming_unpack_{$arch}.tar.gz  > /dev/null 2>&1");
-    shell_exec("/bin/mkdir /usr/src/FOS-Streaming > /dev/null 2>&1");
+function GetFOSResources($arch) {
+    if (stristr($arch, '64')) {
+        $fos = "fos-streaming_unpack_x84_64.tar.gz";
+    } else {
+        $fos = "fos-streaming_unpack_i686.tar.gz";
+    }
+    shell_exec("wget http://198.20.126.212/{$fos} -O /home/fos-streaming/{$fos} ");
+    shell_exec("tar -xzf /home/fos-streaming/{$fos} -C /home/fos-streaming/");
+    shell_exec("/bin/rm -r /home/fos-streaming/{$fos} ");
+    shell_exec("/bin/mkdir /usr/src/FOS-Streaming");
 }
 
-function CleanUP($arch)
-{
-    shell_exec("rm -rf /home/fos-streaming/ffmpeg-release-{$arch}-static.tar.xz   > /dev/null 2>&1");
-    shell_exec("rm -rf/usr/src/composer.phar > /dev/null 2>&1");
-    shell_exec("rm -rf/usr/src/ffmpeg > /dev/null 2>&1");
-    shell_exec("rm -rf/usr/src/FOS-Streaming > /dev/null 2>&1");
-    shell_exec("rm -rf /usr/src/installer* > /dev/null 2>&1");
-    shell_exec(" > /dev/null 2>&1");
-    shell_exec(" > /dev/null 2>&1");
+function CleanUP() {
+    shell_exec("/bin/rm -rf /home/fos-streaming/*.tar.xz  ");
+    shell_exec("/bin/rm -rf /usr/bin/composer.phar");
+    shell_exec("/bin/rm -rf /usr/src/*");
+    shell_exec("/bin/rm -rf /tmp/*");
 }
 
-function GetIP()
-{
+function GetIP() {
     $ip_address = explode("\n", shell_exec("/sbin/ifconfig | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'"));
 
     foreach ($ip_address as $addr) {
@@ -240,16 +329,11 @@ function GetIP()
     return $result;
 }
 
-function DeployFF()
-{
-    shell_exec("/bin/cp /usr/src/ffmpeg/ffmpeg*/ffmpeg  /usr/local/bin/ffmpeg");
-    shell_exec("/bin/cp /usr/src/ffmpeg/ffmpeg*/ffprobe /usr/local/bin/ffprobe");
-}
-
-function ChmodFF()
-{
-    shell_exec("chmod 755 /usr/local/bin/ffmpeg  > /dev/null 2>&1");
-    shell_exec("chmod 755 /usr/local/bin/ffprobe  > /dev/null 2>&1");
+function DeployFF() {
+    shell_exec("/bin/cp /usr/src/ffmpeg/ffmpeg  /usr/local/bin/ffmpeg");
+    shell_exec("/bin/cp /usr/src/ffmpeg/ffprobe /usr/local/bin/ffprobe");
+	shell_exec("chmod 755 /usr/local/bin/ffmpeg ");
+    shell_exec("chmod 755 /usr/local/bin/ffprobe ");
 }
 
 GetFOSResources($arch);
@@ -262,18 +346,20 @@ AddRCLocal();
 echo "#";
 BuildWeb();
 echo "#";
-shell_exec("wget http://http://198.20.126.212/ffmpeg-{$arch}-static.tar.xz -O /home/fos-streaming/ffmpeg-release-{$arch}-static.tar.xz  > /dev/null 2>&1");
-shell_exec("/bin/mkdir /usr/src/ffmpeg > /dev/null 2>&1");
-shell_exec("tar -xJf /home/fos-streaming/ffmpeg-release-{$arch}-static.tar.xz -C /usr/src/ffmpeg > /dev/null 2>&1");
-
-
-DeployFF();
+if (stristr($arch, '64')) {
+    $ffmpeg = "ffmpeg-x86_64-static.tar.xz";
+} else {
+    $ffmpeg = "ffmpeg-i686-static.tar.xz";
+}
+shell_exec("wget -q http://198.20.126.212/{$ffmpeg} -O /home/fos-streaming/{$ffmpeg}");
+shell_exec("/bin/mkdir /usr/src/ffmpeg");
+shell_exec("/bin/tar -xJf /home/fos-streaming/{$ffmpeg} -C /usr/src/ffmpeg");
 echo "##";
-ChmodFF();
+DeployFF();
 echo "#";
-shell_exec("chown www-data:root /usr/local/nginx/html  > /dev/null 2>&1");
+shell_exec("chown www-data:root /home/fos-streaming/fos/nginx/html ");
 echo "#";
-CleanUP($arch);
+CleanUP();
 echo "]PASS \n";
 
 $srv_ip = GetIP();

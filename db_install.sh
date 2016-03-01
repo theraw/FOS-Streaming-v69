@@ -3,11 +3,16 @@
 
 echo  "Database Installation"
 
-apt-get install -y mysql-server-5.6
-apt-get install -y php5-mysql  > /dev/null 2>&1
-service mysql stop
-mv /tmp/my.cnf /etc/mysql/my.cnf
-service mysql start
+UP=$(pgrep mysql | wc -l);
+if [ "$UP" -ne 1 ];
+then
+if [ -f /etc/init.d/mysql* ]; then
+    service mysql start
+else 
+    apt-get install -y mysql-server mysql-client php5-mysql mysql-common -y > /dev/null
+fi
+    
+fi
 
 read -p "Choose your MySQL database name: " sqldatabase
 read -p "Enter your MySQL username(usual 'root'): " sqluname 
@@ -34,7 +39,7 @@ cd /usr/src/
 wget https://getcomposer.org/installer
 php installer
 cd /home/fos-streaming/fos/www/
-php /usr/src/composer.phar install
+php /tmp/composer.phar install
 
 curl "http://127.0.0.1:8000/install.php?install" 
 curl "http://127.0.0.1:8000/install.php?update"
