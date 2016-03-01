@@ -3,10 +3,10 @@
 
 echo  "Database Installation"
 
-apt-get install -y mysql-server mysql-client php5-mysql -y
-service mysql stop
-mv /tmp/my.cnf /etc/mysql/my.cnf
-service mysql start
+apt-get install -y mysql-server mysql-client php5-mysql mysql-common -y
+//service mysql stop
+//mv /tmp/my.cnf /etc/mysql/my.cnf
+//service mysql start
 
 read -p "Choose your MySQL database name: " sqldatabase
 read -p "Enter your MySQL username(usual 'root'): " sqluname 
@@ -33,7 +33,7 @@ cd /usr/src/
 wget https://getcomposer.org/installer
 php installer
 cd /home/fos-streaming/fos/www/
-php /usr/src/composer.phar install
+php /tmp/composer.phar install
 
 curl "http://127.0.0.1:8000/install.php?install" 
 curl "http://127.0.0.1:8000/install.php?update"
