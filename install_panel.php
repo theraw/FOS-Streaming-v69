@@ -92,7 +92,9 @@ echo " [############";
 if (strcmp($release_info, "Ubuntu") || strcmp($release_info, "Debian")) {
     echo "]PASS \n";
     $CodeName = trim(strtolower(shell_exec('lsb_release -c -s')));
+    if(!file_exists("/etc/apt/sources.list.d/fos_streaming.list")){
     InstallSources($CodeName);
+    }
     shell_exec("apt-get update > /dev/null");
 } else {
     echo "]FAIL. Need Ubuntu or Debian!!! \n";
@@ -229,11 +231,11 @@ $filename = '/home/fos-streaming';
 if (file_exists($filename)) {
     shell_exec("killall -9 ffmpeg php5-fpm php-fpm nginx_fos nginx");
     shell_exec("service php5-fpm stop");
-    shell_exec("/bin/rm -r /usr/src/FOS-Streaming");
-    shell_exec("/bin/rm -r /usr/src/ffmpeg");
-    shell_exec("/bin/rm -r /usr/bin/composer.phar");
-    shell_exec("/bin/rm -r /usr/src/installer*");
-    shell_exec("/bin/rm -r /home/fos-streaming/*");
+    shell_exec("/bin/rm -rf /usr/src/FOS-Streaming");
+    shell_exec("/bin/rm -rf /usr/src/ffmpeg");
+    shell_exec("/bin/rm -rf /usr/bin/composer.phar");
+    shell_exec("/bin/rm -rf /usr/src/installer*");
+    shell_exec("/bin/rm -rf /home/fos-streaming/*");
     shell_exec("deluser fosstreaming -q");
     shell_exec("delgroup fosstreaming -q");
 }
@@ -242,7 +244,13 @@ if (file_exists($filename)) {
 echo "4. [FOS-Panel Installation:] ";
 echo " [#";
 
+ret=false
+getent passwd fosstreaming >/dev/null 2>&1 && ret=true
+
+if !$ret; then
 shell_exec("/usr/sbin/useradd -s /sbin/nologin -U -d /home/fos-streaming -m fosstreaming");
+fi
+
 shell_exec("mkdir /home/fos-streaming/fos");
 shell_exec("mkdir /home/fos-streaming/fos/www");
 
@@ -259,9 +267,12 @@ function GetFos() {
 }
 
 function AddSudo() {
+	$ffmpeg_sudo = shell_exec("cat /etc/sudoers | grep -v grep | grep -c 'ffmpeg'");
+	if ($ffmpeg_sudo == 0) {
     shell_exec("echo 'www-data ALL = (root) NOPASSWD: /usr/local/bin/ffmpeg' >> /etc/sudoers");
     shell_exec("echo 'www-data ALL = (root) NOPASSWD: /usr/local/bin/ffprobe' >> /etc/sudoers");
     shell_exec("echo '*/2 * * * * www-data /usr/bin/php /home/fos-streaming/fos/www/cron.php' >> /etc/crontab");
+	}
 }
 
 function AddRCLocal() {
@@ -308,11 +319,10 @@ function GetFOSResources($arch) {
 }
 
 function CleanUP() {
-    shell_exec("/bin/rm -r /home/fos-streaming/*-static.tar.xz  ");
-    shell_exec("/bin/rm -r /usr/bin/composer.phar");
-    shell_exec("/bin/rm -r /usr/src/ffmpeg");
-    shell_exec("/bin/rm -r /usr/src/FOS-Streaming");
-    shell_exec("/bin/rm -r /usr/src/installer*");
+    shell_exec("/bin/rm -rf /home/fos-streaming/*.tar.xz  ");
+    shell_exec("/bin/rm -rf /usr/bin/composer.phar");
+    shell_exec("/bin/rm -rf /usr/src/*");
+    shell_exec("/bin/rm -rf /tmp/*");
 }
 
 function GetIP() {
@@ -328,8 +338,8 @@ function GetIP() {
 }
 
 function DeployFF() {
-    shell_exec("/bin/cp /usr/src/ffmpeg/ffmpeg  /usr/local/bin/ffmpeg");
-    shell_exec("/bin/cp /usr/src/ffmpeg/ffprobe /usr/local/bin/ffprobe");
+    shell_exec("/bin/cp /usr/src/ffmpeg  /usr/local/bin/ffmpeg");
+    shell_exec("/bin/cp /usr/src/ffprobe /usr/local/bin/ffprobe");
 	shell_exec("chmod 755 /usr/local/bin/ffmpeg ");
     shell_exec("chmod 755 /usr/local/bin/ffprobe ");
 }
