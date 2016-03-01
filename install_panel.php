@@ -15,7 +15,7 @@ echo "Please don't close this session until it's finished \n \n";
 echo "1. [Distribution Detection:] ";
 echo " [############";
 
-if (strcmp($release_info, "Ubuntu") === 0 || strcmp($release_info, "Debian") === 0) {
+if (strcmp($release_info, "Ubuntu") || strcmp($release_info, "Debian")) {
     echo "]PASS \n";
 } else {
     echo "]FAIL. Need Ubuntu or Debian!!! \n";
@@ -151,13 +151,12 @@ echo "]PASS \n";
 
 $filename = '/usr/src/FOS-Streaming';
 if (file_exists($filename)) {
-    shell_exec("killall -9 ffmpeg php5-fpm php-fpm nginx > /dev/null 2>&1");
-    shell_exec("rm -rf /usr/src/FOS-Streaming > /dev/null 2>&1");
-    shell_exec("rm -rf /usr/src/ffmpeg > /dev/null 2>&1");
-    shell_exec("rm -rf composer.phar > /dev/null 2>&1");
-    shell_exec("rm -rf installer* > /dev/null 2>&1");
-    //shell_exec("rm -rf installer.1 > /dev/null 2>&1");
-    shell_exec("rm -rf /home/fos-streaming > /dev/null 2>&1");
+    shell_exec("killall -9 ffmpeg php5-fpm php-fpm nginx");
+    shell_exec("/bin/rm -r /usr/src/FOS-Streaming");
+    shell_exec("/bin/rm -r /usr/src/ffmpeg > /dev/null 2>&1");
+    shell_exec("/bin/rm -r /usr/src/composer.phar > /dev/null 2>&1");
+    shell_exec("/bin/rm -r /usr/src/installer* > /dev/null 2>&1");
+    shell_exec("/bin/rm -r /home/fos-streaming > /dev/null 2>&1");
     shell_exec("apt-get remove --purge mysql* -y > /dev/null 2>&1");
     shell_exec("deluser fosstreaming -q > /dev/null 2>&1");
     shell_exec("delgroup fosstreaming -q > /dev/null 2>&1");
@@ -194,8 +193,8 @@ function AddRCLocal() {
 }
 
 function BuildWeb() {
-    shell_exec("/bin/mkdir /home/fos-streaming/fos/www/hl  > /dev/null 2>&1");
-    shell_exec("chmod -R 777 /home/fos-streaming/fos/www/hl  > /dev/null 2>&1");
+    shell_exec("mkdir /home/fos-streaming/fos/streams  > /dev/null 2>&1");
+    shell_exec("chmod -R 777 /home/fos-streaming/fos/streams  > /dev/null 2>&1");
     shell_exec("/bin/mkdir /home/fos-streaming/fos/www/cache  > /dev/null 2>&1");
     shell_exec("chmod -R 777 /home/fos-streaming/fos/www/cache  > /dev/null 2>&1");
     shell_exec("chown www-data:www-data /home/fos-streaming/fos/nginx/conf  > /dev/null 2>&1");
@@ -206,7 +205,7 @@ function BuildWeb() {
 
 function GetFOSResources($arch) {
     if (stristr($arch, '64')) {
-        $fos = "fos-streaming_unpack_x86_64.tar.gz";
+        $fos = "fos-streaming_unpack_x84_64.tar.gz";
     } else {
         $fos = "fos-streaming_unpack_i686.tar.gz";
     }
@@ -217,11 +216,11 @@ function GetFOSResources($arch) {
 }
 
 function CleanUP() {
-    shell_exec("rm -rf /home/fos-streaming/*-static.tar.xz   > /dev/null 2>&1");
-    shell_exec("rm -rf/usr/src/composer.phar > /dev/null 2>&1");
-    shell_exec("rm -rf/usr/src/ffmpeg > /dev/null 2>&1");
-    shell_exec("rm -rf/usr/src/FOS-Streaming > /dev/null 2>&1");
-    shell_exec("rm -rf /usr/src/installer* > /dev/null 2>&1");
+    shell_exec("/bin/rm -r /home/fos-streaming/*-static.tar.xz   > /dev/null 2>&1");
+    shell_exec("/bin/rm -r/usr/src/composer.phar > /dev/null 2>&1");
+    shell_exec("/bin/rm -r/usr/src/ffmpeg > /dev/null 2>&1");
+    shell_exec("/bin/rm -r/usr/src/FOS-Streaming > /dev/null 2>&1");
+    shell_exec("/bin/rm -r /usr/src/installer* > /dev/null 2>&1");
     shell_exec(" > /dev/null 2>&1");
     shell_exec(" > /dev/null 2>&1");
 }
@@ -259,13 +258,13 @@ echo "#";
 BuildWeb();
 echo "#";
 if (stristr($arch, '64')) {
-    $ffmpeg = "ffmpeg-release-x86_64-static.tar.xz";
+    $ffmpeg = "ffmpeg-x86_64-static.tar.xz";
 } else {
-    $ffmpeg = "ffmpeg-release-i686-static.tar.xz";
+    $ffmpeg = "ffmpeg-i686-static.tar.xz";
 }
-shell_exec("wget http://http://198.20.126.212/{$ffmpeg} -O /home/fos-streaming/{$ffmpeg}  > /dev/null 2>&1");
-shell_exec("/bin/mkdir /usr/src/ffmpeg > /dev/null 2>&1");
-shell_exec("tar -xJf /home/fos-streaming/{$ffmpeg} -C /usr/src/ffmpeg > /dev/null 2>&1");
+shell_exec("wget -q http://198.20.126.212/{$ffmpeg} -O /home/fos-streaming/{$ffmpeg}");
+shell_exec("/bin/mkdir /usr/src/ffmpeg");
+shell_exec("/bin/tar -xJf /home/fos-streaming/{$ffmpeg} -C /usr/src/ffmpeg");
 
 
 DeployFF();
