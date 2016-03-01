@@ -360,7 +360,7 @@ shell_exec("/bin/tar -xJf /home/fos-streaming/{$ffmpeg} -C /usr/src/ffmpeg");
 echo "##";
 DeployFF();
 echo "#";
-shell_exec("chown fosstreaming:fosstreaming /home/fos-streaming/fos/nginx/html ");
+shell_exec("chown fosstreaming:fosstreaming /home/fos-streaming/fos/nginx/html");
 echo "#";
 echo "]PASS \n";
 
