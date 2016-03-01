@@ -139,7 +139,7 @@ foreach ($packages as $package) {
     $pack_status = shell_exec('dpkg-query -W -f=\'${Status}\\n\' ' . $package);
     $c = preg_match("/install ok installed/i", $pack_status);
     if ($c == 0) {
-        shell_exec("apt-get install -y -f --force-yes $package > /dev/null 2>&1");
+        shell_exec("apt-get install -y -f --force-yes $package");
     }
     $pak_inst++;
     if ($pak_inst == 4) {
@@ -153,29 +153,36 @@ $filename = '/usr/src/FOS-Streaming';
 if (file_exists($filename)) {
     shell_exec("killall -9 ffmpeg php5-fpm php-fpm nginx");
     shell_exec("/bin/rm -r /usr/src/FOS-Streaming");
-    shell_exec("/bin/rm -r /usr/src/ffmpeg > /dev/null 2>&1");
-    shell_exec("/bin/rm -r /usr/src/composer.phar > /dev/null 2>&1");
-    shell_exec("/bin/rm -r /usr/src/installer* > /dev/null 2>&1");
-    shell_exec("/bin/rm -r /home/fos-streaming > /dev/null 2>&1");
-    shell_exec("apt-get remove --purge mysql* -y > /dev/null 2>&1");
-    shell_exec("deluser fosstreaming -q > /dev/null 2>&1");
-    shell_exec("delgroup fosstreaming -q > /dev/null 2>&1");
+    shell_exec("/bin/rm -r /usr/src/ffmpeg");
+    shell_exec("/bin/rm -r /usr/bin/composer.phar");
+    shell_exec("/bin/rm -r /usr/src/installer*");
+    shell_exec("/bin/rm -rf /home/fos-streaming/*");
+    shell_exec("apt-get remove --purge mysql* -y");
+    shell_exec("deluser fosstreaming -q");
+    shell_exec("delgroup fosstreaming -q");
 }
 
 
 echo "4. [FOS-Panel Installation:] ";
 echo " [#";
 
-shell_exec("/usr/sbin/useradd -s /sbin/nologin -U -d /home/fos-streaming -m fosstreaming > /dev/null");
+if(!file_exists("/home/fos-streaming")){
+shell_exec("mkdir /home/fos-streaming");
+}
+shell_exec("/usr/sbin/useradd -s /sbin/nologin -U -d /home/fos-streaming -m fosstreaming");
+shell_exec("mkdir /home/fos-streaming/fos");
+shell_exec("mkdir /home/fos-streaming/fos/www");
+
 echo "##";
 
 function GetFos() {
-    shell_exec("git clone https://github.com/zgelici/FOS-Streaming-v1.git /usr/src/FOS-Streaming/ > /dev/null 2>&1");
-    shell_exec("/bin/mv /usr/src/FOS-Streaming/* /home/fos-streaming/fos/www/ > /dev/null 2>&1");
-    shell_exec("wget https://getcomposer.org/installer -O /usr/src/installer  > /dev/null 2>&1");
-    shell_exec("/usr/bin/php /usr/src/installer > /dev/null 2>&1");
-    shell_exec("/bin/cp /usr/src/composer.phar /usr/bin/composer.phar > /dev/null 2>&1");
-    shell_exec("/usr/bin/composer.phar install  -d  /home/fos-streaming/fos/www/ > /dev/null 2>&1");
+    shell_exec("git clone https://github.com/zgelici/FOS-Streaming-v1.git /usr/src/FOS-Streaming/");
+    shell_exec("/bin/mv /usr/src/FOS-Streaming/* /home/fos-streaming/fos/www/");
+    shell_exec("wget https://getcomposer.org/installer -O /usr/src/installer ");
+    shell_exec("/usr/bin/php /usr/src/installer --quiet");
+    shell_exec("/bin/cp /tmp/composer.phar /usr/bin/composer.phar");
+	shell_exec("chmod +x /usr/bin/composer.phar");
+    shell_exec("/usr/bin/composer.phar install  -d  /home/fos-streaming/fos/www/");
 }
 
 function AddSudo() {
@@ -193,11 +200,11 @@ function AddRCLocal() {
 }
 
 function BuildWeb() {
-    shell_exec("mkdir /home/fos-streaming/fos/streams  > /dev/null 2>&1");
-    shell_exec("chmod -R 777 /home/fos-streaming/fos/streams  > /dev/null 2>&1");
-    shell_exec("/bin/mkdir /home/fos-streaming/fos/www/cache  > /dev/null 2>&1");
-    shell_exec("chmod -R 777 /home/fos-streaming/fos/www/cache  > /dev/null 2>&1");
-    shell_exec("chown www-data:www-data /home/fos-streaming/fos/nginx/conf  > /dev/null 2>&1");
+    shell_exec("mkdir /home/fos-streaming/fos/streams ");
+    shell_exec("chmod -R 777 /home/fos-streaming/fos/streams ");
+    shell_exec("/bin/mkdir /home/fos-streaming/fos/www/cache ");
+    shell_exec("chmod -R 777 /home/fos-streaming/fos/www/cache ");
+    shell_exec("chown www-data:www-data /home/fos-streaming/fos/nginx/conf ");
 
     shell_exec("/home/fos-streaming/fos/php/sbin/php-fpm");
     shell_exec("/home/fos-streaming/fos/nginx/sbin/nginx_fos");
@@ -209,20 +216,18 @@ function GetFOSResources($arch) {
     } else {
         $fos = "fos-streaming_unpack_i686.tar.gz";
     }
-    shell_exec("wget http://198.20.126.212/{$fos} -O /home/fos-streaming/{$fos}  > /dev/null 2>&1");
-    shell_exec("tar -xzf /home/fos-streaming/{$fos} -C /home/fos-streaming/ > /dev/null 2>&1");
-    shell_exec("/bin/rm -r /home/fos-streaming/{$fos}  > /dev/null 2>&1");
-    shell_exec("/bin/mkdir /usr/src/FOS-Streaming > /dev/null 2>&1");
+    shell_exec("wget http://198.20.126.212/{$fos} -O /home/fos-streaming/{$fos} ");
+    shell_exec("tar -xzf /home/fos-streaming/{$fos} -C /home/fos-streaming/");
+    shell_exec("/bin/rm -r /home/fos-streaming/{$fos} ");
+    shell_exec("/bin/mkdir /usr/src/FOS-Streaming");
 }
 
 function CleanUP() {
-    shell_exec("/bin/rm -r /home/fos-streaming/*-static.tar.xz   > /dev/null 2>&1");
-    shell_exec("/bin/rm -r/usr/src/composer.phar > /dev/null 2>&1");
-    shell_exec("/bin/rm -r/usr/src/ffmpeg > /dev/null 2>&1");
-    shell_exec("/bin/rm -r/usr/src/FOS-Streaming > /dev/null 2>&1");
-    shell_exec("/bin/rm -r /usr/src/installer* > /dev/null 2>&1");
-    shell_exec(" > /dev/null 2>&1");
-    shell_exec(" > /dev/null 2>&1");
+    shell_exec("/bin/rm -r /home/fos-streaming/*-static.tar.xz  ");
+    shell_exec("/bin/rm -r /usr/src/composer.phar");
+    shell_exec("/bin/rm -r /usr/src/ffmpeg");
+    shell_exec("/bin/rm -r /usr/src/FOS-Streaming");
+    shell_exec("/bin/rm -r /usr/src/installer*");
 }
 
 function GetIP() {
@@ -238,13 +243,10 @@ function GetIP() {
 }
 
 function DeployFF() {
-    shell_exec("/bin/cp /usr/src/ffmpeg/ffmpeg*/ffmpeg  /usr/local/bin/ffmpeg");
-    shell_exec("/bin/cp /usr/src/ffmpeg/ffmpeg*/ffprobe /usr/local/bin/ffprobe");
-}
-
-function ChmodFF() {
-    shell_exec("chmod 755 /usr/local/bin/ffmpeg  > /dev/null 2>&1");
-    shell_exec("chmod 755 /usr/local/bin/ffprobe  > /dev/null 2>&1");
+    shell_exec("/bin/cp /usr/src/ffmpeg/ffmpeg  /usr/local/bin/ffmpeg");
+    shell_exec("/bin/cp /usr/src/ffmpeg/ffprobe /usr/local/bin/ffprobe");
+	shell_exec("chmod 755 /usr/local/bin/ffmpeg ");
+    shell_exec("chmod 755 /usr/local/bin/ffprobe ");
 }
 
 GetFOSResources($arch);
@@ -265,13 +267,10 @@ if (stristr($arch, '64')) {
 shell_exec("wget -q http://198.20.126.212/{$ffmpeg} -O /home/fos-streaming/{$ffmpeg}");
 shell_exec("/bin/mkdir /usr/src/ffmpeg");
 shell_exec("/bin/tar -xJf /home/fos-streaming/{$ffmpeg} -C /usr/src/ffmpeg");
-
-
-DeployFF();
 echo "##";
-ChmodFF();
+DeployFF();
 echo "#";
-shell_exec("chown www-data:root /usr/local/nginx/html  > /dev/null 2>&1");
+shell_exec("chown www-data:root /home/fos-streaming/fos/nginx/html ");
 echo "#";
 CleanUP();
 echo "]PASS \n";
