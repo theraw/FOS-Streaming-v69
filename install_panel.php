@@ -151,7 +151,8 @@ echo "]PASS \n";
 
 $filename = '/usr/src/FOS-Streaming';
 if (file_exists($filename)) {
-    shell_exec("killall -9 ffmpeg php5-fpm php-fpm nginx");
+    shell_exec("killall -9 ffmpeg php5-fpm php-fpm nginx_fos nginx");
+    shell_exec("service php5-fpm stop");
     shell_exec("/bin/rm -r /usr/src/FOS-Streaming");
     shell_exec("/bin/rm -r /usr/src/ffmpeg");
     shell_exec("/bin/rm -r /usr/bin/composer.phar");
