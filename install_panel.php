@@ -330,8 +330,8 @@ function GetIP() {
 }
 
 function DeployFF() {
-    shell_exec("/bin/cp /usr/src/ffmpeg  /usr/local/bin/ffmpeg");
-    shell_exec("/bin/cp /usr/src/ffprobe /usr/local/bin/ffprobe");
+    shell_exec("/bin/cp /usr/src/ffmpeg/ffmpeg  /usr/local/bin/ffmpeg");
+    shell_exec("/bin/cp /usr/src/ffmpeg/ffprobe /usr/local/bin/ffprobe");
 	shell_exec("chmod 755 /usr/local/bin/ffmpeg ");
     shell_exec("chmod 755 /usr/local/bin/ffprobe ");
 }
