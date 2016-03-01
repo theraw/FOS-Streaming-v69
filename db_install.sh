@@ -3,8 +3,7 @@
 
 echo  "Database Installation"
 
-apt-get install -y mysql-server-5.6
-apt-get install -y php5-mysql  > /dev/null 2>&1
+apt-get install -y mysql-server mysql-client php5-mysql -y
 service mysql stop
 mv /tmp/my.cnf /etc/mysql/my.cnf
 service mysql start
