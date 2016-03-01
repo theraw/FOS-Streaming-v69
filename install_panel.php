@@ -5,8 +5,7 @@ if (strcmp($we_root, "root") !== 0) {
     echo "Please execute this script as root! Exitting...";
     exit;
 }
-shell_exec("apt-get update");
-shell_exec("apt-get upgrade -y && apt-get install apt-utils python-software-properties apt nscd nano zip unzip gzip -y");
+
 $release_info = shell_exec("lsb_release -i -s");
 $arch = shell_exec("uname -m");
 echo "Welcome \n";
