@@ -166,9 +166,6 @@ if (file_exists($filename)) {
 echo "4. [FOS-Panel Installation:] ";
 echo " [#";
 
-if(!file_exists("/home/fos-streaming")){
-shell_exec("mkdir /home/fos-streaming");
-}
 shell_exec("/usr/sbin/useradd -s /sbin/nologin -U -d /home/fos-streaming -m fosstreaming");
 shell_exec("mkdir /home/fos-streaming/fos");
 shell_exec("mkdir /home/fos-streaming/fos/www");
