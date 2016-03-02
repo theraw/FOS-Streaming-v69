@@ -10,6 +10,7 @@ echo "FOS: Checking for existing installations!\r";
 shell_exec("killall -9 ffmpeg php5-fpm php-fpm nginx nginx_fos > /dev/null");
 shell_exec("service php5-fpm stop > /dev/null");
 shell_exec("rm -rf /usr/src/FOS-Streaming/* > /dev/null");
+shell_exec("rm -rf /usr/src/FOS-Streaming/./.* > /dev/null");
 shell_exec("umount /home/fos-streaming/fos/streams > /dev/null");
 shell_exec("umount /home/fos-streaming/fos/www/cache > /dev/null");
 shell_exec("rm -rf /home/fos-streaming > /dev/null");
@@ -128,6 +129,7 @@ if (!file_exists("/usr/src/FOS-Streaming")) {
 echo "##";
 
 function GetFos() {
+    shell_exec("rm -rf /usr/src/FOS-Streaming/*");
     shell_exec("git clone https://github.com/zgelici/FOS-Streaming-v1.git /usr/src/FOS-Streaming/ > /dev/null");
     shell_exec("mv /usr/src/FOS-Streaming/* /home/fos-streaming/fos/www/  > /dev/null");
     if (!file_exists("/usr/bin/composer.phar")) {
