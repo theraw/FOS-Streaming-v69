@@ -114,7 +114,7 @@ tar zxvf bzip2-1.0.6.tar.gz
 cd bzip2-1.0.6
 make 
 sudo make install PREFIX=$HOME
-]
+}
 
 ## Compile libpng
 compileLibPng(){
@@ -199,4 +199,3 @@ compileLibBzip
 compileLibPng
 compileLibOgg
 compileFfmpeg
-}
