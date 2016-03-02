@@ -85,8 +85,8 @@ if (isset($_GET['install'])) {
 
         $db->schema()->create('settings', function ($table) {
             $table->increments('id');
-            $table->string('ffmpeg_path')->default('/usr/local/bin/ffmpeg');
-            $table->string('ffprobe_path')->default('/usr/local/bin/ffprobe');
+            $table->string('ffmpeg_path')->default('/usr/bin/ffmpeg');
+            $table->string('ffprobe_path')->default('/usr/bin/ffprobe');
             $table->string('webport')->default('8000');
             $table->string('webip')->default('');
             $table->string('hlsfolder')->default('streams');
@@ -181,8 +181,8 @@ if (isset($_GET['install'])) {
 
         $profile2 = new Transcode();
         $profile2->name = 'Default 2: H264, AAC';
-        $profile2->probesize = 15000000;
-        $profile2->analyzeduration = 12000000;
+        $profile2->probesize = 10000000;
+        $profile2->analyzeduration = 5000000;
         $profile2->video_codec = 'h264';
         $profile2->audio_codec = 'libfaac';
         $profile2->save();
