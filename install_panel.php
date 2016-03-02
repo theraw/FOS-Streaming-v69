@@ -235,6 +235,8 @@ if (file_exists($filename)) {
     shell_exec("killall -9 ffmpeg php5-fpm nginx_fos > /dev/null");
     shell_exec("service php5-fpm stop > /dev/null");
     shell_exec("/bin/rm -rf /usr/src/FOS-Streaming/* > /dev/null");
+    shell_exec("umount -a -f /home/fos-streaming/fos/streams");
+    shell_exec("umount -a -f /home/fos-streaming/fos/www/cache");
     shell_exec("/bin/rm -rf /home/fos-streaming > /dev/null");
     shell_exec("deluser fosstreaming -q");
     shell_exec("delgroup fosstreaming -q");
