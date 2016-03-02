@@ -63,7 +63,7 @@
                         </div>
                     </div>
                     <div class="w_right w_20">
-                        <span>{{ $cpu['count'] }} / 100</span>
+                        <span>{{ $cpu['pr'] }} / 100</span>
                     </div>
                     <div class="clearfix"></div>
                 </div>
