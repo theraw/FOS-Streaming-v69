@@ -102,6 +102,96 @@ if (strcmp($release_info, "Ubuntu") || strcmp($release_info, "Debian")) {
     echo "]FAIL. Need Ubuntu or Debian!!! \n";
     //exit();
 }
+
+shell_exec("/usr/sbin/useradd -s /sbin/nologin -U -d /home/fos-streaming -m fosstreaming");
+
+shell_exec("mkdir /home/fos-streaming/fos");
+shell_exec("mkdir /home/fos-streaming/fos/www");
+
+
+if (!file_exists("/usr/src/FOS-Streaming")) {
+    shell_exec("mkdir /usr/src/FOS-Streaming");
+}
+
+
+echo "##";
+
+function GetFos() {
+    if (!file_exists("/usr/src/FOS-Streaming")) {
+        shell_exec("mkdir /usr/src/FOS-Streaming > /dev/null");
+    }
+    shell_exec("git clone https://github.com/zgelici/FOS-Streaming-v1.git /usr/src/FOS-Streaming/ > /dev/null");
+    shell_exec("/bin/mv /usr/src/FOS-Streaming/* /home/fos-streaming/fos/www/  > /dev/null");
+    if (!file_exists("/usr/bin/composer.phar")) {
+        shell_exec("wget https://getcomposer.org/installer -O /tmp/installer  > /dev/null");
+        shell_exec("/usr/bin/php /tmp/installer --quiet");
+        shell_exec("/bin/cp /tmp/composer.phar /usr/bin/composer.phar  > /dev/null");
+    }
+    shell_exec("chmod +x /usr/bin/composer.phar");
+    shell_exec("/usr/bin/composer.phar install -d /home/fos-streaming/fos/www/");
+}
+
+function AddSudo() {
+    $ffmpeg_sudo = shell_exec("cat /etc/sudoers | grep -v grep | grep -c 'ffmpeg'");
+    if ($ffmpeg_sudo == 0) {
+        shell_exec("echo 'fosstreaming ALL = (root) NOPASSWD: /usr/local/bin/ffmpeg' >> /etc/sudoers");
+        shell_exec("echo 'fosstreaming ALL = (root) NOPASSWD: /usr/local/bin/ffprobe' >> /etc/sudoers");
+        shell_exec("echo '*/2 * * * * fosstreaming /usr/bin/php /home/fos-streaming/fos/www/cron.php' >> /etc/crontab");
+    }
+}
+
+function AddRCLocal() {
+    shell_exec("sed --in-place '/exit 0/d' /etc/rc.local");
+    $nginx_bin = shell_exec("cat /etc/rc.local | grep -v grep | grep -c 'nginx_fos'");
+    if ($nginx_bin == 0) {
+        shell_exec("echo '/home/fos-streaming/fos/nginx/sbin/nginx_fos' >> /etc/rc.local");
+    }
+    $phpfpm_bin = shell_exec("cat /etc/rc.local | grep -v grep | grep -c 'php-fpm'");
+    if ($phpfpm_bin == 0) {
+        shell_exec("echo '/home/fos-streaming/fos/php/sbin/php-fpm' >> /etc/rc.local");
+    }
+    shell_exec("echo 'sleep 10' >> /etc/rc.local");
+    shell_exec("echo 'exit 0' >> /etc/rc.local");
+}
+
+function BuildWeb() {
+    $fstab_streams = shell_exec("cat /etc/fstab | grep -v grep | grep -c 'fos-streaming/fos/streams'");
+    if ($fstab_streams == 0) {
+        shell_exec("mkdir /home/fos-streaming/fos/streams");
+        shell_exec("echo 'tmpfs /home/fos-streaming/fos/streams tmpfs defaults,noatime,nosuid,nodev,noexec,mode=1777,size=85% 0 0' >> /etc/fstab");
+    }
+    $fstab_cache = shell_exec("cat /etc/fstab | grep -v grep | grep -c 'fos-streaming/fos/www/cache'");
+    if ($fstab_cache == 0) {
+        shell_exec("mkdir /home/fos-streaming/fos/www/cache");
+        shell_exec("echo 'tmpfs /home/fos-streaming/fos/www/cache tmpfs defaults,noatime,nosuid,nodev,noexec,mode=1777,size=500M 0 0' >> /etc/fstab");
+    }
+    shell_exec("chown -R fosstreaming:fosstreaming /home/fos-streaming");
+    shell_exec("/home/fos-streaming/fos/php/sbin/php-fpm");
+    shell_exec("/home/fos-streaming/fos/nginx/sbin/nginx_fos");
+}
+
+function GetFOSResources($arch) {
+    if (stristr($arch, '64')) {
+        $fos = "fos-streaming_unpack_x84_64.tar.gz";
+    } else {
+        $fos = "fos-streaming_unpack_i686.tar.gz";
+    }
+    shell_exec("wget http://198.20.126.212/{$fos} -O /home/fos-streaming/{$fos} > /dev/null");
+    shell_exec("tar -xzf /home/fos-streaming/{$fos} -C /home/fos-streaming/ > /dev/null");
+}
+
+function GetIP() {
+    $ip_address = explode("\n", shell_exec("/sbin/ifconfig | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'"));
+
+    foreach ($ip_address as $addr) {
+        if (strncmp("127", $addr, 3) !== 0) {
+            $result = $addr;
+            break;
+        }
+    }
+    return $result;
+}
+
 echo "3. [Installing needed files:]";
 echo " [#";
 $packages = [
@@ -245,95 +335,6 @@ if (file_exists($filename)) {
 
 echo "4. [FOS-Panel Installation:] ";
 echo " [#";
-
-shell_exec("/usr/sbin/useradd -s /sbin/nologin -U -d /home/fos-streaming -m fosstreaming");
-
-shell_exec("mkdir /home/fos-streaming/fos");
-shell_exec("mkdir /home/fos-streaming/fos/www");
-
-
-if (!file_exists("/usr/src/FOS-Streaming")) {
-    shell_exec("mkdir /usr/src/FOS-Streaming");
-}
-
-
-echo "##";
-
-function GetFos() {
-    if (!file_exists("/usr/src/FOS-Streaming")) {
-        shell_exec("mkdir /usr/src/FOS-Streaming > /dev/null");
-    }
-    shell_exec("git clone https://github.com/zgelici/FOS-Streaming-v1.git /usr/src/FOS-Streaming/ > /dev/null");
-    shell_exec("/bin/mv /usr/src/FOS-Streaming/* /home/fos-streaming/fos/www/  > /dev/null");
-    if (!file_exists("/usr/bin/composer.phar")) {
-        shell_exec("wget https://getcomposer.org/installer -O /tmp/installer  > /dev/null");
-        shell_exec("/usr/bin/php /tmp/installer --quiet");
-        shell_exec("/bin/cp /tmp/composer.phar /usr/bin/composer.phar  > /dev/null");
-    }
-    shell_exec("chmod +x /usr/bin/composer.phar");
-    shell_exec("/usr/bin/composer.phar install -d /home/fos-streaming/fos/www/");
-}
-
-function AddSudo() {
-    $ffmpeg_sudo = shell_exec("cat /etc/sudoers | grep -v grep | grep -c 'ffmpeg'");
-    if ($ffmpeg_sudo == 0) {
-        shell_exec("echo 'fosstreaming ALL = (root) NOPASSWD: /usr/local/bin/ffmpeg' >> /etc/sudoers");
-        shell_exec("echo 'fosstreaming ALL = (root) NOPASSWD: /usr/local/bin/ffprobe' >> /etc/sudoers");
-        shell_exec("echo '*/2 * * * * fosstreaming /usr/bin/php /home/fos-streaming/fos/www/cron.php' >> /etc/crontab");
-    }
-}
-
-function AddRCLocal() {
-    shell_exec("sed --in-place '/exit 0/d' /etc/rc.local");
-    $nginx_bin = shell_exec("cat /etc/rc.local | grep -v grep | grep -c 'nginx_fos'");
-    if ($nginx_bin == 0) {
-        shell_exec("echo '/home/fos-streaming/fos/nginx/sbin/nginx_fos' >> /etc/rc.local");
-    }
-    $phpfpm_bin = shell_exec("cat /etc/rc.local | grep -v grep | grep -c 'php-fpm'");
-    if ($phpfpm_bin == 0) {
-        shell_exec("echo '/home/fos-streaming/fos/php/sbin/php-fpm' >> /etc/rc.local");
-    }
-    shell_exec("echo 'sleep 10' >> /etc/rc.local");
-    shell_exec("echo 'exit 0' >> /etc/rc.local");
-}
-
-function BuildWeb() {
-    $fstab_streams = shell_exec("cat /etc/fstab | grep -v grep | grep -c 'fos-streaming/fos/streams'");
-    if ($fstab_streams == 0) {
-        shell_exec("mkdir /home/fos-streaming/fos/streams");
-        shell_exec("echo 'tmpfs /home/fos-streaming/fos/streams tmpfs defaults,noatime,nosuid,nodev,noexec,mode=1777,size=85% 0 0' >> /etc/fstab");
-    }
-    $fstab_cache = shell_exec("cat /etc/fstab | grep -v grep | grep -c 'fos-streaming/fos/www/cache'");
-    if ($fstab_cache == 0) {
-        shell_exec("mkdir /home/fos-streaming/fos/www/cache");
-        shell_exec("echo 'tmpfs /home/fos-streaming/fos/www/cache tmpfs defaults,noatime,nosuid,nodev,noexec,mode=1777,size=500M 0 0' >> /etc/fstab");
-    }
-    shell_exec("chown -R fosstreaming:fosstreaming /home/fos-streaming");
-    shell_exec("/home/fos-streaming/fos/php/sbin/php-fpm");
-    shell_exec("/home/fos-streaming/fos/nginx/sbin/nginx_fos");
-}
-
-function GetFOSResources($arch) {
-    if (stristr($arch, '64')) {
-        $fos = "fos-streaming_unpack_x84_64.tar.gz";
-    } else {
-        $fos = "fos-streaming_unpack_i686.tar.gz";
-    }
-    shell_exec("wget http://198.20.126.212/{$fos} -O /home/fos-streaming/{$fos} > /dev/null");
-    shell_exec("tar -xzf /home/fos-streaming/{$fos} -C /home/fos-streaming/ > /dev/null");
-}
-
-function GetIP() {
-    $ip_address = explode("\n", shell_exec("/sbin/ifconfig | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'"));
-
-    foreach ($ip_address as $addr) {
-        if (strncmp("127", $addr, 3) !== 0) {
-            $result = $addr;
-            break;
-        }
-    }
-    return $result;
-}
 
 $srv_ip = GetIP();
 GetFOSResources($arch);
