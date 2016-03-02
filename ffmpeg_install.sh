@@ -199,3 +199,6 @@ compileLibBzip
 compileLibPng
 compileLibOgg
 compileFfmpeg
+
+cp ~/bin/ffmpeg /usr/bin/
+cp ~/bin/ffprobe /usr/bin/
