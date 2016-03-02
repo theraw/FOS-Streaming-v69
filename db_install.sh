@@ -22,7 +22,7 @@ if [ -f /etc/init.d/mysql* ]; then
     service mysql start
 else 
 
-apt-get install -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" --force-yes mysql-server mysql-client php5-mysql mysql-common
+apt-get install -y -q mysql-server mysql-common php5-mysql
 
     
 fi
