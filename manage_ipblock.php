@@ -1,4 +1,5 @@
 <?php
+
 include('config.php');
 logincheck();
 
@@ -39,7 +40,7 @@ if (isset($_POST['submit'])) {
 }
 
 echo $template->view()->make('manage_ipblock')
-    ->with('ipblock', $ipblock)
-    ->with('message', $message)
-    ->with('title', $title)
-    ->render();
+        ->with('ipblock', $ipblock)
+        ->with('message', $message)
+        ->with('title', $title)
+        ->render();

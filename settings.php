@@ -1,4 +1,5 @@
 <?php
+
 include('config.php');
 logincheck();
 //TODO:: N
@@ -36,10 +37,8 @@ if (isset($_POST['submit'])) {
     } else {
         redirect("settings.php", 1000);
     }
-
-
 }
 echo $template->view()->make('manage_settings')
-    ->with('setting', $setting)
-    ->with('message', $message)
-    ->render();
+        ->with('setting', $setting)
+        ->with('message', $message)
+        ->render();

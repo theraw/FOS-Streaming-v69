@@ -1,4 +1,5 @@
 <?php
+
 include('config.php');
 logincheck();
 
@@ -44,7 +45,7 @@ if (isset($_POST['submit'])) {
 }
 
 echo $template->view()->make('manage_admin')
-    ->with('admin', $admin)
-    ->with('message', $message)
-    ->with('title', $title)
-    ->render();
+        ->with('admin', $admin)
+        ->with('message', $message)
+        ->with('title', $title)
+        ->render();

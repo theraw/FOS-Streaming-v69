@@ -1,4 +1,5 @@
 <?php
+
 include('config.php');
 logincheck();
 
@@ -79,7 +80,6 @@ if (isset($_POST['mass_stop'])) {
 if (isset($_GET['running']) && $_GET['running'] == 1) {
     $title = "Running Streams";
     $stream = Stream::where('status', '=', 1)->get();
-
 } else if (isset($_GET['running']) && $_GET['running'] == 2) {
     $title = "Stopped Streams";
     $stream = Stream::where('status', '=', 2)->get();
@@ -88,8 +88,8 @@ if (isset($_GET['running']) && $_GET['running'] == 1) {
 }
 
 echo $template->view()->make('streams')
-    ->with('streams', $stream)
-    ->with('message', $message)
-    ->with('title', $title)
-    ->render();
+        ->with('streams', $stream)
+        ->with('message', $message)
+        ->with('title', $title)
+        ->render();
 ?>

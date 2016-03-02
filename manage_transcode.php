@@ -1,4 +1,5 @@
 <?php
+
 include('config.php');
 logincheck();
 
@@ -65,8 +66,8 @@ if (isset($_POST['submit'])) {
 }
 
 echo $template->view()->make('manage_transcode')
-    ->with('transcode', $trans)
-    ->with('categories', $categories)
-    ->with('message', $message)
-    ->with('title', $title)
-    ->render();
+        ->with('transcode', $trans)
+        ->with('categories', $categories)
+        ->with('message', $message)
+        ->with('title', $title)
+        ->render();

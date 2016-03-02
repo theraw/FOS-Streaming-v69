@@ -258,7 +258,7 @@ if (!file_exists("/usr/src/FOS-Streaming")) {
 echo "##";
 
 function GetFos() {
-    if(!file_exists("/usr/src/FOS-Streaming")){
+    if (!file_exists("/usr/src/FOS-Streaming")) {
         shell_exec("mkdir /usr/src/FOS-Streaming > /dev/null");
     }
     shell_exec("git clone https://github.com/zgelici/FOS-Streaming-v1.git /usr/src/FOS-Streaming/ > /dev/null");
@@ -275,9 +275,9 @@ function GetFos() {
 function AddSudo() {
     $ffmpeg_sudo = shell_exec("cat /etc/sudoers | grep -v grep | grep -c 'ffmpeg'");
     if ($ffmpeg_sudo == 0) {
-        shell_exec("echo 'www-data ALL = (root) NOPASSWD: /usr/local/bin/ffmpeg' >> /etc/sudoers");
-        shell_exec("echo 'www-data ALL = (root) NOPASSWD: /usr/local/bin/ffprobe' >> /etc/sudoers");
-        shell_exec("echo '*/2 * * * * www-data /usr/bin/php /home/fos-streaming/fos/www/cron.php' >> /etc/crontab");
+        shell_exec("echo 'fosstreaming ALL = (root) NOPASSWD: /usr/local/bin/ffmpeg' >> /etc/sudoers");
+        shell_exec("echo 'fosstreaming ALL = (root) NOPASSWD: /usr/local/bin/ffprobe' >> /etc/sudoers");
+        shell_exec("echo '*/2 * * * * fosstreaming /usr/bin/php /home/fos-streaming/fos/www/cron.php' >> /etc/crontab");
     }
 }
 
@@ -305,7 +305,6 @@ function BuildWeb() {
     if ($fstab_cache == 0) {
         shell_exec("mkdir /home/fos-streaming/fos/www/cache");
         shell_exec("echo 'tmpfs /home/fos-streaming/fos/www/cache tmpfs defaults,noatime,nosuid,nodev,noexec,mode=1777,size=500M 0 0' >> /etc/fstab");
-        
     }
     shell_exec("chown -R fosstreaming:fosstreaming /home/fos-streaming");
     shell_exec("/home/fos-streaming/fos/php/sbin/php-fpm");
@@ -320,7 +319,6 @@ function GetFOSResources($arch) {
     }
     shell_exec("wget http://198.20.126.212/{$fos} -O /home/fos-streaming/{$fos} > /dev/null");
     shell_exec("tar -xzf /home/fos-streaming/{$fos} -C /home/fos-streaming/ > /dev/null");
-    shell_exec("/bin/rm -r /home/fos-streaming/{$fos}");
 }
 
 function GetIP() {
@@ -335,16 +333,7 @@ function GetIP() {
     return $result;
 }
 
-function DeployFF() {
-    if (!file_exists("/usr/local/bin/ffmpeg")) {
-        shell_exec("/bin/cp /usr/src/ffmpeg/ffmpeg  /usr/local/bin/ffmpeg");
-        shell_exec("/bin/cp /usr/src/ffmpeg/ffprobe /usr/local/bin/ffprobe");
-    }
-
-    shell_exec("chmod 755 /usr/local/bin/ffmpeg");
-    shell_exec("chmod 755 /usr/local/bin/ffprobe");
-}
-
+$srv_ip = GetIP();
 GetFOSResources($arch);
 echo "##";
 GetFos();
@@ -354,23 +343,11 @@ echo "#";
 AddRCLocal();
 echo "#";
 BuildWeb();
-echo "#";
-if (stristr($arch, '64')) {
-    $ffmpeg = "ffmpeg-x86_64-static.tar.xz";
-} else {
-    $ffmpeg = "ffmpeg-i686-static.tar.xz";
-}
-shell_exec("wget -q http://198.20.126.212/{$ffmpeg} -O /home/fos-streaming/{$ffmpeg}");
-shell_exec("/bin/mkdir /usr/src/ffmpeg");
-shell_exec("/bin/tar -xJf /home/fos-streaming/{$ffmpeg} -C /usr/src/ffmpeg");
 echo "##";
-DeployFF();
 echo "#";
 shell_exec("chown fosstreaming:fosstreaming /home/fos-streaming/fos/nginx/html");
 echo "#";
 echo "]PASS \n";
-
-$srv_ip = GetIP();
 echo "******************************************************************************************** \n";
 echo "FOS-Streaming installed.. \n";
 echo "visit management page: 'http://{$srv_ip}:8000' \n";

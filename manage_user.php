@@ -1,6 +1,8 @@
 <?php
+
 include('config.php');
 logincheck();
+
 use Carbon\Carbon;
 
 $message = [];
@@ -13,8 +15,7 @@ if (isset($_GET['id'])) {
     $user = User::find($_GET['id']);
 }
 
-function parseExpDate($expdate)
-{
+function parseExpDate($expdate) {
 
     $expdate = trim($expdate);
 
@@ -24,10 +25,12 @@ function parseExpDate($expdate)
     try {
         return Carbon::createFromFormat('m/d/Y', $expdate);
     } catch (InvalidArgumentException $e) {
+        
     }
     try {
         return Carbon::createFromFormat('Y-m-d', $expdate);
     } catch (InvalidArgumentException $e) {
+        
     }
 
     return '0000-00-00';
@@ -59,7 +62,6 @@ if (isset($_POST['submit'])) {
     } else if (empty($_POST['category'])) {
         $message['type'] = "error";
         $message['message'] = "Select one category";
-
     } else {
         if (isset($_GET['id'])) {
             $message['type'] = "success";
@@ -81,13 +83,12 @@ if (isset($_POST['submit'])) {
             }
         }
     }
-
 }
 
 echo $template->view()
-    ->make('manage_user')
-    ->with('user', $user)
-    ->with('categories', $categories)
-    ->with('message', $message)
-    ->with('title', $title)
-    ->render();
+        ->make('manage_user')
+        ->with('user', $user)
+        ->with('categories', $categories)
+        ->with('message', $message)
+        ->with('title', $title)
+        ->render();

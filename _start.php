@@ -1,6 +1,8 @@
 <?php
+
 session_start();
 require 'vendor/autoload.php';
+
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Philo\Blade\Blade;
 use Illuminate\Events\Dispatcher;

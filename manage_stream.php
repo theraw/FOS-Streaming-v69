@@ -1,4 +1,5 @@
 <?php
+
 include('config.php');
 logincheck();
 
@@ -66,9 +67,9 @@ if (isset($_POST['submit'])) {
 }
 
 echo $template->view()->make('manage_stream')
-    ->with('stream', $stream)
-    ->with('categories', $categories)
-    ->with('transcodes', $transcodes)
-    ->with('message', $message)
-    ->with('title', $title)
-    ->render();
+        ->with('stream', $stream)
+        ->with('categories', $categories)
+        ->with('transcodes', $transcodes)
+        ->with('message', $message)
+        ->with('title', $title)
+        ->render();

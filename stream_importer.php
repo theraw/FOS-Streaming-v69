@@ -1,4 +1,5 @@
 <?php
+
 include('config.php');
 logincheck();
 
@@ -18,7 +19,8 @@ if (isset($_POST['submit'])) {
 
         $lines = preg_split('~[\r\n]+~', $_POST['import']);
         foreach ($lines as $key => $line) {
-            if (empty($line) or ctype_space($line)) continue;
+            if (empty($line) or ctype_space($line))
+                continue;
 
             if (substr($line, 0, 1) === '#') {
                 $splitline = explode(',', $lines[$key]);
@@ -68,16 +70,15 @@ if (isset($_POST['submit'])) {
 
                 $message['type'] = "success";
                 $message['message'] = "Streams created";
-
             }
         }
     }
 }
 
 echo $template->view()->make('stream_importer')
-    ->with('stream', $stream)
-    ->with('categories', $categories)
-    ->with('transcodes', $transcodes)
-    ->with('message', $message)
-    ->with('title', $title)
-    ->render();
+        ->with('stream', $stream)
+        ->with('categories', $categories)
+        ->with('transcodes', $transcodes)
+        ->with('message', $message)
+        ->with('title', $title)
+        ->render();

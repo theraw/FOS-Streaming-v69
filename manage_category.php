@@ -1,4 +1,5 @@
 <?php
+
 include('config.php');
 logincheck();
 
@@ -34,7 +35,7 @@ if (isset($_POST['submit'])) {
 }
 
 echo $template->view()->make('manage_category')
-    ->with('category', $category)
-    ->with('message', $message)
-    ->with('title', $title)
-    ->render();
+        ->with('category', $category)
+        ->with('message', $message)
+        ->with('title', $title)
+        ->render();

@@ -1,4 +1,5 @@
 <?php
+
 //debug
 if ($debug) {
     error_reporting(E_ALL);

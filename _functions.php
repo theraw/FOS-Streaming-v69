@@ -1,7 +1,6 @@
 <?php
 
-function redirect($url, $time)
-{
+function redirect($url, $time) {
     echo "<script>
                 window.setTimeout(function(){
                     window.location.href = '" . $url . "';
@@ -14,28 +13,24 @@ if (isset($_GET['logout'])) {
     header("location: index.php");
 }
 
-function logincheck()
-{
+function logincheck() {
     if (!isset($_SESSION['user_id'])) {
         header("location: index.php");
     }
 }
 
-
-function checkPid($pid)
-{
+function checkPid($pid) {
     exec("ps $pid", $output, $result);
     return count($output) >= 2 ? true : false;
 }
 
-function stop_stream($id)
-{
+function stop_stream($id) {
     $stream = Stream::find($id);
     $setting = Setting::first();
 
     if (checkPid($stream->pid)) {
         shell_exec("kill -9 " . $stream->pid);
-        shell_exec("/bin/rm -r /home/fos-streaming/fos/www/" . $setting->hlsfolder . "/" . $stream->id . "*");
+        shell_exec("/bin/rm -r /home/fos-streaming/fos/" . $setting->hlsfolder . "/" . $stream->id . "*");
     }
     $stream->pid = "";
     $stream->running = 0;
@@ -45,9 +40,7 @@ function stop_stream($id)
     sleep(2);
 }
 
-
-function getTranscode($id, $streamnumber = null)
-{
+function getTranscode($id, $streamnumber = null) {
     $stream = Stream::find($id);
     $setting = Setting::first();
 
@@ -66,16 +59,16 @@ function getTranscode($id, $streamnumber = null)
     $endofffmpeg = "";
     $endofffmpeg .= $stream->bitstreamfilter ? ' -bsf h264_mp4toannexb' : '';
     $endofffmpeg .= ' -hls_flags delete_segments -hls_time 10';
-    $endofffmpeg .= ' -hls_list_size 8 /home/fos-streaming/fos/www/' . $setting->hlsfolder . '/' . $stream->id . '_.m3u8  > /dev/null 2>/dev/null & echo $! ';
+    $endofffmpeg .= ' -hls_list_size 8 /home/fos-streaming/fos/' . $setting->hlsfolder . '/' . $stream->id . '_.m3u8  > /dev/null 2>/dev/null & echo $! ';
 
     if ($trans) {
 
         $ffmpeg .= ' -y';
-        $ffmpeg .= ' -probesize ' . ($trans->probesize ? $trans->probesize : '15000000');
-        $ffmpeg .= ' -analyzeduration ' . ($trans->analyzeduration ? $trans->analyzeduration : '12000000');
+        $ffmpeg .= ' -probesize ' . ($trans->probesize ? $trans->probesize : '10000000');
+        $ffmpeg .= ' -analyzeduration ' . ($trans->analyzeduration ? $trans->analyzeduration : '5000000');
         $ffmpeg .= ' -i ' . '"' . "$url" . '"';
         $ffmpeg .= ' -user_agent "' . ($setting->user_agent ? $setting->user_agent : 'FOS-Streaming') . '"';
-        $ffmpeg .= ' -strict -2 -dn ';
+        //$ffmpeg .= ' -strict -2 -dn ';
         $ffmpeg .= $trans->scale ? ' -vf scale=' . ($trans->scale ? $trans->scale : '') : '';
         $ffmpeg .= $trans->audio_codec ? ' -acodec ' . $trans->audio_codec : '';
         '';
@@ -93,33 +86,32 @@ function getTranscode($id, $streamnumber = null)
         $ffmpeg .= $trans->crf ? ' -crf ' . $trans->crf : '';
         $ffmpeg .= $trans->audio_channel ? ' -ac ' . $trans->audio_channel : '';
         $ffmpeg .= $stream->bitstreamfilter ? ' -bsf h264_mp4toannexb' : '';
-        $ffmpeg .= $trans->threads ? ' -threads ' . $trans->threads : '';
-        $ffmpeg .= $trans->deinterlance ? ' -vf yadif' : '';
+        $ffmpeg .= $trans->threads ? ' -threads ' . $trans->threads : '0';
+        $ffmpeg .= $trans->deinterlance ? ' -vf yadif=0:-1:0' : '';
 
         $ffmpeg .= $endofffmpeg;
         return $ffmpeg;
     }
 
-    $ffmpeg .= ' -probesize 15000000 -analyzeduration 9000000 -i "' . $url . '"';
+    $ffmpeg .= ' -probesize 10000000 -analyzeduration 5000000 -i "' . $url . '"';
     $ffmpeg .= ' -user_agent "' . ($setting->user_agent ? $setting->user_agent : 'FOS-Streaming') . '"';
-    $ffmpeg .= ' -c copy -c:a libvo_aacenc -b:a 128k';
+    $ffmpeg .= ' -c copy -c:a libfaac -b:a 128k';
     $ffmpeg .= $endofffmpeg;
     return $ffmpeg;
 }
 
-function getTranscodedata($id)
-{
+function getTranscodedata($id) {
 
     $trans = Transcode::find($id);
     $setting = Setting::first();
 
     $ffmpeg = "ffmpeg";
     $ffmpeg .= ' -y';
-    $ffmpeg .= ' -probesize ' . ($trans->probesize ? $trans->probesize : '15000000');
-    $ffmpeg .= ' -analyzeduration ' . ($trans->analyzeduration ? $trans->analyzeduration : '12000000');
+    $ffmpeg .= ' -probesize ' . ($trans->probesize ? $trans->probesize : '10000000');
+    $ffmpeg .= ' -analyzeduration ' . ($trans->analyzeduration ? $trans->analyzeduration : '5000000');
     $ffmpeg .= ' -i ' . '"' . "[input]" . '"';
     $ffmpeg .= ' -user_agent "' . ($setting->user_agent ? $setting->user_agent : 'FOS-Streaming') . '"';
-    $ffmpeg .= ' -strict -2 -dn ';
+    //$ffmpeg .= ' -strict -2 -dn ';
     $ffmpeg .= $trans->scale ? ' -vf scale=' . ($trans->scale ? $trans->scale : '') : '';
     $ffmpeg .= $trans->audio_codec ? ' -acodec ' . $trans->audio_codec : '';
     '';
@@ -136,17 +128,15 @@ function getTranscodedata($id)
     $ffmpeg .= $trans->audio_sampling_rate ? ' -ar ' . $trans->audio_sampling_rate : '';
     $ffmpeg .= $trans->crf ? ' -crf ' . $trans->crf : '';
     $ffmpeg .= $trans->audio_channel ? ' -ac ' . $trans->audio_channel : '';
-    $ffmpeg .= $trans->threads ? ' -threads ' . $trans->threads : '';
-    $ffmpeg .= $trans->deinterlance ? ' -vf yadif' : '';
+    $ffmpeg .= $trans->threads ? ' -threads ' . $trans->threads : '0';
+    $ffmpeg .= $trans->deinterlance ? ' -vf yadif=0:-1:0' : '';
 
     $ffmpeg .= " output[HLS]";
 
     return $ffmpeg;
 }
 
-
-function start_stream($id)
-{
+function start_stream($id) {
     $stream = Stream::find($id);
     $setting = Setting::first();
 
@@ -159,7 +149,7 @@ function start_stream($id)
 
 
         $stream->checker = 0;
-        $checkstreamurl = shell_exec('' . $setting->ffprobe_path . ' -analyzeduration 1000000 -probesize 9000000 -i "' . $stream->streamurl . '" -v  quiet -print_format json -show_streams 2>&1');
+        $checkstreamurl = shell_exec('' . $setting->ffprobe_path . ' -analyzeduration 1000000 -probesize 5000000 -i "' . $stream->streamurl . '" -v  quiet -print_format json -show_streams 2>&1');
         $streaminfo = json_decode($checkstreamurl, true);
 
         if ($streaminfo) {
@@ -181,7 +171,6 @@ function start_stream($id)
                     if ($audio == '') {
                         $audio = ($info['codec_type'] == 'audio' ? $info['codec_name'] : '');
                     }
-
                 }
 
                 $stream->video_codec_name = $video;
@@ -194,13 +183,13 @@ function start_stream($id)
             //TODO: need to make recursive
             if (checkPid($stream->pid)) {
                 shell_exec("kill -9 " . $stream->pid);
-                shell_exec("/bin/rm -r /home/fos-streaming/fos/www/" . $setting->hlsfolder . "/" . $stream->id . "*");
+                shell_exec("/bin/rm -r /home/fos-streaming/fos/" . $setting->hlsfolder . "/" . $stream->id . "*");
             }
 
             if ($stream->streamurl2) {
                 $stream->checker = 2;
 
-                $checkstreamurl = shell_exec('' . $setting->ffprobe_path . ' -analyzeduration 1000000 -probesize 9000000 -i "' . $stream->streamurl . '" -v  quiet -print_format json -show_streams 2>&1');
+                $checkstreamurl = shell_exec('' . $setting->ffprobe_path . ' -analyzeduration 1000000 -probesize 5000000 -i "' . $stream->streamurl . '" -v  quiet -print_format json -show_streams 2>&1');
                 $streaminfo = json_decode($checkstreamurl, true);
 
                 if ($streaminfo) {
@@ -225,7 +214,6 @@ function start_stream($id)
 
                         $stream->video_codec_name = $video;
                         $stream->audio_codec_name = $audio;
-
                     }
                 } else {
                     $stream->running = 1;
@@ -233,13 +221,13 @@ function start_stream($id)
 
                     if (checkPid($stream->pid)) {
                         shell_exec("kill -9 " . $stream->pid);
-                        shell_exec("/bin/rm -r /home/fos-streaming/fos/www/" . $setting->hlsfolder . "/" . $stream->id . "*");
+                        shell_exec("/bin/rm -r /home/fos-streaming/fos/" . $setting->hlsfolder . "/" . $stream->id . "*");
                     }
 
                     //streamurl 3 checker
                     if ($stream->streamurl3) {
                         $stream->checker = 3;
-                        $checkstreamurl = shell_exec('' . $setting->ffprobe_path . ' -analyzeduration 1000000 -probesize 9000000 -i "' . $stream->streamurl . '" -v  quiet -print_format json -show_streams 2>&1');
+                        $checkstreamurl = shell_exec('' . $setting->ffprobe_path . ' -analyzeduration 1000000 -probesize 5000000 -i "' . $stream->streamurl . '" -v  quiet -print_format json -show_streams 2>&1');
                         $streaminfo = json_decode($checkstreamurl, true);
 
                         if ($streaminfo) {
@@ -265,7 +253,6 @@ function start_stream($id)
 
                                 $stream->video_codec_name = $video;
                                 $stream->audio_codec_name = $audio;
-
                             }
                         } else {
                             $stream->running = 1;
@@ -280,9 +267,7 @@ function start_stream($id)
     $stream->save();
 }
 
-
-function generatEginxConfPort($port)
-{
+function generatEginxConfPort($port) {
     ob_start();
     echo 'user  root;
     worker_processes  auto;

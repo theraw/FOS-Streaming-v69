@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by Tyfix 2015
  */
@@ -20,42 +21,26 @@ $offline = Stream::where('running', '=', 0)->count();
 
 
 //space
-$space_pr = 0;
 $space_free = round((disk_free_space('/')) / 1048576, 1);
 $space_total = round((disk_total_space('/')) / 1048576, 1);
-$space_pr = (int)(100 * ($space_free / $space_total));
+$space_pr = (int) (($space_total - $space_free) / 100);
 $cpu_usage = "";
 $cpu_total = "";
-if (stristr(PHP_OS, 'win')) {
-    //cpu
-    $cpu_usage = 2;
-    $cpu_total = 10;
-    $cpu_pr = $cpu_usage / $cpu_total * 100;
 
-    //memory
-    $mem_usage = 20;
-    $mem_total = 120;
-    $mem_pr = (int)(100 * ($mem_usage / $mem_total));
 
-} else {
+//cpu
+$loads = sys_getloadavg();
+$core_nums = trim(shell_exec("grep -P '^processor' /proc/cpuinfo|wc -l"));
+$cpu_pr = round($loads[0] / ($core_nums + 1) * 100, 2);
 
-    //cpu
-    $loads = sys_getloadavg();
-    $core_nums = trim(shell_exec("grep -P '^processor' /proc/cpuinfo|wc -l"));
-    $cpu_pr = round($loads[0] / ($core_nums + 1) * 100, 2);
+//memory
+$free_arr = explode("\n", (string) trim(shell_exec('free')));
+$memory = array_merge(array_filter(explode(" ", $free_arr[1])));
 
-    //memory
-    $free = shell_exec('free');
-    $free = (string)trim($free);
-    $free_arr = explode("\n", $free);
-    $mem = explode(" ", $free_arr[1]);
-    $mem = array_filter($mem);
-    $mem = array_merge($mem);
+$mem_usage = $memory[2];
+$mem_total = $memory[1];
+$mem_pr = $memory[2] / $memory[1] * 100;
 
-    $mem_usage = $mem[2];
-    $mem_total = $mem[1];
-    $mem_pr = $mem[2] / $mem[1] * 100;
-}
 
 $space = [];
 $space['pr'] = $space_pr;
@@ -74,11 +59,11 @@ $mem['total'] = $mem_total;
 
 
 echo $template->view()
-    ->make('dashboard')
-    ->with('all', $all)
-    ->with('online', $online)
-    ->with('offline', $offline)
-    ->with('space', $space)
-    ->with('cpu', $cpu)
-    ->with('mem', $mem)
-    ->render();
+        ->make('dashboard')
+        ->with('all', $all)
+        ->with('online', $online)
+        ->with('offline', $offline)
+        ->with('space', $space)
+        ->with('cpu', $cpu)
+        ->with('mem', $mem)
+        ->render();

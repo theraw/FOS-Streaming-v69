@@ -1,16 +1,17 @@
 <?php
+
 include('config.php');
 // TODO: version control
 // TODO: update tables
 
 $db = $databasemanagar;
-if( isset($_GET['install'])) {
+if (isset($_GET['install'])) {
 
     $arraynamesexist = [];
     $tables = $databasemanagar::select('SHOW TABLES');
     foreach ($tables as $key => $val) {
 
-        $tableName = (array)$val;
+        $tableName = (array) $val;
         $tableName = array_shift($tableName);
 
         array_push($arraynamesexist, $tableName);
@@ -21,7 +22,7 @@ if( isset($_GET['install'])) {
         $db::schema()->dropIfExists('categories');
         $db::schema()->dropIfExists('category_user');
         $db::schema()->dropIfExists('settings');
-        $db::schema()->dropIfExists('streams') ;
+        $db::schema()->dropIfExists('streams');
         $db::schema()->dropIfExists('users');
         $db::schema()->dropIfExists('transcodes');
         $db::schema()->dropIfExists('activity');
@@ -136,7 +137,6 @@ if( isset($_GET['install'])) {
         });
 
         echo "created users table <br>" . PHP_EOL;
-
     }
 
 
@@ -236,12 +236,9 @@ if( isset($_GET['install'])) {
 
         echo "created blocked_user_agents table <br>" . PHP_EOL;
     }
-
-
-
 }
 
-if( isset($_GET['update'])) {
+if (isset($_GET['update'])) {
 
     $db->schema()->table('streams', function ($table) use ($db) {
         $db->schema()->hasColumn('streams', 'bitstreamfilter') ? '' : $table->tinyInteger('bitstreamfilter')->default(0);
@@ -258,8 +255,6 @@ if( isset($_GET['update'])) {
         $db->schema()->hasColumn('users', 'last_stream') ? '' : $table->integer('last_stream')->default(0);
         $db->schema()->hasColumn('users', 'useragent') ? '' : $table->string('useragent')->default('');
         $db->schema()->hasColumn('users', 'max_connections') ? '' : $table->integer('max_connections')->default(1);
-
-
     });
 
     $db->schema()->table('settings', function ($table) use ($db) {
