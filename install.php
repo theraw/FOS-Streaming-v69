@@ -45,8 +45,8 @@ if (isset($_GET['install'])) {
         $admin->password = md5('admin');
         $admin->save();
 
-        echo "created admin table <br>" . PHP_EOL;
-        echo "admin created: username: admin  and password: admin <br>" . PHP_EOL;
+        echo "created admin table " . PHP_EOL;
+        echo "admin created: username: admin  and password: admin " . PHP_EOL;
     }
 
 
@@ -63,7 +63,7 @@ if (isset($_GET['install'])) {
         $category->name = 'Default';
         $category->save();
 
-        echo "created categories table <br>" . PHP_EOL;
+        echo "created categories table " . PHP_EOL;
     }
 
 
@@ -76,7 +76,7 @@ if (isset($_GET['install'])) {
             $table->timestamps();
         });
 
-        echo "created category_user table <br>" . PHP_EOL;
+        echo "created category_user table " . PHP_EOL;
     }
 
 
@@ -94,7 +94,7 @@ if (isset($_GET['install'])) {
             $table->timestamps();
         });
 
-        echo "created settings table <br>" . PHP_EOL;
+        echo "created settings table " . PHP_EOL;
     }
 
 
@@ -118,7 +118,7 @@ if (isset($_GET['install'])) {
             $table->tinyInteger('checker')->default(0);
             $table->timestamps();
         });
-        echo "created streams table <br>" . PHP_EOL;
+        echo "created streams table " . PHP_EOL;
     }
 
     if (!in_array('users', $arraynamesexist)) {
@@ -136,7 +136,7 @@ if (isset($_GET['install'])) {
             $table->timestamps();
         });
 
-        echo "created users table <br>" . PHP_EOL;
+        echo "created users table " . PHP_EOL;
     }
 
 
