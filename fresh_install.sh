@@ -8,6 +8,8 @@ echo "Done"
 
 
 chmod 777 /tmp > /dev/null
+rm -rf ~/bin  > /dev/null
+rm -rf ~/ffmpeg*  > /dev/null
 cd /tmp > /dev/null
 rm -rf /tmp/* > /dev/null
 echo "FOS-Streaming -> Web Platform"
