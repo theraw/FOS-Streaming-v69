@@ -6,8 +6,31 @@ if (strcmp($we_root, "root") !== 0) {
     exit;
 }
 
+echo "FOS: Checking for existing installations!\r";
+$filename = '/home/fos-streaming';
+if (file_exists($filename)) {
+    echo "FOS: Previous Installation detected, removing existing installations: [";
+    shell_exec("killall -9 ffmpeg php5-fpm nginx_fos > /dev/null");
+    echo "#";
+    shell_exec("service php5-fpm stop > /dev/null");
+    echo "#";
+    shell_exec("/bin/rm -rf /usr/src/FOS-Streaming/* > /dev/null");
+    echo "#";
+    shell_exec("umount -a -f /home/fos-streaming/fos/streams");
+    echo "#";
+    shell_exec("umount -a -f /home/fos-streaming/fos/www/cache");
+    echo "#";
+    shell_exec("/bin/rm -rf /home/fos-streaming > /dev/null");
+    echo "#";
+    shell_exec("deluser fosstreaming -q");
+    echo "#";
+    shell_exec("delgroup fosstreaming -q");
+    echo "#";
+}
+echo "]\r";
+
 function InstallSources($CodeName) {
-    echo "[+] Installing Sources ($CodeName)...\n";
+    echo "FOS: Sources ($CodeName)...\n";
     switch ($CodeName) {
         case 'trusty':
             shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ trusty main restricted universe multiverse' > /etc/apt/sources.list.d/fos_streaming.list");
@@ -97,6 +120,7 @@ if (strcmp($release_info, "Ubuntu") || strcmp($release_info, "Debian")) {
     if (!file_exists("/etc/apt/sources.list.d/fos_streaming.list")) {
         InstallSources($CodeName);
     }
+    echo "Updating newly added sources, please hold...";
     shell_exec("apt-get update > /dev/null");
 } else {
     echo "]FAIL. Need Ubuntu or Debian!!! \n";
@@ -319,18 +343,6 @@ foreach ($packages as $package) {
     }
 }
 echo "]PASS \n";
-
-$filename = '/home/fos-streaming';
-if (file_exists($filename)) {
-    shell_exec("killall -9 ffmpeg php5-fpm nginx_fos > /dev/null");
-    shell_exec("service php5-fpm stop > /dev/null");
-    shell_exec("/bin/rm -rf /usr/src/FOS-Streaming/* > /dev/null");
-    shell_exec("umount -a -f /home/fos-streaming/fos/streams");
-    shell_exec("umount -a -f /home/fos-streaming/fos/www/cache");
-    shell_exec("/bin/rm -rf /home/fos-streaming > /dev/null");
-    shell_exec("deluser fosstreaming -q");
-    shell_exec("delgroup fosstreaming -q");
-}
 
 
 echo "4. [FOS-Panel Installation:] ";
