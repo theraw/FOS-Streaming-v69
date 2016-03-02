@@ -3,7 +3,7 @@ echo "Updating sources"
 apt-get update > /dev/null
 echo "Done"
 echo "Installing FOS Prerequisites..."
-apt-get install php5-cli php5-curl curl zip unzip sudo nano dialog apt-utils python-software-properties apt lsb-release -y > /dev/null
+apt-get install php5-cli php5-curl curl zip expect unzip sudo nano dialog apt-utils python-software-properties apt lsb-release -y > /dev/null
 echo "Done"
 
 
