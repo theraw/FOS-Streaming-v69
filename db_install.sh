@@ -10,7 +10,7 @@ if [ -f /etc/init.d/mysql* ]; then
     service mysql start
 else 
 
-apt-get install -y -q mysql-server mysql-common php5-mysql
+apt-get install -y mysql-server mysql-common php5-mysql
 
     
 fi
