@@ -3,17 +3,6 @@
 
 echo  "Database Installation"
 
-UP=$(pgrep mysql | wc -l);
-if [ "$UP" -ne 1 ];
-then
-if [ -f /etc/init.d/mysql* ]; then
-    service mysql start
-else 
-    apt-get install -y mysql-server mysql-client php5-mysql mysql-common
-fi
-    
-fi
-
 read -p "Choose your MySQL database name: " sqldatabase
 read -p "Enter your MySQL username(usual 'root'): " sqluname 
 read -rep $'Enter your MySQL password (ENTER for none):' sqlpasswd
@@ -24,6 +13,17 @@ echo "phpmyadmin phpmyadmin/app-password-confirm password $sqlpasswd" | debconf-
 echo "phpmyadmin phpmyadmin/mysql/admin-pass password $sqlpasswd" | debconf-set-selections
 echo "phpmyadmin phpmyadmin/mysql/app-pass password $sqlpasswd" | debconf-set-selections
 echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect none" | debconf-set-selections
+
+UP=$(pgrep mysql | wc -l);
+if [ "$UP" -ne 1 ];
+then
+if [ -f /etc/init.d/mysql* ]; then
+    service mysql start
+else 
+    apt-get install -y mysql-server mysql-client php5-mysql mysql-common > /dev/null 2>$1
+fi
+    
+fi
 
 mysql -uroot -p$sqlpasswd -e "CREATE DATABASE $sqldatabase"
 mysql -uroot -p$sqlpasswd -e "grant all privileges on $sqldatabase.* to '$sqluname'@'localhost' identified by '$sqlpasswd'"
