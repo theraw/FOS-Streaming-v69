@@ -128,18 +128,15 @@ if (!file_exists("/usr/src/FOS-Streaming")) {
 echo "##";
 
 function GetFos() {
-    if (!file_exists("/usr/src/FOS-Streaming")) {
-        shell_exec("mkdir /usr/src/FOS-Streaming > /dev/null");
-    }
     shell_exec("git clone https://github.com/zgelici/FOS-Streaming-v1.git /usr/src/FOS-Streaming/ > /dev/null");
-    shell_exec("/bin/mv /usr/src/FOS-Streaming/* /home/fos-streaming/fos/www/  > /dev/null");
+    shell_exec("mv /usr/src/FOS-Streaming/* /home/fos-streaming/fos/www/  > /dev/null");
     if (!file_exists("/usr/bin/composer.phar")) {
         shell_exec("wget https://getcomposer.org/installer -O /tmp/installer  > /dev/null");
         shell_exec("/usr/bin/php /tmp/installer --quiet");
         shell_exec("/bin/cp /tmp/composer.phar /usr/bin/composer.phar  > /dev/null");
     }
     shell_exec("chmod +x /usr/bin/composer.phar");
-    shell_exec("/usr/bin/composer.phar install -d /home/fos-streaming/fos/www/");
+    shell_exec("/usr/bin/composer.phar install -d /home/fos-streaming/fos/www/ --quiet");
 }
 
 function AddSudo() {
