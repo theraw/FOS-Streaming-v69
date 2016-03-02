@@ -9,7 +9,7 @@ then
 if [ -f /etc/init.d/mysql* ]; then
     service mysql start
 else 
-    apt-get install -y mysql-server mysql-client php5-mysql mysql-common -y > /dev/null
+    apt-get install -y mysql-server mysql-client php5-mysql mysql-common
 fi
     
 fi
@@ -35,14 +35,11 @@ sed -i 's/xxx/'$sqldatabase'/g' /home/fos-streaming/fos/www/config.php
 sed -i 's/zzz/'$sqlpasswd'/g' /home/fos-streaming/fos/www/config.php 
 sed -i 's/ttt/'$sqluname'/g' /home/fos-streaming/fos/www/config.php
 
-cd /usr/src/
-wget https://getcomposer.org/installer
-php installer
 cd /home/fos-streaming/fos/www/
-php /tmp/composer.phar install
+/usr/bin/composer.phar install
 
 curl "http://127.0.0.1:8000/install.php?install" 
 curl "http://127.0.0.1:8000/install.php?update"
-rm -rf /home/fos-streaming/fos/www/*install.php
+rm -rf /home/fos-streaming/fos/www/*install*
 rm -rf /tmp/*
 rm -rf /usr/src/*
