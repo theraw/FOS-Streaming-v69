@@ -78,7 +78,7 @@
                                             <option value="" {{ isset($_POST['audio_codec']) ?  $_POST['audio_codec']  == '' : $transcode->audio_codec  == '' ? "selected" : "" }}>
                                                 Disable
                                             </option>
-                                            <option value="libvo_aacenc" {{ isset($_POST['audio_codec']) ?  $_POST['audio_codec']  == 'libvo_aacenc' : $transcode->audio_codec  == 'libfaac' ? "selected" : "" }}>
+                                            <option value="libfaac" {{ isset($_POST['audio_codec']) ?  $_POST['audio_codec']  == 'libfaac' : $transcode->audio_codec  == 'libfaac' ? "selected" : "" }}>
                                                 AAC
                                             </option>
                                             <option value="copy" {{ isset($_POST['audio_codec']) ?  $_POST['audio_codec']  == 'copy' : $transcode->audio_codec  == 'copy' ? "selected" : "" }}>
