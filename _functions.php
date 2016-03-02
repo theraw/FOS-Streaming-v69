@@ -145,7 +145,7 @@ function start_stream($id) {
 
 
         $stream->checker = 0;
-        $checkstreamurl = shell_exec('' . $setting->ffprobe_path . ' -analyzeduration 1000000 -probesize 5000000 -i "' . $stream->streamurl . '" -v  quiet -print_format json -show_streams 2>&1');
+        $checkstreamurl = shell_exec('' . $setting->ffprobe_path . ' -analyzeduration 10000000 -probesize 5000000 -i "' . $stream->streamurl . '" -v  quiet -print_format json -show_streams 2>&1');
         $streaminfo = json_decode($checkstreamurl, true);
 
         if ($streaminfo) {
@@ -185,7 +185,7 @@ function start_stream($id) {
             if ($stream->streamurl2) {
                 $stream->checker = 2;
 
-                $checkstreamurl = shell_exec('' . $setting->ffprobe_path . ' -analyzeduration 1000000 -probesize 5000000 -i "' . $stream->streamurl . '" -v  quiet -print_format json -show_streams 2>&1');
+                $checkstreamurl = shell_exec('' . $setting->ffprobe_path . ' -analyzeduration 10000000 -probesize 5000000 -i "' . $stream->streamurl . '" -v  quiet -print_format json -show_streams 2>&1');
                 $streaminfo = json_decode($checkstreamurl, true);
 
                 if ($streaminfo) {
@@ -223,7 +223,7 @@ function start_stream($id) {
                     //streamurl 3 checker
                     if ($stream->streamurl3) {
                         $stream->checker = 3;
-                        $checkstreamurl = shell_exec('' . $setting->ffprobe_path . ' -analyzeduration 1000000 -probesize 5000000 -i "' . $stream->streamurl . '" -v  quiet -print_format json -show_streams 2>&1');
+                        $checkstreamurl = shell_exec('' . $setting->ffprobe_path . ' -analyzeduration 10000000 -probesize 5000000 -i "' . $stream->streamurl . '" -v  quiet -print_format json -show_streams 2>&1');
                         $streaminfo = json_decode($checkstreamurl, true);
 
                         if ($streaminfo) {
