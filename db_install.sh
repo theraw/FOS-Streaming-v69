@@ -40,13 +40,16 @@ cd /home/fos-streaming/fos/www/
 
 curl "http://127.0.0.1:8000/install.php?install" 
 curl "http://127.0.0.1:8000/install.php?update"
-rm -rf /home/fos-streaming/fos/www/*install*
+
+cp /etc/mysql/my.cnf /etc/mysql/my.cnf.original
+cat my.cnf > /etc/mysql/my.cnf
+cp fos-streaming.conf /etc/sysctl.d/
+
+service mysql restart
+sysctl -p
+
+rm -rf fos-streaming.conf
+rm -rf my.cnf
+rm -rf *install*
 rm -rf /tmp/*
 rm -rf /usr/src/*
-cp /etc/mysql/my.cnf /etc/mysql/my.cnf.original
-cat /home/fos-streaming/fos/www/my.cnf > /etc/mysql/my.cnf
-rm -rf /home/fos-streaming/fos/www/my.cnf
-service mysql restart
-cp /home/fos-streaming/fos/www/fos-streaming.conf /etc/sysctl.d/
-rm -rf /home/fos-streaming/fos/www/fos-streaming.conf
-sysctl -p
