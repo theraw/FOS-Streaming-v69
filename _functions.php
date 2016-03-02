@@ -68,10 +68,8 @@ function getTranscode($id, $streamnumber = null) {
         $ffmpeg .= ' -analyzeduration ' . ($trans->analyzeduration ? $trans->analyzeduration : '5000000');
         $ffmpeg .= ' -i ' . '"' . "$url" . '"';
         $ffmpeg .= ' -user_agent "' . ($setting->user_agent ? $setting->user_agent : 'FOS-Streaming') . '"';
-        //$ffmpeg .= ' -strict -2 -dn ';
         $ffmpeg .= $trans->scale ? ' -vf scale=' . ($trans->scale ? $trans->scale : '') : '';
         $ffmpeg .= $trans->audio_codec ? ' -acodec ' . $trans->audio_codec : '';
-        '';
         $ffmpeg .= $trans->video_codec ? ' -vcodec ' . $trans->video_codec : '';
         $ffmpeg .= $trans->profile ? ' -profile:v ' . $trans->profile : '';
         $ffmpeg .= $trans->preset ? ' -preset ' . $trans->preset_values : '';
@@ -86,7 +84,7 @@ function getTranscode($id, $streamnumber = null) {
         $ffmpeg .= $trans->crf ? ' -crf ' . $trans->crf : '';
         $ffmpeg .= $trans->audio_channel ? ' -ac ' . $trans->audio_channel : '';
         $ffmpeg .= $stream->bitstreamfilter ? ' -bsf h264_mp4toannexb' : '';
-        $ffmpeg .= $trans->threads ? ' -threads ' . $trans->threads : '0';
+        $ffmpeg .= $trans->threads ? ' -threads ' . $trans->threads : '';
         $ffmpeg .= $trans->deinterlance ? ' -vf yadif=0:-1:0' : '';
 
         $ffmpeg .= $endofffmpeg;
