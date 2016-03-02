@@ -37,7 +37,7 @@
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <input type="number" name="probesize" class="form-control col-md-7 col-xs-12"
                                                placeholder="15000000"
-                                               value="{{  isset($_POST['probesize']) ?  $_POST['probesize'] : $transcode->probesize ? $transcode->probesize : "15000000" }}">
+                                               value="{{  isset($_POST['probesize']) ?  $_POST['probesize'] : $transcode->probesize ? $transcode->probesize : "10000000" }}">
                                     </div>
                                 </div>
 
@@ -47,7 +47,7 @@
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <input type="number" name="analyzeduration"
                                                class="form-control col-md-7 col-xs-12" placeholder="12000000"
-                                               value="{{  isset($_POST['analyzeduration']) ?  $_POST['analyzeduration'] : $transcode->analyzeduration ? $transcode->analyzeduration : "12000000" }}">
+                                               value="{{  isset($_POST['analyzeduration']) ?  $_POST['analyzeduration'] : $transcode->analyzeduration ? $transcode->analyzeduration : "5000000" }}">
                                     </div>
                                 </div>
 
@@ -78,7 +78,7 @@
                                             <option value="" {{ isset($_POST['audio_codec']) ?  $_POST['audio_codec']  == '' : $transcode->audio_codec  == '' ? "selected" : "" }}>
                                                 Disable
                                             </option>
-                                            <option value="libvo_aacenc" {{ isset($_POST['audio_codec']) ?  $_POST['audio_codec']  == 'libvo_aacenc' : $transcode->audio_codec  == 'libvo_aacenc' ? "selected" : "" }}>
+                                            <option value="libvo_aacenc" {{ isset($_POST['audio_codec']) ?  $_POST['audio_codec']  == 'libvo_aacenc' : $transcode->audio_codec  == 'libfaac' ? "selected" : "" }}>
                                                 AAC
                                             </option>
                                             <option value="copy" {{ isset($_POST['audio_codec']) ?  $_POST['audio_codec']  == 'copy' : $transcode->audio_codec  == 'copy' ? "selected" : "" }}>

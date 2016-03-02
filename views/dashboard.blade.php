@@ -41,7 +41,7 @@
                     <div class="w_center w_55">
                         <div class="progress">
                             <div class="progress-bar bg-green" role="progressbar" aria-valuenow="{{ $space['pr'] }}"
-                                 aria-valuemin="0" aria-valuemax="100" style="width: 66%;">
+                                 aria-valuemin="0" aria-valuemax="100" style="width: {{ $space['pr'] }}%;">
                             </div>
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                     <div class="w_center w_55">
                         <div class="progress">
                             <div class="progress-bar bg-green" role="progressbar" aria-valuenow="{{ $cpu['pr'] }}"
-                                 aria-valuemin="0" aria-valuemax="100" style="width: 45%;">
+                                 aria-valuemin="0" aria-valuemax="100" style="width: {{ $cpu['pr'] }}%;">
 
                             </div>
                         </div>
@@ -74,7 +74,7 @@
                     <div class="w_center w_55">
                         <div class="progress">
                             <div class="progress-bar bg-green" role="progressbar" aria-valuenow="{{ $mem['pr'] }}"
-                                 aria-valuemin="0" aria-valuemax="100" style="width: 5%;">
+                                 aria-valuemin="0" aria-valuemax="100" style="width: {{ $mem['pr'] }}%;">
                             </div>
                         </div>
                     </div>

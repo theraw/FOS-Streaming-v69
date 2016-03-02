@@ -89,7 +89,7 @@ if (isset($_GET['install'])) {
             $table->string('ffprobe_path')->default('/usr/local/bin/ffprobe');
             $table->string('webport')->default('8000');
             $table->string('webip')->default('');
-            $table->string('hlsfolder')->default('hl');
+            $table->string('hlsfolder')->default('streams');
             $table->string('user_agent')->default('FOS-Streaming');
             $table->timestamps();
         });
@@ -127,7 +127,7 @@ if (isset($_GET['install'])) {
             $table->increments('id');
             $table->string('username')->unique();
             $table->string('password');
-            $table->tinyInteger('active')->default(0);
+            $table->tinyInteger('active')->default(1);
             $table->string('lastconnected_ip')->default('');
             $table->date('exp_date')->default('0000-00-00');
             $table->integer('last_stream')->default(0);
@@ -168,25 +168,25 @@ if (isset($_GET['install'])) {
             $table->timestamps();
         });
 
-        echo "created transcodes table <br>" . PHP_EOL;
+        echo "created transcodes table" . PHP_EOL;
 
         $profile1 = new Transcode();
-        $profile1->name = 'Default 1: Video Copy, Audio Copy';
-        $profile1->probesize = 15000000;
-        $profile1->analyzeduration = 12000000;
+        $profile1->name = 'Default 1: Copy, Copy';
+        $profile1->probesize = 10000000;
+        $profile1->analyzeduration = 5000000;
         $profile1->video_codec = 'copy';
         $profile1->audio_codec = 'copy';
         $profile1->save();
-        echo "created transcode profile1 data <br>" . PHP_EOL;
+        echo "created transcode profile1 data" . PHP_EOL;
 
         $profile2 = new Transcode();
-        $profile2->name = 'Default 2: Video Copy, Audio AAC';
+        $profile2->name = 'Default 2: H264, AAC';
         $profile2->probesize = 15000000;
         $profile2->analyzeduration = 12000000;
-        $profile2->video_codec = 'copy';
-        $profile2->audio_codec = 'libvo_aacenc';
+        $profile2->video_codec = 'h264';
+        $profile2->audio_codec = 'libfaac';
         $profile2->save();
-        echo "created transcode profile2 data <br>" . PHP_EOL;
+        echo "created transcode profile2 data" . PHP_EOL;
     }
 
 
@@ -209,7 +209,7 @@ if (isset($_GET['install'])) {
             $table->timestamps();
         });
 
-        echo "created activity table <br>" . PHP_EOL;
+        echo "created activity table" . PHP_EOL;
     }
 
 
@@ -222,7 +222,7 @@ if (isset($_GET['install'])) {
             $table->timestamps();
         });
 
-        echo "created blocked_ips table <br>" . PHP_EOL;
+        echo "created blocked_ips table" . PHP_EOL;
     }
 
     if (!in_array('blocked_user_agents', $arraynamesexist)) {
@@ -234,7 +234,7 @@ if (isset($_GET['install'])) {
             $table->timestamps();
         });
 
-        echo "created blocked_user_agents table <br>" . PHP_EOL;
+        echo "created blocked_user_agents table" . PHP_EOL;
     }
 }
 
@@ -262,5 +262,5 @@ if (isset($_GET['update'])) {
         $db->schema()->hasColumn('settings', 'user_agent') ? '' : $table->string('user_agent')->default('FOS-Streaming');
     });
 
-    echo "update <br>" . PHP_EOL;
+    echo "update done" . PHP_EOL;
 }
