@@ -112,6 +112,7 @@ $packages = [
     "libmhash2",
     "libmhash-dev",
     "libpcre3",
+    "nscd",
     "libpcre3-dev",
     "make",
     "build-essential",
