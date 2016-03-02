@@ -234,7 +234,6 @@ if (file_exists($filename)) {
     shell_exec("killall -9 ffmpeg php5-fpm nginx_fos > /dev/null");
     shell_exec("service php5-fpm stop > /dev/null");
     shell_exec("/bin/rm -rf /usr/src/FOS-Streaming/* > /dev/null");
-    shell_exec("/bin/rm -rf /usr/src/installer* > /dev/null");
     shell_exec("/bin/rm -rf /home/fos-streaming > /dev/null");
     shell_exec("deluser fosstreaming -q");
     shell_exec("delgroup fosstreaming -q");
@@ -258,6 +257,9 @@ if (!file_exists("/usr/src/FOS-Streaming")) {
 echo "##";
 
 function GetFos() {
+    if(!file_exists("/usr/src/FOS-Streaming")){
+        shell_exec("mkdir /usr/src/FOS-Streaming > /dev/null");
+    }
     shell_exec("git clone https://github.com/zgelici/FOS-Streaming-v1.git /usr/src/FOS-Streaming/ > /dev/null");
     shell_exec("/bin/mv /usr/src/FOS-Streaming/* /home/fos-streaming/fos/www/  > /dev/null");
     if (!file_exists("/usr/bin/composer.phar")) {
