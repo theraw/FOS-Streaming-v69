@@ -7,18 +7,14 @@ if (strcmp($we_root, "root") !== 0) {
 }
 
 echo "FOS: Checking for existing installations!\r";
-$filename = '/home/fos-streaming';
-if (file_exists($filename)) {
-    echo "FOS: Previous Installation detected, removing existing installations:\r";
-    shell_exec("killall -9 ffmpeg php5-fpm php-fpm nginx nginx_fos > /dev/null");
-    shell_exec("service php5-fpm stop > /dev/null");
-    shell_exec("rm -rf /usr/src/FOS-Streaming/* > /dev/null");
-    shell_exec("umount /home/fos-streaming/fos/streams");
-    shell_exec("umount /home/fos-streaming/fos/www/cache");
-    shell_exec("rm -rf /home/fos-streaming > /dev/null");
-    shell_exec("deluser fosstreaming -q");
-    shell_exec("delgroup fosstreaming -q");
-}
+shell_exec("killall -9 ffmpeg php5-fpm php-fpm nginx nginx_fos > /dev/null");
+shell_exec("service php5-fpm stop > /dev/null");
+shell_exec("rm -rf /usr/src/FOS-Streaming/* > /dev/null");
+shell_exec("umount /home/fos-streaming/fos/streams > /dev/null");
+shell_exec("umount /home/fos-streaming/fos/www/cache > /dev/null");
+shell_exec("rm -rf /home/fos-streaming > /dev/null");
+shell_exec("deluser fosstreaming -q");
+shell_exec("delgroup fosstreaming -q");
 
 function InstallSources($CodeName) {
     echo "FOS: Sources ($CodeName)...\n";
