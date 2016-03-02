@@ -165,10 +165,14 @@ function AddRCLocal() {
 }
 
 function BuildWeb() {
-    if (file_exists("/home/fos-streaming/fos/www/cache")) {
+    if (!file_exists("/home/fos-streaming/fos/www/cache")) {
         shell_exec("mkdir /home/fos-streaming/fos/www/cache");
+    }
+    if (!file_exists("/home/fos-streaming/fos/streams")) {
         shell_exec("mkdir /home/fos-streaming/fos/streams");
     }
+
+
     $fstab_streams = shell_exec("cat /etc/fstab | grep -v grep | grep -c 'fos-streaming/fos/streams'");
     if ($fstab_streams == 0) {
         shell_exec("echo 'tmpfs /home/fos-streaming/fos/streams tmpfs defaults,noatime,nosuid,nodev,noexec,mode=1777,size=85% 0 0' >> /etc/fstab");
