@@ -265,7 +265,7 @@ function start_stream($id) {
 
 function generatEginxConfPort($port) {
     ob_start();
-    echo 'user  fosstreaming;
+    echo 'user  root;
     worker_processes  auto;
 
     error_log  logs/error.log debug;
