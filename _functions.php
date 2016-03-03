@@ -338,7 +338,7 @@ rtmp {
      }
    }
 }';
-    $file = '/usr/local/nginx/conf/nginx.conf';
+    $file = '/home/fos-streaming/fos/nginx/conf/nginx.conf';
     $current = ob_get_clean();
     file_put_contents($file, $current);
 }
