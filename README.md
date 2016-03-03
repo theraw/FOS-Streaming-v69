@@ -17,12 +17,19 @@
 - User Agent block
 - predefined transcode profiles
 
+##Currently supported OS:
+###Ubuntu: trusty, utopic, saucy, wily, vivid
+###Debian: wheezy, squeeze, jessie, sid
+
+Try to install the panel on clean OS, minimal version 64-bit
+
 ## Installation options:
 ### Option 1: Fresh installation
-1. `wget http://fos-streaming.com/fresh_install.sh`
+1. `cd ~/ && wget https://raw.githubusercontent.com/zgelici/FOS-Streaming-v1/master/fresh_install.sh`
 2. `chmod 755 fresh_install.sh`
 3. `./fresh_install.sh`
 
+DO NOT USE, UNSTABLE!
 ### Option 2: Old FOS-Streaming to (NEW) FOS-Streaming V
 1. `wget http://fos-streaming.com/old2new_install.sh`
 2. `chmod 755 old2new_install.sh`
@@ -44,6 +51,7 @@ If someone have problem after reboot that old panel starts, then use this comman
 - You can use it also in proxy mode, but that depends on how you want to use it.
 - The most stable way is using transcode profile: **Default 1** without proxy mode ticket
 
+DO NOT USE, UNSTABLE!
 ## Updater
 1. `wget http://fos-streaming.com/update_fos.sh`
 2. `chmod 755 update_fos.sh`
