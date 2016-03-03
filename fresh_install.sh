@@ -3,7 +3,7 @@ echo "Updating sources"
 apt-get update > /dev/null
 echo "Done"
 echo "Installing FOS Prerequisites..."
-apt-get install php5-cli php5-curl curl zip expect unzip sudo nano dialog apt-utils python-software-properties apt lsb-release -y > /dev/null
+apt-get install php5-cli php5-curl curl zip unzip sudo nano dialog apt-utils python-software-properties apt lsb-release -y > /dev/null
 echo "Done"
 
 
@@ -24,4 +24,5 @@ wget -q https://raw.githubusercontent.com/zgelici/FOS-Streaming-v1/master/ffmpeg
 chmod 755 ffmpeg_install.sh > /dev/null
 ./ffmpeg_install.sh
 
-
+chown fosstreaming:fosstreaming /usr/bin/ff*
+chown -R fosstreaming:fosstreaming /home/fos-streaming

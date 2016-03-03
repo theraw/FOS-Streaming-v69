@@ -265,31 +265,47 @@ function start_stream($id) {
 
 function generatEginxConfPort($port) {
     ob_start();
-    echo 'user  root;
+    echo 'user  fosstreaming;
     worker_processes  auto;
 
     error_log  logs/error.log debug;
 
-    events {
-        worker_connections  1024;
-    }
+worker_rlimit_nofile 300000;
+events {
+    multi_accept on;
+    worker_connections  16000;
+    use epoll;
+}
 
-    http {
-        include       mime.types;
-        default_type  application/octet-stream;
+http {
 
-        sendfile        on;
-        keepalive_timeout  65;
+    include       mime.types;
+    default_type  application/octet-stream;
 
+    sendfile           on;
+    tcp_nopush         on;
+    tcp_nodelay        on;
+    proxy_buffering off;
+    client_max_body_size 100m;
+    gzip on;
+    gzip_comp_level 5;
+    fastcgi_read_timeout 180;
         server {
             listen ' . $port . ';
                     root /home/fos-streaming/fos/www/;
                     index index.php index.html index.htm;
                     server_tokens off;
                     chunked_transfer_encoding off;
-                    rewrite  ^/(.*)/(.*)/(.*)$ /stream.php?username=$1&password=$2&stream=$3 break;
+                    rewrite  ^/live/(.*)/(.*)/(.*)$ /stream.php?username=$1&password=$2&stream=$3 break;
 
      location ~ \.php$ {
+     			if ($uri ~* /stream.php) {
+				gzip off;
+			}
+
+			if ($uri ~* /getfile.php) {
+				gzip off;
+			}
             try_files $uri =404;
                             fastcgi_index index.php;
                             fastcgi_pass unix:/var/run/php5-fpm.sock;
@@ -306,18 +322,22 @@ function generatEginxConfPort($port) {
         }
     }
 
-    rtmp {
-        server {
-            listen 1935;
-            ping 30s;
-            notify_method get;
+rtmp_auto_push on;
+rtmp {
+   server {
+     listen 8546;
+     interleave on;
+     wait_video on;
+     idle_streams off;
+     max_streams 512;
+     application input{
+         live on;
+         allow play 127.0.0.1; # localhost
+         deny play all;
 
-            application rtmp {
-                live on;
-            }
-
-        }
-    }';
+     }
+   }
+}';
     $file = '/usr/local/nginx/conf/nginx.conf';
     $current = ob_get_clean();
     file_put_contents($file, $current);

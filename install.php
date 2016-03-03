@@ -172,7 +172,7 @@ if (isset($_GET['install'])) {
 
         $profile1 = new Transcode();
         $profile1->name = 'Default 1: Copy, Copy';
-        $profile1->probesize = 10000000;
+        $profile1->probesize = 12000000;
         $profile1->analyzeduration = 5000000;
         $profile1->video_codec = 'copy';
         $profile1->audio_codec = 'copy';
@@ -181,12 +181,21 @@ if (isset($_GET['install'])) {
 
         $profile2 = new Transcode();
         $profile2->name = 'Default 2: H264, AAC';
-        $profile2->probesize = 10000000;
+        $profile2->probesize = 12000000;
         $profile2->analyzeduration = 5000000;
         $profile2->video_codec = 'h264';
         $profile2->audio_codec = 'libfaac';
         $profile2->save();
         echo "created transcode profile2 data" . PHP_EOL;
+        
+                $profile3 = new Transcode();
+        $profile2->name = 'Default 2: H265, AAC';
+        $profile2->probesize = 12000000;
+        $profile2->analyzeduration = 5000000;
+        $profile2->video_codec = 'libx265';
+        $profile2->audio_codec = 'libfaac';
+        $profile2->save();
+        echo "created transcode profile3 data" . PHP_EOL;
     }
 
 
