@@ -20,47 +20,6 @@ shell_exec("delgroup fosstreaming -q");
 function InstallSources($CodeName) {
     echo "FOS: Sources ($CodeName)...\n";
     switch ($CodeName) {
-        case 'trusty':
-            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ trusty main restricted universe multiverse' > /etc/apt/sources.list.d/fos_streaming.list");
-            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ trusty main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
-            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ trusty-security main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
-            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ trusty-updates main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
-            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ trusty-proposed main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
-            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ trusty-backports main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
-            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ trusty-security main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
-            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ trusty-updates main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
-            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ trusty-proposed main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
-            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ trusty-backports main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
-
-            break;
-
-        case 'utopic':
-            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ utopic main restricted universe multiverse' > /etc/apt/sources.list.d/fos_streaming.list");
-            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ utopic main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
-            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ utopic-security main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
-            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ utopic-updates main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
-            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ utopic-proposed main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
-            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ utopic-backports main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
-            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ utopic-security main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
-            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ utopic-updates main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
-            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ utopic-proposed main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
-            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ utopic-backports main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
-
-            break;
-
-        case 'saucy':
-            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ saucy main restricted universe multiverse' > /etc/apt/sources.list.d/fos_streaming.list'");
-            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ saucy main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
-            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ saucy-security main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
-            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ saucy-updates main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
-            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ saucy-proposed main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
-            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ saucy-backports main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
-            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ saucy-security main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
-            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ saucy-updates main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
-            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ saucy-proposed main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
-            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ saucy-backports main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
-
-
         case 'wheezy':
             shell_exec("echo 'deb http://ftp.de.debian.org/debian stable main contrib non-free' > /etc/apt/sources.list.d/fos_streaming.list");
             shell_exec("echo 'deb-src http://ftp.de.debian.org/debian stable main contrib non-free' >> /etc/apt/sources.list.d/fos_streaming.list");
@@ -88,6 +47,86 @@ function InstallSources($CodeName) {
             shell_exec("echo 'deb-src http://security.debian.org/ jessie/updates main contrib non-free' >> /etc/apt/sources.list.d/fos_streaming.list");
             break;
 
+        case "sid":
+            shell_exec("echo 'deb http://ftp.us.debian.org/debian unstable main contrib non-free' > /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://ftp.us.debian.org/debian unstable main contrib non-free' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://ftp.debian.org/debian/ Sid-updates main contrib non-free' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://ftp.debian.org/debian/ Sid-updates main contrib non-free' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://security.debian.org/ Sid/updates main contrib non-free' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://security.debian.org/ Sid/updates main contrib non-free' >> /etc/apt/sources.list.d/fos_streaming.list");
+            break;
+
+        case 'trusty':
+            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ trusty main restricted universe multiverse' > /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ trusty main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ trusty-security main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ trusty-updates main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ trusty-proposed main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ trusty-backports main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ trusty-security main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ trusty-updates main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ trusty-proposed main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ trusty-backports main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            break;
+
+        case 'utopic':
+            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ utopic main restricted universe multiverse' > /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ utopic main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ utopic-security main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ utopic-updates main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ utopic-proposed main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ utopic-backports main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ utopic-security main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ utopic-updates main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ utopic-proposed main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ utopic-backports main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            break;
+
+        case 'saucy':
+            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ saucy main restricted universe multiverse' > /etc/apt/sources.list.d/fos_streaming.list'");
+            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ saucy main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ saucy-security main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ saucy-updates main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ saucy-proposed main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ saucy-backports main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ saucy-security main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ saucy-updates main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ saucy-proposed main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ saucy-backports main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            break;
+        
+        case "wily":
+            shell_exec("echo '###### Ubuntu Main Repos' > /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ wily main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ wily main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo '###### Ubuntu Update Repos' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ wily-security main restricted universe multiverse ' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ wily-updates main restricted universe multiverse ' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ wily-proposed main restricted universe multiverse ' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ wily-security main restricted universe multiverse ' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ wily-updates main restricted universe multiverse ' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ wily-proposed main restricted universe multiverse ' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo '###### Ubuntu Partner Repo' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://archive.canonical.com/ubuntu wily partner' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://archive.canonical.com/ubuntu wily partner' >> /etc/apt/sources.list.d/fos_streaming.list");
+            break;
+        
+        case "vivid":
+            shell_exec("echo '###### Ubuntu Main Repos' > /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ vivid main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ vivid main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo '###### Ubuntu Update Repos' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ vivid-security main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ vivid-updates main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://us.archive.ubuntu.com/ubuntu/ vivid-proposed main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ vivid-security main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ vivid-updates main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ vivid-proposed main restricted universe multiverse' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo '###### Ubuntu Partner Repo' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb http://archive.canonical.com/ubuntu vivid partner' >> /etc/apt/sources.list.d/fos_streaming.list");
+            shell_exec("echo 'deb-src http://archive.canonical.com/ubuntu vivid partner' >> /etc/apt/sources.list.d/fos_streaming.list");
+            break;
+        
         default:
             return true;
     }
