@@ -151,7 +151,7 @@ if (strcmp($release_info, "Ubuntu") || strcmp($release_info, "Debian")) {
     shell_exec("apt-get update > /dev/null");
 } else {
     echo "]FAIL. Need Ubuntu or Debian!!! \n";
-    //exit();
+    exit();
 }
 
 shell_exec("/usr/sbin/useradd -s /sbin/nologin -U -d /home/fos-streaming -m fosstreaming");

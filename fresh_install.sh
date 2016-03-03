@@ -19,10 +19,11 @@ echo "FOS-Streaming -> Database Deployment"
 wget -q https://raw.githubusercontent.com/zgelici/FOS-Streaming-v1/master/db_install.sh -O db_install.sh > /dev/null 
 chmod 755 db_install.sh > /dev/null
 ./db_install.sh
+if [ ! -f /usr/bin/ffmpeg ]; then
 echo "FOS-Streaming -> FFmpeg and FFprobe installation"
 wget -q https://raw.githubusercontent.com/zgelici/FOS-Streaming-v1/master/ffmpeg_install.sh -O ffmpeg_install.sh > /dev/null
 chmod 755 ffmpeg_install.sh > /dev/null
 ./ffmpeg_install.sh
-
+fi
 chown fosstreaming:fosstreaming /usr/bin/ff*
 chown -R fosstreaming:fosstreaming /home/fos-streaming
