@@ -2,6 +2,9 @@
 include('config.php');
 set_time_limit(0);
 error_reporting(0);
+if (isset($_SERVER['HTTP_USER_AGENT'])) {
+    $agent = $_SERVER['HTTP_USER_AGENT'];
+}
 
 
 if (empty($_GET['username']) || empty($_GET['password'])) {
@@ -40,7 +43,11 @@ if(isset($_GET['m3u'])) {
         foreach($category->streams as $stream) {
 
             if($stream->running == 1) {
-                echo "#EXTINF:0," . $stream->name . "\r\n";
+                if (strlen(strstr($agent, 'Kodi')) > 0) {	
+				echo "#EXTINF:0 tvg-logo=\"" . $stream->logo . "\" tvg-id=\"" . $stream->tvid . "\" ,[COLOR green]" . $stream->name . "[/COLOR]\r\n";
+                } else {
+				echo "#EXTINF:0 tvg-logo=\"" . $setting->logourl . "" . $stream->logo . "\" tvg-id=\"" . $stream->tvid . "\" ," . $stream->name . "\r\n";
+				}
                 echo "http://" . $setting->webip . ":" . $setting->webport . "/live/" . $user->username . "/" . $user->password . "/" . $stream->id . "\r\n";
             }
         }
