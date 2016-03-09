@@ -44,10 +44,10 @@ if(isset($_GET['m3u'])) {
 
             if($stream->running == 1) {
                 if (strlen(strstr($agent, 'Kodi')) > 0) {	
-				echo "#EXTINF:0 tvg-logo=\"" . $stream->logo . "\" tvg-id=\"" . $stream->tvid . "\" ,[COLOR green]" . $stream->name . "[/COLOR]\r\n";
+			echo "#EXTINF:0 tvg-logo=\"" . $stream->logo . "\" tvg-id=\"" . $stream->tvid . "\" ,[COLOR green]" . $stream->name . "[/COLOR]\r\n";
                 } else {
-				echo "#EXTINF:0 tvg-logo=\"" . $setting->logourl . "" . $stream->logo . "\" tvg-id=\"" . $stream->tvid . "\" ," . $stream->name . "\r\n";
-				}
+			echo "#EXTINF:0 tvg-logo=\"" . $setting->logourl . "" . $stream->logo . "\" tvg-id=\"" . $stream->tvid . "\" ," . $stream->name . "\r\n";
+		}
                 echo "http://" . $setting->webip . ":" . $setting->webport . "/live/" . $user->username . "/" . $user->password . "/" . $stream->id . "\r\n";
             }
         }
