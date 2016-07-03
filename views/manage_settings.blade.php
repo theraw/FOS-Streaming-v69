@@ -61,6 +61,15 @@
                     </div>
 
                     <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">logo url:
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" class="form-control col-md-7 col-xs-12" name="logourl" value="{{  isset($_POST['logourl']) ?  $_POST['logourl'] : $setting->logourl}}">
+                        </div>
+                        (URL of the folder containing the logo) example: http://example.com/logo/
+                    </div>
+
+                    <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">User agent <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">

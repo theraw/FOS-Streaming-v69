@@ -24,6 +24,8 @@ if (isset($_POST['submit'])) {
 
     $stream->streamurl2 = $_POST['streamurl2'];
     $stream->streamurl3 = $_POST['streamurl3'];
+    $stream->tvid = $_POST['tvid'];
+    $stream->logo = $_POST['logo'];
 
     $stream->restream = 0;
     if(isset($_POST['restream'])) {

@@ -84,6 +84,7 @@ if( isset($_GET['install'])) {
             $table->string('ffprobe_path')->default('/usr/local/bin/ffprobe');
             $table->string('webport')->default('8000');
             $table->string('webip');
+            $table->string('logourl');
             $table->string('hlsfolder')->default('hl');
             $table->string('user_agent')->default('FOS-Streaming');
             $table->timestamps();
@@ -111,6 +112,8 @@ if( isset($_GET['install'])) {
             $table->string('audio_codec_name');
             $table->tinyInteger('bitstreamfilter');
             $table->tinyInteger('checker');
+            $table->string('logo');
+            $table->string('tvid');
             $table->timestamps();
         });
         echo "created streams table <br>" . PHP_EOL;
