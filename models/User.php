@@ -7,12 +7,7 @@ class User extends FosStreaming {
     {
         return $this->belongsToMany('Category');
     }
-
-//    public function listsId()
-//    {
-//        return $this->lists($this->categories, 'id');
-//    }
-
+    
     public function getCategoryNamesAttribute()
     {
         $return = "";
