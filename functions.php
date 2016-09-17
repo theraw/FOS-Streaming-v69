@@ -19,6 +19,15 @@ function logincheck() {
     }
 }
 
+function lists($list, $column)
+{
+    $columns = [];
+    foreach($list->toArray() as $key => $value) {
+        array_push($columns, $value[$column]);
+    }
+
+    return $columns;
+}
 
 function checkPid($pid) {
     exec("ps $pid", $output, $result);

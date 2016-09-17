@@ -61,7 +61,7 @@
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <select name="category[]" class="select2_multiple form-control" multiple="multiple">
                                     @foreach ($categories as $category)
-                                        <option {{ in_array($category->id, $user->categories->lists('id')->toArray()) ? 'selected' : '' }} value="{{ $category->id }}">{{{ $category->name }}}</option>
+                                        <option {{ in_array($category->id, lists($user->categories, 'id')) ? 'selected' : '' }} value="{{ $category->id }}">{{{ $category->name }}}</option>
                                     @endforeach
                                     </select>
                                 </div>

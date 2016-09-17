@@ -4,7 +4,7 @@ logincheck();
 use Carbon\Carbon;
 $message = [];
 $title = "Create user";
-$user = new User;
+$user = new User();
 $categories = Category::all();
 
 if(isset($_GET['id'])) {
@@ -65,6 +65,13 @@ if (isset($_POST['submit'])) {
 
 }
 
+
+//print_r($user->categories->keyBy('id')->toArray());
+//print_r($user->categories->get());
+
+
+
+//\Illuminate\Database\Eloquent\Builder::lists($column, $key);
 echo $template->view()
     ->make('manage_user')
         ->with('user',  $user)
