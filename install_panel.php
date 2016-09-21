@@ -1,24 +1,15 @@
 <?php
 if (strtolower(substr(PHP_OS, 0, 5)) === 'linux')
 {
-    $release_info = array();
-    $files = glob('/etc/*-release');
-
-    foreach ($files as $file)
-    {
-        $lines = array_filter(array_map(function($line) {
-            $parts = explode('=', $line);
-            if (count($parts) !== 2) return false;
-            $parts[1] = str_replace(array('"', "'"), '', $parts[1]);
-            return $parts;
-
-        }, file($file)));
-
-        foreach ($lines as $line)
-            $release_info[$line[0]] = $line[1];
-    }
-
-#print_r($release_info);
+    $osname = shell_exec( "lsb_release -si" );
+    $osrelease = shell_exec( "lsb_release -sr" );
+    $oscodename = shell_exec( "lsb_release -sc" );
+    $osDisc = shell_exec( "lsb_release -sd" );
+    echo $osname; // show distributor ID
+    echo $osrelease; //show release number of this distribution
+    echo $oscodename; // show code name of this distribution
+    echo $osDisc; // show description of this distribution
+    #print_r($release_info);
 }
 $arch = shell_exec( "uname -m" );
 echo "Welcome \n";
@@ -26,20 +17,20 @@ echo "FOS-Streaming will be installed on your system \n";
 echo "Please don't close this session until it's finished \n \n";
 echo "1. [Distribution Detection:] ";
 echo " [############";
-if (trim($release_info["DISTRIB_ID"]) == "Ubuntu") {
+if (trim($osname) == "Ubuntu") {
     echo "]PASS \n";
 }
-elseif (trim($release_info["DISTRIB_ID"]) == "Debian") {
+elseif (trim($osname) == "Debian") {
     echo "]PASS \n";
 }
 else {
     echo "]FAIL \n";
     echo "///////////////////////////////////////////////////// \n";
     echo " Report this problem on www.fos-streaming.com \n";
-    echo ' Distro: ' . $release_info["DISTRIB_ID"] . "\n ";
-    echo 'Version: ' . $release_info["DISTRIB_RELEASE"]  . "\n ";
-    echo 'Codename: ' . $release_info["DISTRIB_CODENAME"]  . "\n ";
-    echo 'Discription: ' . $release_info["DISTRIB_DESCRIPTION"] . "\n ";
+    echo ' Distro: ' . $osname . "\n ";
+    echo 'Version: ' . $osrelease  . "\n ";
+    echo 'Codename: ' . $oscodename  . "\n ";
+    echo 'Discription: ' . $osDisc . "\n ";
     echo $arch;
     echo "///////////////////////////////////////////////////// \n";
     die();
@@ -172,15 +163,12 @@ if(trim($arch) == "x86_64") {
     shell_exec("apt-get install -y --force-yes zlib1g-dev > /dev/null 2>&1");
     shell_exec("apt-get install -y --force-yes php5-fpm  > /dev/null 2>&1");
     echo "]PASS \n";
-
     echo "4. [FOS-Panel Installation:] ";
     echo " [#";
-
     $filename =  '/usr/src/FOS-Streaming';
     if (file_exists($filename)) {
         shell_exec("/bin/rm -r /usr/src/FOS-Streaming > /dev/null 2>&1");
     } else {
-
     }
     shell_exec("/usr/sbin/useradd -s /sbin/nologin -U -d /home/fos-streaming -m fosstreaming > /dev/null");
     echo "##";
@@ -205,14 +193,12 @@ if(trim($arch) == "x86_64") {
     shell_exec("echo '/home/fos-streaming/fos/nginx/sbin/nginx_fos' >> /etc/rc.local");
     shell_exec("echo '/home/fos-streaming/fos/php/sbin/php-fpm' >> /etc/rc.local");
     shell_exec("echo 'exit 0' >> /etc/rc.local");
-
     echo "#";
     shell_exec("/bin/mkdir /home/fos-streaming/fos/www/hl  > /dev/null 2>&1");
     shell_exec("chmod -R 777 /home/fos-streaming/fos/www/hl  > /dev/null 2>&1");
     shell_exec("/bin/mkdir /home/fos-streaming/fos/www/cache  > /dev/null 2>&1");
     shell_exec("chmod -R 777 /home/fos-streaming/fos/www/cache  > /dev/null 2>&1");
     shell_exec("chown www-data:www-data /home/fos-streaming/fos/nginx/conf  > /dev/null 2>&1");
-
     shell_exec("/home/fos-streaming/fos/php/sbin/php-fpm");
     shell_exec("/home/fos-streaming/fos/nginx/sbin/nginx_fos");
     echo "#";
@@ -240,12 +226,9 @@ if(trim($arch) == "x86_64") {
     echo "database details: \n";
     echo "IMPORTANT: After you logged in, go to settings and check your ip-address. \n";
     echo "******************************************************************************************** \n";
-
-
 }
 elseif(trim($arch) == "i686") {
     echo "]PASS \n";
-
     echo "3. [Installing needed files:]";
     echo " [#";
     shell_exec("apt-get install -y --force-yes libxml2-dev  > /dev/null 2>&1");
@@ -370,15 +353,12 @@ elseif(trim($arch) == "i686") {
     shell_exec("apt-get install -y --force-yes zlib1g-dev > /dev/null 2>&1");
     shell_exec("apt-get install -y --force-yes php5-fpm  > /dev/null 2>&1");
     echo "]PASS \n";
-
     echo "4. [FOS-Panel Installation:] ";
     echo " [#";
-
     $filename =  '/usr/src/FOS-Streaming';
     if (file_exists($filename)) {
         shell_exec("/bin/rm -r /usr/src/FOS-Streaming > /dev/null 2>&1");
     } else {
-
     }
     shell_exec("/usr/sbin/useradd -s /sbin/nologin -U -d /home/fos-streaming -m fosstreaming > /dev/null");
     echo "##";
@@ -403,14 +383,12 @@ elseif(trim($arch) == "i686") {
     shell_exec("echo '/home/fos-streaming/fos/nginx/sbin/nginx_fos' >> /etc/rc.local");
     shell_exec("echo '/home/fos-streaming/fos/php/sbin/php-fpm' >> /etc/rc.local");
     shell_exec("echo 'exit 0' >> /etc/rc.local");
-
     echo "#";
     shell_exec("/bin/mkdir /home/fos-streaming/fos/www/hl  > /dev/null 2>&1");
     shell_exec("chmod -R 777 /home/fos-streaming/fos/www/hl  > /dev/null 2>&1");
     shell_exec("/bin/mkdir /home/fos-streaming/fos/www/cache  > /dev/null 2>&1");
     shell_exec("chmod -R 777 /home/fos-streaming/fos/www/cache  > /dev/null 2>&1");
     shell_exec("chown www-data:www-data /home/fos-streaming/fos/nginx/conf  > /dev/null 2>&1");
-
     shell_exec("/home/fos-streaming/fos/php/sbin/php-fpm");
     shell_exec("/home/fos-streaming/fos/nginx/sbin/nginx_fos");
     echo "#";
@@ -438,18 +416,15 @@ elseif(trim($arch) == "i686") {
     echo "database details: \n";
     echo "IMPORTANT: After you logged in, go to settings and check your ip-address. \n";
     echo "******************************************************************************************** \n";
-
-
-
 }
 else {
     echo "]FAIL \n";
     echo "///////////////////////////////////////////////////// \n";
     echo " Report this problem on www.fos-streaming.com \n";
-    echo ' Distro: ' . $release_info["DISTRIB_ID"] . "\n ";
-    echo 'Version: ' . $release_info["DISTRIB_RELEASE"]  . "\n ";
-    echo 'Codename: ' . $release_info["DISTRIB_CODENAME"]  . "\n ";
-    echo 'Discription: ' . $release_info["DISTRIB_DESCRIPTION"] . "\n ";
+    echo ' Distro: ' . $osname . "\n ";
+    echo 'Version: ' . $osrelease  . "\n ";
+    echo 'Codename: ' . $oscodename  . "\n ";
+    echo 'Discription: ' . $osDisc . "\n ";
     echo $arch;
     echo "///////////////////////////////////////////////////// \n";
     die();
