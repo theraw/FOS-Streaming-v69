@@ -3,11 +3,11 @@ include('config.php');
 // TODO: version control
 // TODO: update tables
 
-$db = $databasemanagar;
+$db = $capsule;
 if( isset($_GET['install'])) {
 
     $arraynamesexist = [];
-    $tables = $databasemanagar::select('SHOW TABLES');
+    $tables = $capsule::select('SHOW TABLES');
     foreach ($tables as $key => $val) {
 
         $tableName = (array)$val;
