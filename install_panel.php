@@ -9,7 +9,6 @@ if (strtolower(substr(PHP_OS, 0, 5)) === 'linux')
     echo $osrelease; //show release number of this distribution
     echo $oscodename; // show code name of this distribution
     echo $osDisc; // show description of this distribution
-    #print_r($release_info);
 }
 $arch = shell_exec( "uname -m" );
 echo "Welcome \n";
@@ -179,14 +178,10 @@ if(trim($arch) == "x86_64") {
     echo "##";
     shell_exec("git clone https://github.com/zgelici/FOS-Streaming-v1.git /usr/src/FOS-Streaming/ > /dev/null 2>&1");
     shell_exec("/bin/mv /usr/src/FOS-Streaming/* /home/fos-streaming/fos/www/ > /dev/null 2>&1");
-    shell_exec("wget https://getcomposer.org/installer -O /usr/src/installer  > /dev/null 2>&1");
-    shell_exec("/usr/bin/php /usr/src/installer > /dev/null 2>&1");
-    shell_exec("/bin/cp /usr/src/composer.phar /usr/bin/composer.phar > /dev/null 2>&1");
-    shell_exec("/usr/bin/composer.phar install  -d  /home/fos-streaming/fos/www/ > /dev/null 2>&1");
     echo "#";
     shell_exec("echo 'www-data ALL = (root) NOPASSWD: /usr/local/bin/ffmpeg' >> /etc/sudoers");
     shell_exec("echo 'www-data ALL = (root) NOPASSWD: /usr/local/bin/ffprobe' >> /etc/sudoers");
-    shell_exec("echo '*/2 * * * * www-data /usr/bin/php /home/fos-streaming/fos/www/cron.php' >> /etc/crontab");
+    shell_exec("echo '*/2 * * * * www-data /home/fos-streaming/fos/php/bin/php /home/fos-streaming/fos/www/cron.php' >> /etc/crontab");
     echo "#";
     shell_exec("sed --in-place '/exit 0/d' /etc/rc.local");
     shell_exec("echo 'sleep 10' >> /etc/rc.local");
@@ -369,14 +364,10 @@ elseif(trim($arch) == "i686") {
     echo "##";
     shell_exec("git clone https://github.com/zgelici/FOS-Streaming-v1.git /usr/src/FOS-Streaming/ > /dev/null 2>&1");
     shell_exec("/bin/mv /usr/src/FOS-Streaming/* /home/fos-streaming/fos/www/ > /dev/null 2>&1");
-    shell_exec("wget https://getcomposer.org/installer -O /usr/src/installer  > /dev/null 2>&1");
-    shell_exec("/usr/bin/php /usr/src/installer > /dev/null 2>&1");
-    shell_exec("/bin/cp /usr/src/composer.phar /usr/bin/composer.phar > /dev/null 2>&1");
-    shell_exec("/usr/bin/composer.phar install  -d  /home/fos-streaming/fos/www/ > /dev/null 2>&1");
     echo "#";
     shell_exec("echo 'www-data ALL = (root) NOPASSWD: /usr/local/bin/ffmpeg' >> /etc/sudoers");
     shell_exec("echo 'www-data ALL = (root) NOPASSWD: /usr/local/bin/ffprobe' >> /etc/sudoers");
-    shell_exec("echo '*/2 * * * * www-data /usr/bin/php /home/fos-streaming/fos/www/cron.php' >> /etc/crontab");
+    shell_exec("echo '*/2 * * * * www-data /home/fos-streaming/fos/php/bin/php /home/fos-streaming/fos/www/cron.php' >> /etc/crontab");
     echo "#";
     shell_exec("sed --in-place '/exit 0/d' /etc/rc.local");
     shell_exec("echo 'sleep 10' >> /etc/rc.local");
