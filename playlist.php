@@ -75,8 +75,8 @@ if(isset($_GET['allfrtvwindows'])) {
         }
     }
     echo "</channel>\r\n";  
-    header('Content-Type: application/octet-stream');
-    header('Content-Disposition: attachment; filename="tv_user.m3u"');
+    header('Content-Type: text/xml');
+    header('Content-Disposition: attachment; filename="allfrtvwindows.xml"');
     die;
 }
 
