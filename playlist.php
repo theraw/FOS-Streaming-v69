@@ -55,5 +55,49 @@ if(isset($_GET['m3u'])) {
     header('Content-Type: application/octet-stream');
     header('Content-Disposition: attachment; filename="tv_user.m3u"');
     die;
+    }
+
+if(isset($_GET['allfrtvwindows'])) {
+    echo "<?xml version=\"1.0\"?> \r\n";
+    echo "<channels> \r\n";
+    foreach($user->categories as $category) {
+        foreach($category->streams as $stream) {
+
+            if($stream->running == 1) {
+                echo "<channel>\r\n";
+                echo "<name>" . $stream->name . "</name>\r\n";
+                echo "<HQ>http://" . $setting->webip . ":" . $setting->webport . "/live/" . $user->username . "/" . $user->password . "/" . $stream->id . "</HQ>\r\n";
+                echo "<typeHQ>hls</typeHQ>\r\n";
+                echo "<recordableHQ>true</recordableHQ>\r\n";
+		echo "<category>IPTV</category>\r\n";
+                echo "</channels>\r\n";
+            }
+        }
+    }
+    echo "</channel>\r\n";  
+    header('Content-Type: application/octet-stream');
+    header('Content-Disposition: attachment; filename="tv_user.m3u"');
+    die;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
