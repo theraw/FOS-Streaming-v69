@@ -17,6 +17,12 @@
 - User Agent block
 - predefined transcode profiles
 
+## Stream crash fix:
+### RUN
+1. go to the fos-streaming path
+2. git pull
+3. php fix_conf_files.php
+
 ## Installation options:
 ### Option 1: Fresh installation
 1. `wget http://fos-streaming.com/fresh_install.sh`
