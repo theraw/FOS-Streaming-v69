@@ -175,10 +175,6 @@ if(trim($arch) == "x86_64") {
     shell_exec("tar -xzf /home/fos-streaming/fos-streaming_unpack_x84_64.tar.gz -C /home/fos-streaming/ > /dev/null 2>&1");
     shell_exec("/bin/rm -r /home/fos-streaming/fos-streaming_unpack_x84_64.tar.gz  > /dev/null 2>&1");
     shell_exec("/bin/mkdir /usr/src/FOS-Streaming > /dev/null 2>&1");
-    echo "##";
-    shell_exec("git clone https://github.com/zgelici/FOS-Streaming-v1.git /usr/src/FOS-Streaming/ > /dev/null 2>&1");
-    shell_exec("/bin/mv /usr/src/FOS-Streaming/* /home/fos-streaming/fos/www/ > /dev/null 2>&1");
-    echo "#";
     shell_exec("echo 'www-data ALL = (root) NOPASSWD: /usr/local/bin/ffmpeg' >> /etc/sudoers");
     shell_exec("echo 'www-data ALL = (root) NOPASSWD: /usr/local/bin/ffprobe' >> /etc/sudoers");
     shell_exec("echo '*/2 * * * * www-data /home/fos-streaming/fos/php/bin/php /home/fos-streaming/fos/www/cron.php' >> /etc/crontab");
@@ -209,8 +205,6 @@ if(trim($arch) == "x86_64") {
     echo "#";
     shell_exec("chown www-data:root /usr/local/nginx/html  > /dev/null 2>&1");
     echo "#";
-#shell_exec("/bin/rm -r /usr/src/ffmpeg  > /dev/null 2>&1");
-#shell_exec("/bin/rm -r /home/fos-streaming/ffmpeg-release-64bit-static.tar.xz   > /dev/null 2>&1");
     echo "]PASS \n";
     echo "******************************************************************************************** \n";
     echo "FOS-Streaming installed.. \n";

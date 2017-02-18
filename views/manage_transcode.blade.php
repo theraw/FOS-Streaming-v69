@@ -60,7 +60,7 @@
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <select name="audio_codec" class="form-control">
                                             <option value="" {{ isset($_POST['audio_codec']) ?  $_POST['audio_codec']  == '' : $transcode->audio_codec  == '' ? "selected" : "" }}>Disable</option>
-                                            <option value="libvo_aacenc" {{ isset($_POST['audio_codec']) ?  $_POST['audio_codec']  == 'libvo_aacenc' : $transcode->audio_codec  == 'libvo_aacenc' ? "selected" : "" }}>AAC</option>
+                                            <option value="aac" {{ isset($_POST['audio_codec']) ?  $_POST['audio_codec']  == 'aac' : $transcode->audio_codec  == 'aac' ? "selected" : "" }}>AAC</option>
                                             <option value="copy" {{ isset($_POST['audio_codec']) ?  $_POST['audio_codec']  == 'copy' : $transcode->audio_codec  == 'copy' ? "selected" : "" }}>Copy</option>
                                         </select>
                                     </div>

@@ -1,12 +1,12 @@
 {
-    "require": {
-        "philo/laravel-blade": "3.*",
-        "nesbot/carbon": "^1.20",
-        "illuminate/database": "^5.3"
-    },
-    "autoload": {
-        "classmap": [
-            "models"
-        ]
-    }
+  "require": {
+    "philo/laravel-blade": "3.*",
+    "nesbot/carbon": "^1.20",
+    "illuminate/database": "^5.3"
+  },
+  "autoload": {
+    "classmap": [
+      "models"
+    ]
+  }
 }

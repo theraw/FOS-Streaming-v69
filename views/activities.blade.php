@@ -31,7 +31,7 @@
                         <tbody>
                             @foreach($activities as $key => $activity)
                                 <tr>
-                                    <td>{{ $activity->user->username }}</td>
+                                    <td>{{ $activity->user ? $activity->user->username : '' }}</td>
                                     <td>{{ $activity->stream->name }}</td>
                                     <td>{{ $activity->date_start }}</td>
                                     <td>{{ $activity->user_ip }}</td>
@@ -45,7 +45,7 @@
                         </table>
                     @else
                         <div class="alert alert-info">
-                            <button type="button" class="close" data-dismiss="alert">×</button>
+                            <button type="button" class="close" data-dismiss="alert">ï¿½</button>
                             No activity found
                         </div>
                     @endif

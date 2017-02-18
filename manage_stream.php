@@ -14,24 +14,14 @@ if(isset($_GET['id'])) {
 }
 
 if (isset($_POST['submit'])) {
-
-
-
     $stream->name = $_POST['name'];
     $stream->streamurl = $_POST['streamurl'];
     $stream->cat_id = $_POST['category'];
     $stream->trans_id = $_POST['transcode'];
-
     $stream->streamurl2 = $_POST['streamurl2'];
     $stream->streamurl3 = $_POST['streamurl3'];
     $stream->tvid = $_POST['tvid'];
     $stream->logo = $_POST['logo'];
-
-    $stream->restream = 0;
-    if(isset($_POST['restream'])) {
-        $stream->restream = 1;
-    }
-
     $stream->bitstreamfilter = 0;
     if(isset($_POST['bitstreamfilter'])) {
         $stream->bitstreamfilter = 1;

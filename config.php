@@ -16,9 +16,9 @@ $capsule = new Capsule;
 $capsule->addConnection([
     'driver'    => 'mysql',
     'host'      => 'localhost',
-    'database'  => 'xxx',
-    'username'  => 'ttt',
-    'password'  => 'zzz',
+    'database'  => 'fosiv1',
+    'username'  => 'root',
+    'password'  => 'zadik',
     'charset'   => 'utf8',
     'collation' => 'utf8_unicode_ci',
     'prefix'    => '',

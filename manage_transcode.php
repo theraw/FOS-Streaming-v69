@@ -7,7 +7,7 @@ $title = "Create transcode profile";
 $trans = new Transcode;
 $categories = Category::all();
 
-if(isset($_GET['id'])) {
+if (isset($_GET['id'])) {
     $title = "Edit transcode profile";
     $trans = Transcode::where('id', '=', $_GET['id'])->first();
 }
@@ -51,7 +51,7 @@ if (isset($_POST['submit'])) {
         } else {
             $exists = Transcode::where('name', '=', $_POST['profilename'])->get();
 
-            if(count($exists) > 0) {
+            if (count($exists) > 0) {
                 $message['type'] = "error";
                 $message['message'] = "Transcode profile name already in use";
             } else {
@@ -65,8 +65,8 @@ if (isset($_POST['submit'])) {
 }
 
 echo $template->view()->make('manage_transcode')
-    ->with('transcode',  $trans)
-    ->with('categories',  $categories)
+    ->with('transcode', $trans)
+    ->with('categories', $categories)
     ->with('message', $message)
     ->with('title', $title)
     ->render();

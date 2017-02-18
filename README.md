@@ -17,25 +17,11 @@
 - User Agent block
 - predefined transcode profiles
 
-## Stream crash fix:
-### RUN
-1. go to the fos-streaming path
-2. git pull
-3. php fix_conf_files.php
-
 ## Installation options:
-### Option 1: Fresh installation
 1. `wget http://fos-streaming.com/fresh_install.sh`
 2. `chmod 755 fresh_install.sh`
 3. `./fresh_install.sh`
 
-### Option 2: Old FOS-Streaming to (NEW) FOS-Streaming V
-1. `wget http://fos-streaming.com/old2new_install.sh`
-2. `chmod 755 old2new_install.sh`
-3. `./old2new_install.sh`
-  - remove /usr/local/nginx/sbin/nginx in /etc/rc.local
-
-If someone have problem after reboot that old panel starts, then use this command: rm -r /etc/init.d/nginx
 
 ### Change port of panel
 1. change port in webinterface -> Settings -> web Port

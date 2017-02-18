@@ -4,7 +4,7 @@ include('config.php');
 // TODO: update tables
 
 $db = $capsule;
-if( isset($_GET['install'])) {
+if (isset($_GET['install'])) {
 
     $arraynamesexist = [];
     $tables = $capsule::select('SHOW TABLES');
@@ -21,7 +21,7 @@ if( isset($_GET['install'])) {
         $db::schema()->dropIfExists('categories');
         $db::schema()->dropIfExists('category_user');
         $db::schema()->dropIfExists('settings');
-        $db::schema()->dropIfExists('streams') ;
+        $db::schema()->dropIfExists('streams');
         $db::schema()->dropIfExists('users');
         $db::schema()->dropIfExists('transcodes');
         $db::schema()->dropIfExists('activity');
@@ -49,7 +49,6 @@ if( isset($_GET['install'])) {
     }
 
 
-
     if (!in_array('categories', $arraynamesexist)) {
 
         $db->schema()->create('categories', function ($table) {
@@ -73,7 +72,6 @@ if( isset($_GET['install'])) {
 
         echo "created category_user table <br>" . PHP_EOL;
     }
-
 
 
     if (!in_array('settings', $arraynamesexist)) {
@@ -183,7 +181,7 @@ if( isset($_GET['install'])) {
         $profile2->probesize = 15000000;
         $profile2->analyzeduration = 12000000;
         $profile2->video_codec = 'copy';
-        $profile2->audio_codec = 'libvo_aacenc';
+        $profile2->audio_codec = 'aac';
         $profile2->save();
         echo "created transcode profile2 data <br>" . PHP_EOL;
     }
@@ -237,10 +235,9 @@ if( isset($_GET['install'])) {
     }
 
 
-
 }
 
-if( isset($_GET['update'])) {
+if (isset($_GET['update'])) {
 
     $db->schema()->table('streams', function ($table) use ($db) {
         $db->schema()->hasColumn('streams', 'bitstreamfilter') ? '' : $table->tinyInteger('bitstreamfilter');

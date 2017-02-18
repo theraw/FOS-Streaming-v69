@@ -6,7 +6,7 @@ include('config.php');
 logincheck();
 $message = [];
 
-if(isset($_GET['delete'])) {
+if (isset($_GET['delete'])) {
     $category = Category::find($_GET['delete']);
     $category->delete();
 
@@ -16,4 +16,7 @@ if(isset($_GET['delete'])) {
 
 $categories = Category::all();
 
-echo $template->view()->make('categories')->with('categories',  $categories)->with('message', $message)->render();
+echo $template->view()->make('categories')
+    ->with('categories', $categories)
+    ->with('message', $message)
+    ->render();
