@@ -18,9 +18,9 @@
 - predefined transcode profiles
 
 ## Installation options:
-1. `wget http://fos-streaming.com/fresh_install.sh`
-2. `chmod 755 fresh_install.sh`
-3. `./fresh_install.sh`
+1. `wget https://raw.githubusercontent.com/zgelici/FOS-Streaming-v1/master/install.sh`
+2. `chmod 755 install.sh`
+3. `./install.sh`
 
 
 ### Change port of panel
@@ -36,10 +36,6 @@
 - You can use it also in proxy mode, but that depends on how you want to use it.
 - The most stable way is using transcode profile: **Default 1** without proxy mode ticket
 
-## Updater
-1. `wget http://fos-streaming.com/update_fos.sh`
-2. `chmod 755 update_fos.sh`
-3. `./update_fos.sh`
 
 Are there bugs?
 You can report it here or on official website
