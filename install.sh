@@ -2,7 +2,7 @@
 apt-get update
 apt-get -y install git
 apt-get -y install php5-cli curl
-/bin/mkdir /home/fos-streaming/fos/www/
+/bin/mkdir -p /home/fos-streaming/fos/www/
 cd /home/fos-streaming/fos/www/
 git clone https://github.com/zgelici/FOS-Streaming-v1.git .
 php install_panel.php
