@@ -17,10 +17,17 @@
 - User Agent block
 - predefined transcode profiles
 
-## Installation options:
-1. `wget https://raw.githubusercontent.com/zgelici/FOS-Streaming-v1/master/install.sh`
-2. `chmod 755 install.sh`
-3. `./install.sh`
+
+## Installation (64bit):
+1. `wget https://raw.githubusercontent.com/zgelici/FOS-Streaming-v1/master/install_fos_ubuntu1404_64bit.sh`
+2. `chmod 755 install_fos_ubuntu1404_64bit.sh`
+3. `./install_fos_ubuntu1404_64bit.sh`
+
+
+## Installation (32bit):
+1. `wget https://raw.githubusercontent.com/zgelici/FOS-Streaming-v1/master/install_fos_ubuntu1404_32bit.sh`
+2. `chmod 755 install_fos_ubuntu1404_32bit.sh`
+3. `./install_fos_ubuntu1404_32bit.sh`
 
 
 ### Change port of panel
@@ -39,12 +46,6 @@
 
 Are there bugs?
 You can report it here or on official website
-
-Bug List:
-- Stream (activity, limit connection)
-- Stream kill active stream, switch
-- Problems with database?
-- dpkg-reconfigure mysql-server-5.5# FOS-Streaming
 
 ## Commercial rights
 - You may charge for installation, support and modification.
