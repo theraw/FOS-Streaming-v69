@@ -1,5 +1,6 @@
 <?php
 include('config.php');
+logincheck();
 
 $message = [];
 if (isset($_GET['delete_all'])) {
