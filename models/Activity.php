@@ -5,12 +5,12 @@ class Activity extends FosStreaming {
 
     public function user()
     {
-        return $this->hasOne('user', 'id', 'user_id');
+        return $this->hasOne(User::class , 'id', 'user_id');
     }
 
     public function stream()
     {
         
-        return $this->hasOne('stream', 'id', 'stream_id');
+        return $this->hasOne(Stream::class , 'id', 'stream_id');
     }
 }
