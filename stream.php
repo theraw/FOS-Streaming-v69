@@ -36,7 +36,7 @@ if (isset($_GET['username']) && isset($_GET['password']) && isset($_GET['stream'
                 $user_activity = $user->activity()->where('date_end', '=', NULL)->get();
                 $active_cons = $user_activity->count();
 
-                if ($user_max_connections != 0 && $active_cons >= $user_max_connections) {
+                if ($user_max_connections != 1 && $active_cons >= $user_max_connections) {
                     $maxconntactionactivity = Activity::where("user_id", "=", $user_id)->where("user_ip", "=", $user_ip)->where("date_end", "=", null)->first();
 
                     if ($maxconntactionactivity != null) {
