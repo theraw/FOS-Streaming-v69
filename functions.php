@@ -259,58 +259,95 @@ function generatEginxConfPort($port)
 {
     ob_start();
     echo 'user  root;
-    worker_processes  auto;
+worker_processes  auto;
 
-    error_log  logs/error.log debug;
+worker_rlimit_nofile 300000;
 
-    events {
-        worker_connections  1024;
-    }
+events {
+    worker_connections  16000;
+    use epoll;
+        accept_mutex on;
+        multi_accept on;
+}
 
-    http {
-        include       mime.types;
-        default_type  application/octet-stream;
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+    sendfile        on;
+ tcp_nopush         on;
+    tcp_nodelay        on;
+        reset_timedout_connection on;
+    gzip off;
+    fastcgi_read_timeout 200;
+        access_log off;
+        keepalive_timeout 10;
+        client_max_body_size 20m;
+        include balance.conf;
+        send_timeout 20m;
+        sendfile_max_chunk 512k;
+        lingering_close off;
 
-        sendfile        on;
-        keepalive_timeout  65;
-
-        server {
-            listen ' . $port . ';
-                    root /home/fos-streaming/fos/www/;
-                    index index.php index.html index.htm;
-                    server_tokens off;
-                    chunked_transfer_encoding off;
-                    rewrite  ^/(.*)/(.*)/(.*)$ /stream.php?username=$1&password=$2&stream=$3 break;
-
-     location ~ \.php$ {
+        limit_req_zone $binary_remote_addr zone=one:30m rate=30r/s;
+	
+	 server {
+                listen ' . $port . ';
+				root /home/fos-streaming/fos/www1/;
+				server_tokens off;
+                chunked_transfer_encoding off;
+				rewrite ^/live/(.*)/(.*)/(.*)$ /stream.php?username=$1&password=$2&stream=$3 break;
+				access_log /home/fos-streaming/fos/logs/access1.log;
+				
+ 
+ location ~ \.php$ {
+                        limit_req zone=one burst=10;
             try_files $uri =404;
-                            fastcgi_index index.php;
-                            fastcgi_pass unix:/var/run/php5-fpm.sock;
-                            include fastcgi_params;
-                            fastcgi_keep_conn on;
-                            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-                            fastcgi_param SCRIPT_NAME $fastcgi_script_name;
-                    }
+                        fastcgi_index index.php;
+                        include fastcgi_params;
+                        fastcgi_buffering on;
+                        fastcgi_buffers 96 32k;
+                        fastcgi_buffer_size 32k;
+                        fastcgi_max_temp_file_size 0;
+                        fastcgi_keep_conn on;
+                        fastcgi_param SCRIPT_FILENAME /home/fos-streaming/fos/www1/$fastcgi_script_name;
+                        fastcgi_param SCRIPT_NAME $fastcgi_script_name;
+                        fastcgi_pass unix:/var/run/php__5-fpm.sock;
+						}
+		error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html; 
+			}			
+                }
 
-            error_page   500 502 503 504  /50x.html;
-            location = /50x.html {
-                root   html;
-            }
+    server {
+                listen 7777;
+                root /home/fos-streaming/fos/www/;
+                index index.php index.html index.htm;
+                server_tokens off;
+                chunked_transfer_encoding off;
+		access_log /home/fos-streaming/fos/logs/access.log;
+		
+ location ~ \.php$ {
+                        limit_req zone=one burst=10;
+            try_files $uri =404;
+                        fastcgi_index index.php;
+                        include fastcgi_params;
+                        fastcgi_buffering on;
+                        fastcgi_buffers 96 32k;
+                        fastcgi_buffer_size 32k;
+                        fastcgi_max_temp_file_size 0;
+                        fastcgi_keep_conn on;
+                        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+                        fastcgi_param SCRIPT_NAME $fastcgi_script_name;
+                        fastcgi_pass unix:/var/run/php__5-fpm.sock;
+
+                }
+
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
         }
     }
-
-    rtmp {
-        server {
-            listen 1935;
-            ping 30s;
-            notify_method get;
-
-            application rtmp {
-                live on;
-            }
-
-        }
-    }';
+}';
     $file = '/usr/local/nginx/conf/nginx.conf';
     $current = ob_get_clean();
     file_put_contents($file, $current);
