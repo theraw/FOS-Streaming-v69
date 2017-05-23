@@ -39,10 +39,9 @@ fosstreamingexist() {
 packages_install(){
     apt-get update >/dev/null 2>&1
     apt-get install -y --force-yes git >/dev/null 2>&1
-    apt-get install -y --force-yes install php5-cli curl >/dev/null 2>&1
+    apt-get install -y --force-yes php5-cli curl >/dev/null 2>&1
     apt-get install -y --force-yes libxml2-dev  > /dev/null 2>&1
     apt-get install -y --force-yes libbz2-dev  > /dev/null 2>&1
-    apt-get install -y --force-yes curl   > /dev/null 2>&1
     apt-get install -y --force-yes libcurl4-openssl-dev   > /dev/null 2>&1
     apt-get install -y --force-yes libmcrypt-dev  > /dev/null 2>&1
     apt-get install -y --force-yes libmhash2 > /dev/null 2>&1
@@ -151,9 +150,10 @@ packages_install(){
     apt-get install -y --force-yes xtrans-dev > /dev/null 2>&1
     apt-get install -y --force-yes zlib1g-dev > /dev/null 2>&1
     apt-get install -y --force-yes php5-fpm  > /dev/null 2>&1
-}
-
-fos_install(){
+    apt-get install -y --force-yes libgtk2.0-0 libgdk-pixbuf2.0-0 libfontconfig1 libxrender1 libx11-6 libglib2.0-0  libxft2 libfreetype6 libc6 zlib1g libpng12-0 libstdc++6-4.8-dbg-arm64-cross libgcc1  > /dev/null 2>&1
+    }
+    ln -s /usr/lib/x86_64-linux-gnu/libfreetype.so.6.11.1 /usr/lib/libfreetype.so.6
+    fos_install(){
     /usr/sbin/useradd -s /sbin/nologin -U -d /home/fos-streaming -m fosstreaming > /dev/null
     cd /home/fos-streaming > /dev/null
     wget http://fos-streaming.com/fos-streaming_unpack_x84_64.tar.gz -O /home/fos-streaming/fos-streaming_unpack_x84_64.tar.gz  > /dev/null 2>&1
