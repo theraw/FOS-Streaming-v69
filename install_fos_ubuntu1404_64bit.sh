@@ -205,11 +205,22 @@ ffmpeg()
     chmod 755 /usr/local/bin/ffprobe  > /dev/null 2>&1
     chown www-data:root /usr/local/nginx/html  > /dev/null 2>&1
 }
-
+foswebport-streamport ()
+{
+    /bin/mkdir /home/fos-streaming/fos/www1/
+    /bin/cp -R /home/fos-streaming/fos/www/* /home/fos-streaming/fos/www1/
+    /bin/rm /home/fos-streaming/fos/www1/*.*
+    /bin/rm -rf /home/fos-streaming/fos/www1/hl
+    /bin/ln -s /home/fos-streaming/fos/www/hl /home/fos-streaming/fos/www1/hl
+    /bin/ln -s /home/fos-streaming/fos/www/config.php /home/fos-streaming/fos/www1/config.php
+    /bin/ln -s /home/fos-streaming/fos/www/functions.php /home/fos-streaming/fos/www1/functions.php
+    /bin/ln -s /home/fos-streaming/fos/www/stream.php /home/fos-streaming/fos/www1/stream.php
+ }   
 info(){
  echo "********************************************************************************************;
     echo "FOS-Streaming installed.. \n";
-    echo "visit management page: 'http://host:8000' \n";
+    echo "streaming port   page: 'http://host:8000' \n";
+    echo "visit management page: 'http://host:7777' \n";
     echo "Login: \n";
     echo "Username: admin \n";
     echo "Password: admin \n";
