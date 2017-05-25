@@ -10,6 +10,7 @@ ln -s /home/fos-streaming/fos/www/hl /home/fos-streaming/fos/www1/hl
 ln -s /home/fos-streaming/fos/www/config.php /home/fos-streaming/fos/www1/config.php
 ln -s /home/fos-streaming/fos/www/functions.php /home/fos-streaming/fos/www1/functions.php
 ln -s /home/fos-streaming/fos/www/stream.php /home/fos-streaming/fos/www1/stream.php
+ln -s /home/fos-streaming/fos/www/playlist.php /home/fos-streaming/fos/www1/playlist.php
 wget -q https://raw.githubusercontent.com/zgelici/FOS-Streaming-v1/master/improvement/nginx.conf -O nginx.conf
 cp -R nginx.conf /home/fos-streaming/fos/nginx/conf/nginx.conf
 sleep 2
