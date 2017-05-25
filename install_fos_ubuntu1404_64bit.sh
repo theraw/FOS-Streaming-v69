@@ -190,8 +190,8 @@ startfos(){
     /home/fos-streaming/fos/php/sbin/php-fpm
     /home/fos-streaming/fos/nginx/sbin/nginx_fos
     sleep 3
-    curl "http://127.0.0.1:8000/install_database_tables.php?install"
-    curl "http://127.0.0.1:8000/install_database_tables.php?update"
+    curl "http://127.0.0.1:7777/install_database_tables.php?install"
+    curl "http://127.0.0.1:7777/install_database_tables.php?update"
     rm -r /home/fos-streaming/fos/www/install_database_tables.php
 }
 
