@@ -27,8 +27,9 @@ if (isset($_GET['username']) && isset($_GET['password']) && isset($_GET['stream'
     $username = $_GET['username'];
     $password = $_GET['password'];
     $stream_id = intval($_GET['stream']);
-    if (!BlockedIp::where('ip', '=', $_SERVER['REMOTE_ADDR'])->first() || BlockedUseragent::where('name', '=', $user_agent)->first()) {
-        if ($user = User::where('username', '=', $username)->where('password', '=', $password)->where('active', '=', 1)->first()) {
+  	if (!BlockedUseragent::where('name', '=', $user_agent)->first() )
+    if (!BlockedIp::where('ip', '=', $_SERVER['REMOTE_ADDR'])->first()) {
+          if ($user = User::where('username', '=', $username)->where('password', '=', $password)->where('active', '=', 1)->first()) {
             if ($user->exp_date == "0000-00-00" || $user->exp_date > date('Y-m-d H:i:s')) {
                 $user_id = $user->id;
                 $user_max_connections = $user->max_connections;
