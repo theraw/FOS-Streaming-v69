@@ -205,7 +205,7 @@ ffmpeg()
     chmod 755 /usr/local/bin/ffprobe  > /dev/null 2>&1
     chown www-data:root /usr/local/nginx/html  > /dev/null 2>&1
 }
-foswebport-streamport ()
+foswebport-streamport()
 {
     /bin/mkdir /home/fos-streaming/fos/www1/
     /bin/cp -R /home/fos-streaming/fos/www/* /home/fos-streaming/fos/www1/
