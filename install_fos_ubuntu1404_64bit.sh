@@ -208,6 +208,8 @@ ffmpeg()
 foswebport-streamport()
 {
     /bin/mkdir /home/fos-streaming/fos/www1/
+    /bin/mkdir /home/fos-streaming/fos/www1/log/
+    chown fosstreaming:fosstreaming /home/fos-streaming/fos/www1/log/
     /bin/cp -R /home/fos-streaming/fos/www/* /home/fos-streaming/fos/www1/
     /bin/rm /home/fos-streaming/fos/www1/*.*
     /bin/rm -rf /home/fos-streaming/fos/www1/hl
