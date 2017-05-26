@@ -3,6 +3,8 @@ killall -9 nginx_fos php-fpm
 killall -9 nginx_fos php-fpm
 sleep 2
 /bin/mkdir /home/fos-streaming/fos/www1/
+/bin/mkdir /home/fos-streaming/fos/www1/log/
+chown fosstreaming:fosstreaming /home/fos-streaming/fos/www1/log/
 cp -R /home/fos-streaming/fos/www/* /home/fos-streaming/fos/www1/
 rm /home/fos-streaming/fos/www1/*.*
 rm -rf /home/fos-streaming/fos/www1/hl
