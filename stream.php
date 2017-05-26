@@ -29,6 +29,17 @@ if (isset($_GET['username']) && isset($_GET['password']) && isset($_GET['stream'
     $stream_id = intval($_GET['stream']);
   	if (!BlockedUseragent::where('name', '=', $user_agent)->first() )
     if (!BlockedIp::where('ip', '=', $_SERVER['REMOTE_ADDR'])->first()) {
+      if ($user = User::where('username', '=', $username)->where('password', '=', $password)->first()) {
+
+		  } else { 
+			$log  = "Worning --> Ip: ".$_SERVER['REMOTE_ADDR'].' - '.date("F j, Y, g:i a").
+            " - Attempt ".('Failed Login -').
+            " User: ".$username.
+            " Pass: ".$password.
+	    	" ".PHP_EOL; 
+		    file_put_contents('/home/fos-streaming/fos/www1/log/fos-loginfail'.'.log', $log, FILE_APPEND);
+		    sleep (10);
+		              }
           if ($user = User::where('username', '=', $username)->where('password', '=', $password)->where('active', '=', 1)->first()) {
             if ($user->exp_date == "0000-00-00" || $user->exp_date > date('Y-m-d H:i:s')) {
                 $user_id = $user->id;
