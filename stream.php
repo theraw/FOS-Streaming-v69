@@ -5,7 +5,6 @@ include("config.php");
 function closed()
 {
     global $user_activity_id;
-
     if ($user_activity_id != 0) {
         $active = Activity::find($user_activity_id);
         $active->date_end = date('Y-m-d H:i:s');
@@ -14,21 +13,31 @@ function closed()
     fastcgi_finish_request();
     exit;
 }
-
 $user_activity_id = 0;
 $user_ip = $_SERVER['REMOTE_ADDR'];
 header("Access-Control-Allow-Origin: *");
 register_shutdown_function('closed');
 header("Content-Type: video/mp2t");
 ob_end_flush();
-
 if (isset($_GET['username']) && isset($_GET['password']) && isset($_GET['stream'])) {
     $user_agent = (empty($_SERVER['HTTP_USER_AGENT'])) ? "0" : trim($_SERVER['HTTP_USER_AGENT']);
     $username = $_GET['username'];
     $password = $_GET['password'];
     $stream_id = intval($_GET['stream']);
-  	if (!BlockedUseragent::where('name', '=', $user_agent)->first() )
+  if (!BlockedUseragent::where('name', '=', $user_agent)->first())
     if (!BlockedIp::where('ip', '=', $_SERVER['REMOTE_ADDR'])->first()) {
+      if ($user = User::where('username', '=', $username)->where('password', '=', $password)->where('active', '=', 1)->first()) {
+
+      } else { 
+	    $log  = "Worning --> Ip: [".$_SERVER['REMOTE_ADDR'].'] - '.date("d-m-Y H:i:s").
+            " - Attempt ".('Failed Login -').
+            " User: ".$username.
+            " Pass: ".$password.
+	    " ".PHP_EOL; 
+            file_put_contents('/home/fos-streaming/fos/www1/log/fos-loginfail'.'.log', $log, FILE_APPEND);
+            sleep (10);
+		  }
+
           if ($user = User::where('username', '=', $username)->where('password', '=', $password)->where('active', '=', 1)->first()) {
             if ($user->exp_date == "0000-00-00" || $user->exp_date > date('Y-m-d H:i:s')) {
                 $user_id = $user->id;
@@ -36,20 +45,16 @@ if (isset($_GET['username']) && isset($_GET['password']) && isset($_GET['stream'
                 $user_expire_date = $user->exp_date;
                 $user_activity = $user->activity()->where('date_end', '=', NULL)->get();
                 $active_cons = $user_activity->count();
-
                 if ($user_max_connections != 1 && $active_cons >= $user_max_connections) {
                     $maxconntactionactivity = Activity::where("user_id", "=", $user_id)->where("user_ip", "=", $user_ip)->where("date_end", "=", null)->first();
-
                     if ($maxconntactionactivity != null) {
                         if ($maxconntactionactivity->count() > 0) {
                             --$active_cons;
                         }
                     }
                 }
-
                 if ($user_max_connections == 0 || $active_cons < $user_max_connections) {
                     if ($stream = Stream::find($_GET['stream'])) {
-
                         if ($user_activity_id != 0) {
                             $active = Activity::find($user_activity_id);
                         } else {
@@ -76,7 +81,6 @@ if (isset($_GET['username']) && isset($_GET['password']) && isset($_GET['stream'
                         } else {
                             $url = $stream->streamurl;
                         }
-
                         $folder = $setting->hlsfolder . '/';
                         $files = "";
                         $file = $setting->hlsfolder . '/' . $stream->id . '_.m3u8';
