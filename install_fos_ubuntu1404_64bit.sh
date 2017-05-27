@@ -270,5 +270,6 @@ database
 ffmpeg
 startfos
 #test
+foswebport-streamport
 info
 
