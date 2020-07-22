@@ -80,11 +80,7 @@
                     <div class="menu_section">
                         <h3>Extra information</h3>
                         <ul class="nav side-menu">
-                            <li><a target="_new" href="http://fos-streaming.com"><i class="fa fa-laptop"></i> Website </a></li>
-                            <li><a target="_new" href="https://github.com/zgelici/FOS-Streaming-v1/issues"><i class="fa fa-exclamation-triangle"></i> Report </a></li>
-                            <li><a target="_new" href="http://www.fos-streaming.com/forum/"><i class="fa fa-circle-o"></i> Forum</a></li>
-                            <li><a target="_new" href="http://multics.info/threads/fos-streaming-v1.56885/"><i class="fa fa-circle-o"></i> Multics thread (Support) </a></li>
-                            <li><a target="_new" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6ATJFKYPFY65W"><img src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" alt="Donate Button" /></a></li>
+                            <li><a target="_new" href="https://github.com/theraw/FOS-Streaming-v69/issues"><i class="fa fa-laptop"></i> Support </a></li>
                         </ul>
                     </div>
 
