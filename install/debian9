@@ -14,8 +14,6 @@ perl -pi -e 's/;error_log = syslog/error_log = php_error.log/g' /etc/php/7.3/fpm
 perl -pi -e 's/;date.timezone =/date.timezone = UTC/g' /etc/php/7.3/fpm/php.ini
 useradd nginx
 service php7.3-fpm restart
-       
-       
 apt-get install -y libxml2-dev libbz2-dev libcurl4-openssl-dev libmcrypt-dev libmhash2 libmhash-dev libpcre3 libpcre3-dev
 apt-get install -y libxslt1-dev libpopt0 libpq-dev libpq5 libpspell-dev libpthread-stubs0-dev libpython-stdlib libqdbm-dev libqdbm14
 apt-get install -y libquadmath0 librecode-dev librecode0 librtmp-dev libsasl2-dev libsasl2-modules libsctp-dev libsctp1 libsensors4
@@ -44,88 +42,14 @@ echo 'exit 0' >> /etc/rc.local
 mkdir -p /home/fos-streaming/fos/www/hl ; chmod -R 777 /home/fos-streaming/fos/www/hl; mkdir -p /home/fos-streaming/fos/www/cache; chmod -R 777 /home/fos-streaming/fos/www/cache; chown nginx:nginx /home/fos-streaming/fos/nginx/conf
 curl -s https://raw.githubusercontent.com/theraw/FOS-Streaming-v69/master/improvement/nginx.conf > /home/fos-streaming/fos/nginx/conf/nginx.conf
 curl -s https://raw.githubusercontent.com/theraw/FOS-Streaming-v69/master/improvement/php73.conf > /etc/php/7.3/fpm/pool.d/www.conf
-service php7.3-fpm stop 
-service php7.3-fpm start
-/home/fos-streaming/fos/nginx/sbin/nginx_fos
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-startfos(){
-    /home/fos-streaming/fos/php/sbin/php-fpm
-    /home/fos-streaming/fos/nginx/sbin/nginx_fos
-    sleep 3
-    curl "http://127.0.0.1:7777/install_database_tables.php?install"
-    curl "http://127.0.0.1:7777/install_database_tables.php?update"
-    rm -r /home/fos-streaming/fos/www/install_database_tables.php
-}
-
-ffmpeg()
-{
-    wget http://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz -O /home/fos-streaming/ffmpeg-release-amd64-static.tar.xz > /dev/null 2>&1
-    tar -xJf /home/fos-streaming/ffmpeg-release-amd64-static.tar.xz -C /tmp/ > /dev/null 2>&1
-    /bin/cp /tmp/ffmpeg*/ffmpeg  /usr/local/bin/ffmpeg
-    /bin/cp /tmp/ffmpeg*/ffprobe /usr/local/bin/ffprobe
-    chmod 755 /usr/local/bin/ffmpeg  > /dev/null 2>&1
-    chmod 755 /usr/local/bin/ffprobe  > /dev/null 2>&1
-    chown www-data:root /usr/local/nginx/html  > /dev/null 2>&1
-}
-foswebport-streamport()
-{
-    /bin/mkdir /home/fos-streaming/fos/www1/
-    /bin/mkdir /home/fos-streaming/fos/www1/log/
-    chown fosstreaming:fosstreaming /home/fos-streaming/fos/www1/log/
-    /bin/cp -R /home/fos-streaming/fos/www/* /home/fos-streaming/fos/www1/
-    /bin/rm /home/fos-streaming/fos/www1/*.*
-    /bin/rm -rf /home/fos-streaming/fos/www1/hl
-    /bin/ln -s /home/fos-streaming/fos/www/hl /home/fos-streaming/fos/www1/hl
-    /bin/ln -s /home/fos-streaming/fos/www/config.php /home/fos-streaming/fos/www1/config.php
-    /bin/ln -s /home/fos-streaming/fos/www/functions.php /home/fos-streaming/fos/www1/functions.php
-    /bin/ln -s /home/fos-streaming/fos/www/stream.php /home/fos-streaming/fos/www1/stream.php
-    /bin/ln -s /home/fos-streaming/fos/www/playlist.php /home/fos-streaming/fos/www1/playlist.php
- }   
-info(){
- echo "********************************************************************************************;
-    echo "FOS-Streaming installed.. \n";
-    echo "streaming port   page: 'http://host:8000' \n";
-    echo "visit management page: 'http://host:7777' \n";
-    echo "Login: \n";
-    echo "Username: admin \n";
-    echo "Password: admin \n";
-    echo "database details: \n";
-    echo  "hostname: localhost, database_name: " $1 " , database_username: "  $2  " , database_password " $3
-    echo "IMPORTANT: After you logged in, go to settings and check your ip-address. \n";
-    echo "*****************************************************************************************;
-}
-
-database(){
-
-echo ""
-read -p "Choose your MySQL database name: " sqldatabase
-read -p "Enter your MySQL username(usual 'root'): " sqluname
-read -rep $'Enter your MySQL password (ENTER for none):' sqlpasswd
+wget http://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz -O /home/fos-streaming/ffmpeg-release-amd64-static.tar.xz
+tar -xJf /home/fos-streaming/ffmpeg-release-amd64-static.tar.xz -C /tmp/; rm -Rf /home/fos-streaming/ffmpeg-release-amd64-static.tar.xz
+/bin/cp /tmp/ffmpeg*/ffmpeg  /usr/local/bin/ffmpeg
+/bin/cp /tmp/ffmpeg*/ffprobe /usr/local/bin/ffprobe
+chmod 755 /usr/local/bin/ffmpeg
+chmod 755 /usr/local/bin/ffprobe
+echo "`date +%s | sha256sum | base64 | head -c 32 ; echo`" > /root/MYSQL_ROOT_PASSWORD
+sqlpasswd=(`cat /root/MYSQL_ROOT_PASSWORD`);
 echo "mysql-server mysql-server/root_password password $sqlpasswd" | debconf-set-selections
 echo "mysql-server mysql-server/root_password_again password $sqlpasswd" | debconf-set-selections
 echo "phpmyadmin phpmyadmin/dbconfig-install boolean true" | debconf-set-selections
@@ -133,29 +57,22 @@ echo "phpmyadmin phpmyadmin/app-password-confirm password $sqlpasswd" | debconf-
 echo "phpmyadmin phpmyadmin/mysql/admin-pass password $sqlpasswd" | debconf-set-selections
 echo "phpmyadmin phpmyadmin/mysql/app-pass password $sqlpasswd" | debconf-set-selections
 echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect none" | debconf-set-selections
-
-apt-get install -y mysql-server > /dev/null 2>&1
-apt-get install -y php5-mysql  > /dev/null 2>&1
-
-mysql -uroot -p$sqlpasswd -e "CREATE DATABASE $sqldatabase"
-mysql -uroot -p$sqlpasswd -e "grant all privileges on $sqldatabase.* to '$sqluname'@'localhost' identified by '$sqlpasswd'"
-
-
-sed -i 's/xxx/'$sqldatabase'/g' /home/fos-streaming/fos/www/config.php
+sudo apt-get -y install mysql-server mysql-client; service mysql stop; service mysql start
+mysql -uroot -p$sqlpasswd -e "CREATE DATABASE fos"
+mysql -uroot -p$sqlpasswd -e "grant all privileges on fos.* to 'fos'@'localhost' identified by '$sqlpasswd'"
+sed -i 's/xxx/fos/g' /home/fos-streaming/fos/www/config.php
 sed -i 's/zzz/'$sqlpasswd'/g' /home/fos-streaming/fos/www/config.php
-sed -i 's/ttt/'$sqluname'/g' /home/fos-streaming/fos/www/config.php
-
-}
-
-echo "FOS-Streaming is installing, you need to wait till the installation gets finished"
-
-fosstreamingexist
-distro
-packages_install
-fos_install
-database
-ffmpeg
-startfos
-#test
-foswebport-streamport
-info
+sed -i 's/ttt/fos/g' /home/fos-streaming/fos/www/config.php
+mkdir -p /home/fos-streaming/fos/www1/; mkdir -p /home/fos-streaming/fos/www1/log/; chown nginx:nginx /home/fos-streaming/fos/www1/log/; cp -R /home/fos-streaming/fos/www/* /home/fos-streaming/fos/www1/; rm -rf /home/fos-streaming/fos/www1/*.*
+rm -rf /home/fos-streaming/fos/www1/hl
+ln -s /home/fos-streaming/fos/www/hl /home/fos-streaming/fos/www1/hl
+ln -s /home/fos-streaming/fos/www/config.php /home/fos-streaming/fos/www1/config.php
+ln -s /home/fos-streaming/fos/www/functions.php /home/fos-streaming/fos/www1/functions.php
+ln -s /home/fos-streaming/fos/www/stream.php /home/fos-streaming/fos/www1/stream.php
+ln -s /home/fos-streaming/fos/www/playlist.php /home/fos-streaming/fos/www1/playlist.php
+service php7.3-fpm stop
+service php7.3-fpm start
+/home/fos-streaming/fos/nginx/sbin/nginx_fos
+curl -s http://127.0.0.1:7777/install_database_tables.php?install
+curl -s http://127.0.0.1:7777/install_database_tables.php?update
+rm -rf /home/fos-streaming/fos/www/install_database_tables.php
