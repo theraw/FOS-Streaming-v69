@@ -31,7 +31,7 @@
         <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
                 <div class="navbar nav_title" style="border: 0;">
-                    <a href="index.php" class="site_title"> <span><span>FOS-Streaming <small style="font-size: 10px;">by Tyfix</small></span></span></a>
+                    <a href="index.php" class="site_title"> <span><span>FOS-Streaming</span></span></a>
                 </div>
                 <div class="clearfix"></div>
                 <br />
@@ -78,7 +78,6 @@
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu animated fadeInDown pull-right">
-
                                 <li><a href="?logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                                 </li>
                             </ul>
@@ -97,8 +96,7 @@
             <!-- footer content -->
             <footer>
                 <div class="">
-                    <p class="pull-right">FOS-Streaming by <a href="http://www.tyfix.nl" target="_new">Tyfix</a>
-                    </p>
+                    <p class="pull-right">FOS-Streaming v69</p>
                 </div>
                 <div class="clearfix"></div>
             </footer>
