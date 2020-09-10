@@ -70,6 +70,7 @@ ln -s /home/fos-streaming/fos/www/config.php /home/fos-streaming/fos/www1/config
 ln -s /home/fos-streaming/fos/www/functions.php /home/fos-streaming/fos/www1/functions.php
 ln -s /home/fos-streaming/fos/www/stream.php /home/fos-streaming/fos/www1/stream.php
 ln -s /home/fos-streaming/fos/www/playlist.php /home/fos-streaming/fos/www1/playlist.php
+ln -sf /etc/alternatives/php /home/fos-streaming/fos/php/bin/php
 service php7.3-fpm stop
 service php7.3-fpm start
 /home/fos-streaming/fos/nginx/sbin/nginx_fos
