@@ -1,6 +1,6 @@
 #!/bin/bash
 apt-get update -y; apt-get upgrade -y; apt-get dist-upgrade -y; apt-get autoremove -y
-apt-get install build-essential libssl-dev curl nano wget zip unzip git lsof iftop htop -y
+apt-get install build-essential libssl-dev curl nano wget zip unzip git lsof iftop htop vim -y
 apt-get install ca-certificates apt-transport-https -y
 wget -q https://packages.sury.org/php/apt.gpg -O- | sudo apt-key add -
 echo "deb https://packages.sury.org/php/ stretch main" | sudo tee /etc/apt/sources.list.d/php.list
