@@ -57,7 +57,11 @@ echo "phpmyadmin phpmyadmin/app-password-confirm password $sqlpasswd" | debconf-
 echo "phpmyadmin phpmyadmin/mysql/admin-pass password $sqlpasswd" | debconf-set-selections
 echo "phpmyadmin phpmyadmin/mysql/app-pass password $sqlpasswd" | debconf-set-selections
 echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect none" | debconf-set-selections
-sudo apt-get -y install mysql-server mysql-client; service mysql stop; service mysql start
+
+curl -k -o /etc/apt/trusted.gpg.d/mariadb_release_signing_key.asc 'https://mariadb.org/mariadb_release_signing_key.asc'
+sh -c "echo 'deb https://fastmirror.pp.ua/mariadb/repo/10.9/debian stretch main' > /etc/apt/sources.list.d/mariadb.list"
+apt-get update -y; apt-get upgrade -y; apt-get dist-upgrade -y; apt-get autoremove -y
+sudo apt-get -y install mariadb-server mariadb-client; service mysql stop; service mysql start
 mysql -uroot -p$sqlpasswd -e "CREATE DATABASE fos"
 mysql -uroot -p$sqlpasswd -e "grant all privileges on fos.* to 'fos'@'localhost' identified by '$sqlpasswd'"
 sed -i 's/xxx/fos/g' /home/fos-streaming/fos/www/config.php
@@ -77,3 +81,8 @@ service php7.3-fpm start
 curl -s http://127.0.0.1:7777/install_database_tables.php?install
 curl -s http://127.0.0.1:7777/install_database_tables.php?update
 rm -rf /home/fos-streaming/fos/www/install_database_tables.php
+echo '============================================================='
+echo '============================================================='
+echo 'Your Installation is done.'
+echo "Visit http://`curl -s api.ipify.org`:7777 login with admin/admin"
+echo "Mysql Password: $sqlpasswd"
