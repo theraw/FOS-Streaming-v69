@@ -19,8 +19,8 @@
 
 
 ## Installation
-1. **`SUPPORTED DISTRO : Debian 9, 64 BIT`**
-2. **`curl -s https://raw.githubusercontent.com/theraw/FOS-Streaming-v69/master/install/debian9 | bash`**
+1. **`SUPPORTED DISTRO : Debian 11`**
+2. **`curl -s https://raw.githubusercontent.com/theraw/FOS-Streaming-v69/master/install/debian11 | bash`**
 3. **`Visit : http://your-ip:7777/ login with User : admin Password : admin`**
 4. **`Change "Web ip: *" with your public IPv4 server ip at http://your-ip:7777/settings.php`**
 5. crontab -e `*/2 * * * * /etc/alternatives/php /home/fos-streaming/fos/www/cron.php`
