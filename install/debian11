@@ -79,6 +79,7 @@ ln -sf /etc/alternatives/php /home/fos-streaming/fos/php/bin/php
 service php7.3-fpm stop
 service php7.3-fpm start
 /home/fos-streaming/fos/nginx/sbin/nginx_fos
+curl -s http://127.0.0.1:7777/install_database_tables.php?install=fresh
 curl -s http://127.0.0.1:7777/install_database_tables.php?install
 curl -s http://127.0.0.1:7777/install_database_tables.php?update
 rm -rf /home/fos-streaming/fos/www/install_database_tables.php
