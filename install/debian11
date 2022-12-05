@@ -64,6 +64,7 @@ apt-get update -y; apt-get upgrade -y; apt-get dist-upgrade -y; apt-get autoremo
 sudo apt-get -y install mariadb-server mariadb-client; service mysql stop; service mysql start
 mysql -uroot -p$sqlpasswd -e "CREATE DATABASE fos"
 mysql -uroot -p$sqlpasswd -e "grant all privileges on fos.* to 'fos'@'localhost' identified by '$sqlpasswd'"
+mysql -uroot -p$sqlpasswd -e "use fos; SET GLOBAL sql_mode='';"
 sed -i 's/xxx/fos/g' /home/fos-streaming/fos/www/config.php
 sed -i 's/zzz/'$sqlpasswd'/g' /home/fos-streaming/fos/www/config.php
 sed -i 's/ttt/fos/g' /home/fos-streaming/fos/www/config.php
