@@ -36,7 +36,7 @@ if (isset($_POST['submit'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>FOS-Streaming panel by Tyfix</title>
+    <title>FOS-Streaming panel</title>
 
     <!-- Bootstrap core CSS -->
 
@@ -93,15 +93,10 @@ if (isset($_POST['submit'])) {
                     </div>
                     <div class="clearfix"></div>
                     <div class="separator">
-
-
                         <div class="clearfix"></div>
                         <br/>
                         <div>
-
-
-                            <p>&copy;2015 All Rights Reserved FOS-Streaming by <a href="http://www.tyfix.nl"
-                                                                                  target="_blank">Tyfix</a></p>
+                            <p>&copy;2023 All Rights Reserved <a href="https://github.com/theraw/FOS-Streaming-v69" target="_blank">FOS-Streaming</a></p>
                         </div>
                     </div>
                 </form>
